@@ -1,0 +1,19 @@
+{
+  "name": "mb",
+  "version": "0.0.1",
+  "description": "Filmdatenbank",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://agent47@gitlab.com/agent47/MovieBase.git"
+  },
+  "author": "Oliver Kleditzsch",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/agent47/MovieBase/issues"
+  },
+  "homepage": "https://gitlab.com/agent47/MovieBase#README"
+}
