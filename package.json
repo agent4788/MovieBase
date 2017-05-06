@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://gitlab.com/agent47/MovieBase/issues"
   },
-  "homepage": "https://gitlab.com/agent47/MovieBase#README"
+  "homepage": "https://gitlab.com/agent47/MovieBase#README",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
 }
