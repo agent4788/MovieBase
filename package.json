@@ -2,7 +2,7 @@
   "name": "mb",
   "version": "0.0.1",
   "description": "Filmdatenbank",
-  "main": "index.js",
+  "main": "app/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +17,10 @@
   },
   "homepage": "https://gitlab.com/agent47/MovieBase#README",
   "dependencies": {
-    "express": "^4.15.2"
+    "exbars": "^1.0.4",
+    "express": "^4.15.3",
+    "express-static": "^1.1.0",
+    "handlebars": "^4.0.8",
+    "semantic-ui-css": "^2.2.10"
   }
 }
