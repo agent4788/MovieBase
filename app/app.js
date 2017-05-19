@@ -18,7 +18,7 @@ app.set('views', 'app/views');
 app.set('view engine', 'hbs');
 
 //Routen
-require('./routes/movie')(app);
+require('./routes/router')(app);
 
 //Server starten
 app.listen(3000, function () {
