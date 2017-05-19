@@ -11,5 +11,9 @@ module.exports = {
         port:     6379,
         db:       10,
         password: ''
+    },
+
+    pagination: {
+        elementsAtPage: 25
     }
 }

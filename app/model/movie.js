@@ -14,6 +14,7 @@ module.exports = class Movie {
         this._title = '';
         this._subTitle = '';
         this._description = '';
+        this._coverImg = '';
         this._year = 1900;
         this._disc = '';
         this._price = 0.0;
@@ -54,6 +55,14 @@ module.exports = class Movie {
 
     set description(value) {
         this._description = value;
+    }
+
+    get coverImg() {
+        return this._coverImg;
+    }
+
+    set coverImg(value) {
+        this._coverImg = value;
     }
 
     get year() {

@@ -13,6 +13,7 @@ module.exports = class MovieBox {
         this._id = '';
         this._title = '';
         this._subTitle = '';
+        this._coverImg = '';
         this._year = 1900;
         this._disc = '';
         this._price = 0.0;
@@ -42,6 +43,14 @@ module.exports = class MovieBox {
 
     set subTitle(value) {
         this._subTitle = value;
+    }
+
+    get coverImg() {
+        return this._coverImg;
+    }
+
+    set coverImg(value) {
+        this._coverImg = value;
     }
 
     get year() {

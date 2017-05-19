@@ -2,22 +2,24 @@
     <h2 class="ui header">Filme</h2>
     <div class="ui divider"></div>
     <div class="ui link cards five column doubling stackable">
-        <div class="card" onclick="window.location = 'detail_view.html'">
+        {{#each data}}
+        <div class="card" onclick="window.location = '{{#if this.movies}}/detailView/movieBox/{{this.id}}{{else}}/detailView/movie/{{this.id}}{{/if}}'">
             <div class="image">
-                <img src="http://lorempixel.com/500/650">
+                <img src="/static/image/cover/{{this.coverImg}}">
             </div>
             <div class="content">
-                <div class="header">V wie Vendetta</div>
+                <div class="header">{{this.title}}</div>
                 <div class="meta">
-                    <a>SiFi</a>
+                    <a>{{this.genres.[0]}}</a>
                 </div>
             </div>
             <div class="extra content">
-            <span class="right floated">
-                102min
-            </span>
+                <span class="right floated">
+                    {{this.duration}}min
+                </span>
             </div>
         </div>
+        {{/each}}
     </div>
     <nav>
         <div class="ui pageBrowser">
