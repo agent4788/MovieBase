@@ -14,6 +14,6 @@ module.exports = {
     },
 
     pagination: {
-        elementsAtPage: 25
+        elementsAtPage: 10
     }
 }

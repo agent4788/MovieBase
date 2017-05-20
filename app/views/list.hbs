@@ -21,32 +21,18 @@
         </div>
         {{/each}}
     </div>
+    {{#if pagination}}
     <nav>
-        <div class="ui pageBrowser">
-            <div class="ui pagination menu pageBrowserContainer">
-                <a class="item">
-                    1
-                </a>
-                <a class="item disabled">
-                    ...
-                </a>
-                <a class="item">
-                    10
-                </a>
-                <a class="item active">
-                    11
-                </a>
-                <a class="item">
-                    12
-                </a>
-                <a class="item disabled">
-                    ...
-                </a>
-                <a class="item">
-                    70
-                </a>
+        <br>
+        <div class="ui container">
+            <div class="ui secondary menu">
+                <div class="right menu">
+                    <div class="ui inverted pagination menu">
+                        {{pagination}}
+                    </div>
+                </div>
             </div>
         </div>
-        <span style="float: none"></span>
     </nav>
+    {{/if}}
 </div>

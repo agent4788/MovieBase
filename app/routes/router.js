@@ -10,5 +10,5 @@ var movieList = require('../controller/movielist.js');
 module.exports = function(app) {
 
     app.get('/', dashboard);
-    app.get('/movies', movieList);
+    app.get('/movies/', movieList);
 }
