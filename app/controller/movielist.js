@@ -15,16 +15,24 @@ module.exports = function(req, res) {
     movieModel.listMovies(function(data) {
 
         //Daten nach Titel aufsteigend sortieren
-        data.sort(function(a, b) {
+        data.sort(function(obj1, obj2) {
 
-            if(a.title > b.title) {
-
-                return 1;
-            } else if(a.title < b.title) {
-
-                return -1;
+            as = obj1.title;
+            bs = obj2.title;
+            var a, b, a1, b1, rx=/(\d+)|(\D+)/g, rd=/\d+/;
+            a= String(as).toLowerCase().match(rx);
+            b= String(bs).toLowerCase().match(rx);
+            while(a.length && b.length){
+                a1= a.shift();
+                b1= b.shift();
+                if(rd.test(a1) || rd.test(b1)){
+                    if(!rd.test(a1)) return 1;
+                    if(!rd.test(b1)) return -1;
+                    if(a1!= b1) return a1-b1;
+                }
+                else if(a1!= b1) return a1> b1? 1: -1;
             }
-            return 0;
+            return a.length- b.length;
         });
 
         //Start Element
@@ -81,6 +89,7 @@ module.exports = function(req, res) {
         var subData = [];
         var n = 0;
         for(var i = start; i < (parseInt(start) + parseInt(elementsAtPage)); i++) {
+
             if(data[i]) {
 
                 subData[n] = data[i];

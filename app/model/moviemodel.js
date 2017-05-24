@@ -43,30 +43,35 @@ module.exports = class MovieModel {
         return crypto.randomBytes(20).toString('hex');
     }
 
+    insertSampleData() {
+
+        var client = this.__connect();
+
+        for(var i = 0; i < 75; i++) {
+
+            var movie1 = new Movie();
+            movie1.id = this.__createId();
+            movie1.title = 'Test Film ' + (i + 1);
+            movie1.description = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.';
+            movie1.disc = 'Blu-ray';
+            movie1.coverImg = 'bsp.jpg';
+            movie1.fsk = 16;
+            movie1.duration = 115;
+            movie1.genres = ['Action', 'Horror'];
+            movie1.price = 19.99;
+            movie1.rating = 4;
+
+            client.hset('movies', movie1.id, JSON.stringify(movie1));
+        }
+        client.quit();
+    }
+
     /**
      * gibt eine Liste mit allen Filmen zurück
      *
      * @param callback Callback Funktion welche die Daten erhält
      */
     listMovies(callback) {
-
-        /*
-        var movie1 = new Movie();
-        movie1.id = this.__createId();
-        movie1.title = 'Test Film 6';
-        movie1.description = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.';
-        movie1.disc = 'Blu-ray';
-        movie1.coverImg = 'bsp.jpg';
-        movie1.fsk = 16;
-        movie1.duration = 115;
-        movie1.genres = ['Action', 'Horror'];
-        movie1.price = 19.99;
-        movie1.rating = 4;
-
-        var client = this.__connect();
-        client.hset('movies', movie1.id, JSON.stringify(movie1));
-        client.quit();
-*/
 
         var client = this.__connect();
         client.hgetall('movies', function (err, obj) {
