@@ -111,6 +111,7 @@ module.exports = class MovieModel {
     listMovies(callback) {
 
         var client = this.__connect();
+        var movieModel = this;
         client.hgetall('movies', function (err, obj) {
 
             var data = [];
@@ -139,7 +140,7 @@ module.exports = class MovieModel {
 
             //TODO Nach Entwicklung wieder entfernen
             if(data.length < 1) {
-                this.insertSampleData();
+                movieModel.insertSampleData();
             }
 
             callback(data);
