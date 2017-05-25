@@ -1,10 +1,10 @@
-<div class="ui segment mainSegment">
+<div class="ui segment">
     <h2 class="ui header">Filme</h2>
     <div class="ui divider"></div>
     <div class="ui link cards five column doubling stackable">
         {{#if data}}
             {{#each data}}
-            <div class="card" onclick="window.location = '{{#if this.movies}}/detailView/movieBox/{{this.id}}{{else}}/detailView/movie/{{this.id}}{{/if}}'">
+            <div class="card" onclick="window.location = '/detailView/{{this.id}}'">
                 <div class="image">
                     <img src="/static/image/cover/{{this.coverImg}}">
                 </div>
@@ -22,7 +22,11 @@
             </div>
             {{/each}}
         {{else}}
-            <h1 class="ui header">Keine Einträge</h1>
+            <div class="ui negative message">
+                <div class="header">
+                    Keine Einträge
+                </div>
+            </div>
         {{/if}}
     </div>
     {{#if pagination}}

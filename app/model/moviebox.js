@@ -65,7 +65,7 @@ module.exports = class MovieBox {
         return this._disc;
     }
 
-    set sisc(value) {
+    set disc(value) {
         this._disc = value;
     }
 
