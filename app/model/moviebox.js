@@ -18,6 +18,7 @@ module.exports = class MovieBox {
         this._disc = '';
         this._price = 0.0;
         this._movies = [];
+        this._registredDate = '01.01.1900';
         this._type = 2;
     }
 
@@ -83,6 +84,14 @@ module.exports = class MovieBox {
 
     set movies(value) {
         this._movies = value;
+    }
+
+    get registredDate() {
+        return this._registredDate;
+    }
+
+    set registredDate(value) {
+        this._registredDate = value;
     }
 
     get type() {

@@ -22,6 +22,7 @@ module.exports = class Movie {
         this._fsk = 0;
         this._genres = [];
         this._rating = 0;
+        this._registredDate = '01.01.1900';
         this._type = 1;
     }
 
@@ -119,6 +120,14 @@ module.exports = class Movie {
 
     set rating(value) {
         this._rating = value;
+    }
+
+    get registredDate() {
+        return this._registredDate;
+    }
+
+    set registredDate(value) {
+        this._registredDate = value;
     }
 
     get type() {
