@@ -22,6 +22,7 @@ function movieFormat(data, inBox = false) {
         _movie.disc = data.disc;
         _movie.year = data.year;
         _movie.fsk = data.fsk;
+        _movie.genre = data.genre;
 
         //Cover Bild
         if(data.coverImg.length > 0) {
@@ -65,15 +66,6 @@ function movieFormat(data, inBox = false) {
             rating += '<i class="grey star icon"></i>';
         }
         _movie.rating = new Handlebars.SafeString(rating);
-
-        //Genre
-        var comma = '', genres = '';
-        for(var i in data.genres) {
-
-            genres += comma + data.genres[i];
-            comma = ', ';
-        }
-        _movie.genres[0] = new Handlebars.SafeString(genres);
 
         return _movie;
     } else if(data instanceof MovieBox) {

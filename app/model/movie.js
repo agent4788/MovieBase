@@ -20,7 +20,7 @@ module.exports = class Movie {
         this._price = 0.0;
         this._duration = 0;
         this._fsk = 0;
-        this._genres = [];
+        this._genre = '';
         this._rating = 0;
         this._registredDate = '01.01.1900';
         this._type = 1;
@@ -106,11 +106,11 @@ module.exports = class Movie {
         this._fsk = value;
     }
 
-    get genres() {
+    get genre() {
         return this._genres;
     }
 
-    set genres(value) {
+    set genre(value) {
         this._genres = value;
     }
 

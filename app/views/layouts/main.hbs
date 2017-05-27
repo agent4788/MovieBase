@@ -6,6 +6,7 @@
 
         <link rel="stylesheet" type="text/css" href="/static/css/semantic.min.css">
         <script src="/static/js/jquery.min.js"></script>
+        <script src="/static/css/semantic.min.css"></script>
         <link rel="stylesheet" type="text/css" href="/static/css/moviebase.css">
 
         <link rel="apple-touch-icon" sizes="57x57" href="/static/image/favicon/apple-icon-57x57.png">
@@ -26,6 +27,26 @@
     </head>
     <body>
         <header class="ui container">
+            <script type="text/javascript">
+
+                function search() {
+
+                    var value = $('.ui.search input').val();
+                    window.location = '/search?title=' + value;
+                }
+
+                $(function () {
+
+                    $('.ui.search i').click(function () {
+                        search();
+                    });
+                    $('.ui.search input').keydown(function (e) {
+                        if(e.which == 13) {
+                            search();
+                        }
+                    });
+                })
+            </script>
             <div class="ui fixed inverted menu">
                 <a href="#" class="header item">
                     <img src="/static/image/icon.png" width="32" height="32" class="logo">
@@ -37,7 +58,7 @@
                 <a href="/statistics" class="item">Statistik</a>
                 <div class="right menu">
                     <div class="item">
-                        <div class="ui icon input">
+                        <div class="ui icon input search">
                             <input placeholder="Suchen..." type="text">
                             <i class="search link icon"></i>
                         </div>

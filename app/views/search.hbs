@@ -1,0 +1,109 @@
+<script type="text/javascript">
+    function showHide() {
+        if($('#searchForm').hasClass('hide')) {
+
+            $('#searchForm').show('slow');
+            $('#searchForm').removeClass('hide');
+        } else {
+
+            $('#searchForm').hide('slow');
+            $('#searchForm').addClass('hide');
+        }
+    }
+</script>
+<div class="ui segment">
+    <div onclick="showHide()" style="cursor: pointer;">
+        <h2 class="ui header">Suchen</h2>
+    </div>
+    <div class="ui divider"></div>
+    <div id="searchForm" {{#if found}}class="hide" style="display: none"{{/if}}>
+        <form class="ui form" method="get" action="/search">
+            <h4 class="ui dividing header">Titel</h4>
+            <div class="field">
+                <div class="field">
+                    <div class="field">
+                        <input name="title" placeholder="Titel" type="text" value="{{searchParameters.title}}">
+                    </div>
+                </div>
+            </div>
+            <h4 class="ui dividing header">Länge</h4>
+            <div class="field">
+                <div class="two fields">
+                    <div class="field">
+                        <input name="min_length" placeholder="von (min)" type="text" value="{{searchParameters.minLength}}">
+                    </div>
+                    <div class="field">
+                        <input name="max_length" placeholder="bis (min)" type="text" value="{{searchParameters.maxLength}}">
+                    </div>
+                </div>
+            </div>
+            <h4 class="ui dividing header">Sonstiges</h4>
+            <div class="field">
+                <div class="two fields">
+                    <div class="field">
+                        <label>Genre</label>
+                        <select class="ui fluid dropdown" name="genre">
+                            <option value="">alle</option>
+                            {{genreSelect}}
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>FSK</label>
+                        <select class="ui fluid dropdown" name="fsk">
+                            <option value="">alle</option>
+                            {{fskSelect}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" class="ui button" value="Suchen">
+            <input type="reset" class="ui button" value="Reset">
+        </form>
+    </div>
+</div>
+<div class="ui segment">
+    <h2 class="ui header">Ergebnisse</h2>
+    <div class="ui divider"></div>
+    <div class="ui link cards five column doubling stackable">
+        {{#if data}}
+            {{#each data}}
+                <div class="card" onclick="window.location = '/detailView/{{this.id}}'">
+                    <div class="image">
+                        <img src="/static/image/cover/{{this.coverImg}}">
+                    </div>
+                    <div class="content">
+                        <div class="header">{{this.title}}</div>
+                        <div class="meta">
+                            <a>{{this.genre}}</a>
+                        </div>
+                    </div>
+                    <div class="extra content">
+                    <span class="right floated">
+                        {{this.duration}}
+                    </span>
+                    </div>
+                </div>
+            {{/each}}
+        {{else}}
+            <div class="ui negative message">
+                <div class="header">
+                    Keine Filme gefunden
+                </div>
+            </div>
+        {{/if}}
+    </div>
+    {{#if pagination}}
+        <nav>
+            <br>
+            <div class="ui container">
+                <div class="ui secondary menu">
+                    <div class="right menu">
+                        <div class="ui inverted pagination menu">
+                            {{pagination}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    {{/if}}
+</div>

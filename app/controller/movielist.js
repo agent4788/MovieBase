@@ -8,6 +8,7 @@ const MovieModel = require('../model/moviemodel');
 const Pagination = require('../util/pagination');
 const Handlebars = require('handlebars');
 const config = require('../config');
+const movieFormat = require('../util/movieFormat');
 
 module.exports = function(req, res) {
 
@@ -39,7 +40,7 @@ module.exports = function(req, res) {
         var start = 0;
         if(req.query.start) {
 
-            var start = req.query.start;
+            var start = parseInt(req.query.start);
         }
 
         //Blätterfunktion
@@ -92,7 +93,7 @@ module.exports = function(req, res) {
 
             if(data[i]) {
 
-                subData[n] = data[i];
+                subData[n] = movieFormat(data[i]);
                 n++;
             }
         }

@@ -60,10 +60,11 @@ module.exports = class MovieModel {
             movie1.disc = 'Blu-ray';
             movie1.coverImg = 'bsp.jpg';
             movie1.fsk = 16;
-            movie1.duration = 115;
-            movie1.genres = ['Action', 'Horror'];
+            movie1.duration = 75 + i;
+            movie1.genre = 'Action';
             movie1.price = 19.99;
-            movie1.rating = 4;
+            movie1.rating = i % 5;
+            movie1.registredDate = '01.01.1900';
 
             client.hset('movies', movie1.id, JSON.stringify(movie1));
         }
@@ -78,6 +79,7 @@ module.exports = class MovieModel {
             movieBox1.year = 2015;
             movieBox1.price = 49.95;
             movieBox1.disc = 'Blu-ray';
+            movieBox1.registredDate = '01.01.1900';
 
             var movies = [];
             for(var j = 0; j < 3; j++) {
@@ -89,10 +91,10 @@ module.exports = class MovieModel {
                 movie1.disc = 'Blu-ray';
                 movie1.coverImg = 'bsp.jpg';
                 movie1.fsk = 16;
-                movie1.duration = 115;
-                movie1.genres = ['Action', 'Horror'];
+                movie1.duration = 90 + i;
+                movie1.genre = 'Horror';
                 movie1.price = 19.99;
-                movie1.rating = 4;
+                movie1.rating = i % 5;
                 movies[j] = movie1;
             }
             movieBox1.movies = movies;

@@ -15,5 +15,16 @@ module.exports = {
 
     pagination: {
         elementsAtPage: 10
-    }
+    },
+
+    genres: [
+        'Action',
+        'Horror',
+        'Drama',
+        'Musik'
+    ],
+
+    fsk: [
+        0, 6, 12, 16, 18
+    ]
 }
