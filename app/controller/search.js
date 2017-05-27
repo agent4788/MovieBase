@@ -21,7 +21,7 @@ module.exports = function(req, res) {
         minLength: (req.query.min_length ? parseInt(req.query.min_length) : ''),
         maxLength: (req.query.max_length ? parseInt(req.query.max_length) : ''),
         genre: (req.query.genre ? req.query.genre.toLocaleLowerCase() : ''),
-        fsk: (req.query.fsk ? req.query.fsk.toLocaleLowerCase() : '')
+        rating: (req.query.rating ? req.query.rating.toLocaleLowerCase() : '')
     };
 
     //Auswahlfelder vorbereiten
@@ -38,17 +38,15 @@ module.exports = function(req, res) {
             genreSelect += '<option value="' + entities.encode(genre) + '">' + entities.encode(genre) + '</option>'
         }
     }
-    var fskSelect = '';
-    var fsks = config.fsk;
-    for(var i in fsks) {
+    var ratingSelect = '';
+    for(var i = 1; i <= 5; i++) {
 
-        var fsk = fsks[i].toString();
-        if(fsk.toLocaleLowerCase() == searchParameters.fsk.toLocaleLowerCase()) {
+        if(searchParameters.rating == i) {
 
-            fskSelect += '<option selected value="' + entities.encode(fsk) + '">' + entities.encode(fsk) + '</option>'
+            ratingSelect += '<option selected value="' + i.toString() + '">' + i.toString() + '</option>'
         } else {
 
-            fskSelect += '<option value="' + entities.encode(fsk) + '">' + entities.encode(fsk) + '</option>'
+            ratingSelect += '<option value="' + i.toString() + '">' + i.toString() + '</option>'
         }
     }
 
@@ -117,9 +115,9 @@ module.exports = function(req, res) {
             }
 
             //FSK Filtern
-            if(searchParameters.fsk.length > 0) {
+            if(searchParameters.rating.length > 0) {
 
-                if(!(movie.fsk == searchParameters.fsk)) {
+                if(!(movie.rating >= searchParameters.rating)) {
 
                     filterActive = true;
                     continue;
@@ -222,7 +220,7 @@ module.exports = function(req, res) {
             data: subData,
             pagination: new Handlebars.SafeString(paginationStr),
             genreSelect: new Handlebars.SafeString(genreSelect),
-            fskSelect: new Handlebars.SafeString(fskSelect),
+            ratingSelect: new Handlebars.SafeString(ratingSelect),
             found: (filterActive && subData.length > 0 ? true : false)
         });
     });
@@ -257,9 +255,9 @@ function queryString(searchParameters) {
         and = '&';
     }
 
-    if(searchParameters.fsk.length > 0) {
+    if(searchParameters.rating.length > 0) {
 
-        queryStr += and + 'fsk=' + entities.encode(searchParameters.fsk);
+        queryStr += and + 'rating=' + entities.encode(searchParameters.rating);
     }
     return queryStr;
 }
