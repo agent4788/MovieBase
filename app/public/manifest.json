@@ -1,6 +1,7 @@
 {
     "name": "Movie Base",
     "short_name": "MB",
+    "description": "DIe Movie Base ist eine Filmdatenbank für DVDs und Blu-rays",
     "icons": [
         {
           "src": "/static/image/favicon/android-icon-36x36.png",
