@@ -61,7 +61,8 @@ function formatDuration(duration) {
 
         if((duration % 60) > 0) {
 
-            formatedDuration += ' ' + Math.ceil(duration % 60) + 'min';
+            var min = Math.ceil(data.duration % 60);
+            _movie.duration += ' ' + (min < 10 ? '0' : '') + min + 'min';
         }
     }
     return formatedDuration;

@@ -44,7 +44,8 @@ function movieFormat(data, inBox = false) {
                 _movie.duration = Math.floor(data.duration / 60) + 'h';
                 if((data.duration % 60) > 0) {
 
-                    _movie.duration += ' ' + Math.ceil(data.duration % 60) + 'min';
+                    var min = Math.ceil(data.duration % 60);
+                    _movie.duration += ' ' + (min < 10 ? '0' : '') + min + 'min';
                 }
             }
         } else {
