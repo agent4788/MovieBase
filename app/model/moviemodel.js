@@ -150,6 +150,46 @@ module.exports = class MovieModel {
         });
     }
 
+
+
+    /**
+     * gibt eine Liste mit allen Filmen zurück
+     *
+     * @param callback Callback Funktion welche die Daten erhält
+     */
+    listMovieBoxes(callback) {
+
+        var client = this.__connect();
+        var movieModel = this;
+        client.hgetall('movies', function (err, obj) {
+
+            var data = [];
+            var i = 0;
+            for(var key in obj) {
+
+                var json = JSON.parse(obj[key]);
+                if(json._type == 2) {
+
+                    //Filmbox filme extrahieren
+                    json.__proto__ = MovieBox.prototype;
+                    var movies = [];
+                    for(var j in json.movies) {
+
+                        var boxMovie = json.movies[j];
+                        boxMovie.__proto__ = Movie.prototype;
+                        movies[j] = boxMovie;
+                    }
+                    json.movies = movies;
+                    data[i] = json;
+                    i++;
+                }
+            }
+
+            callback(data);
+            client.quit();
+        });
+    }
+
     /**
      * gibt den zur ID zugehörigen Film zurück
      *
@@ -217,5 +257,6 @@ module.exports = class MovieModel {
 
         });
     }
+
 
 }

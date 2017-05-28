@@ -1,0 +1,41 @@
+<div class="ui segment">
+    <h2 class="ui header">Film Boxen</h2>
+    <div class="ui divider"></div>
+    <div class="ui link cards five column doubling stackable">
+        {{#if data}}
+            {{#each data}}
+                <div class="card" onclick="window.location = '/detailView/{{this.movies.0.id}}'">
+                    <div class="image">
+                        <img src="/static/image/cover/{{this.coverImg}}">
+                    </div>
+                    <div class="content">
+                        <div class="header">{{this.title}}</div>
+                        <div class="meta">
+                            <a>{{this.subTitle}}</a>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        {{else}}
+            <div class="ui negative message">
+                <div class="header">
+                    Keine Einträge
+                </div>
+            </div>
+        {{/if}}
+    </div>
+    {{#if pagination}}
+        <nav>
+            <br>
+            <div class="ui container">
+                <div class="ui secondary menu">
+                    <div class="right menu">
+                        <div class="ui inverted pagination menu">
+                            {{pagination}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    {{/if}}
+</div>
