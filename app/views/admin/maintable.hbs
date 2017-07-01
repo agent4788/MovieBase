@@ -1,0 +1,113 @@
+<div class="ui segment">
+    <h2 class="ui header">Filme</h2>
+    <div class="ui divider"></div>
+    {{#if success.add}}
+        {{#if success.addSuccess}}
+            <div class="ui message success">
+                Der Film wurde erfolgreich erstellt
+            </div>
+        {{else}}
+            <div class="ui message error">
+                Der Film konnte nicht erstellt werden
+            </div>
+        {{/if}}
+    {{/if}}
+    {{#if success.edit}}
+        {{#if success.editSuccess}}
+            <div class="ui message success">
+                Der Film wurde erfolgreich bearbeitet
+            </div>
+        {{else}}
+            <div class="ui message error">
+                Der Film konnte nicht bearbeitet werden
+            </div>
+        {{/if}}
+    {{/if}}
+    {{#if success.delete}}
+        {{#if success.deleteSuccess}}
+            <div class="ui message success">
+                Der Film wurde erfolgreich gelöscht
+            </div>
+        {{else}}
+            <div class="ui message error">
+                Der Film konnte nicht gelöscht werden
+            </div>
+        {{/if}}
+    {{/if}}
+    <table class="ui celled table">
+        <thead>
+            <tr>
+                <th>Cover</th>
+                <th>Titel</th>
+                <th>Länge</th>
+                <th>FSK</th>
+                <th>Optionen</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#if data}}
+                {{#each data}}
+                    <tr>
+                        <td><img src="/static/image/cover/{{this.coverImg}}" class="ui tiny image"></td>
+                        <td>
+                            {{this.title}}
+                            <br>
+                            {{this.subTitle}}
+                        </td>
+                        <td>{{this.duration}}</td>
+                        <td><img src="/static/image/fsk/{{this.fsk}}.jpg" class="ui tiny image"></td>
+                        <td>
+                            <div class="ui icon buttons">
+                                <button title="bearbeiten" class="ui button large" onclick="window.location = '/admin/editMovie/{{this.id}}'"><i class="edit icon orange large"></i></button>
+                                <button title="l&ouml;schen" class="ui button large" onclick="$('#a{{this.id}}').modal('show')"><i class="remove red icon large"></i></button>
+                            </div>
+                            <div class="ui basic modal" id="a{{this.id}}">
+                                <div class="ui icon header">
+                                    <i class="delete icon"></i>
+                                    Film löschen
+                                </div>
+                                <div class="content">
+                                    <p>Bist du sicher das du den Film löschen möchtest?</p>
+                                </div>
+                                <div class="actions">
+                                    <div class="ui red basic cancel inverted button">
+                                        <i class="remove icon"></i>
+                                        Nein
+                                    </div>
+                                    <div class="ui green ok inverted button" onclick="window.location = '/admin/deleteMovie/{{this.id}}'">
+                                        <i class="checkmark icon"></i>
+                                        Ja
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {{/each}}
+            {{else}}
+                <tr>
+                    <td colspan="5">keine Eiträge</td>
+                </tr>
+            {{/if}}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="5">
+                    {{#if pagination}}
+                        <nav>
+                            <br>
+                            <div class="ui">
+                                <div class="ui secondary menu">
+                                    <div class="right menu">
+                                        <div class="ui inverted pagination menu">
+                                            {{pagination}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    {{/if}}
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+</div>

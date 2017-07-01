@@ -150,7 +150,35 @@ module.exports = class MovieModel {
         });
     }
 
+    /**
+     * gibt eine Liste mit allen Filmen zurück
+     *
+     * @param callback Callback Funktion welche die Daten erhält
+     */
+    listOnlyMovies(callback) {
 
+        var client = this.__connect();
+        var movieModel = this;
+        client.hgetall('movies', function (err, obj) {
+
+            var data = [];
+            var i = 0;
+            for(var key in obj) {
+
+                var json = JSON.parse(obj[key]);
+                if(json._type == 1) {
+
+                    //Film
+                    json.__proto__ = Movie.prototype;
+                    data[i] = json;
+                    i++;
+                }
+            }
+
+            callback(data);
+            client.quit();
+        });
+    }
 
     /**
      * gibt eine Liste mit allen Filmen zurück
@@ -258,5 +286,41 @@ module.exports = class MovieModel {
         });
     }
 
+    /**
+     * Film hinzufügen
+     *
+     * @param movie Film
+     * @return ID des Films
+     */
+    addMovie(movie) {
 
+        movie.id = this.__createId();
+        var client = this.__connect();
+        client.hset('movies', movie.id, JSON.stringify(movie));
+        return movie.id;
+    }
+
+    /**
+     * Film bearbeiten
+     *
+     * @param movie Film
+     * @return ID des Films
+     */
+    updateMovie(movie) {
+
+        var client = this.__connect();
+        client.hset('movies', movie.id, JSON.stringify(movie));
+        return movie.id;
+    }
+
+    /**
+     * Film löschen
+     *
+     * @param id Film ID
+     */
+    deleteMovie(id) {
+
+        var client = this.__connect();
+        client.hdel('movies', id);
+    }
 }

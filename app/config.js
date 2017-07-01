@@ -26,5 +26,11 @@ module.exports = {
 
     fsk: [
         0, 6, 12, 16, 18
+    ],
+
+    disc: [
+        "DVD",
+        "Blu-ray",
+        "UHD Blu-ray"
     ]
 }
