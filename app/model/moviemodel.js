@@ -287,6 +287,40 @@ module.exports = class MovieModel {
     }
 
     /**
+     * gibt die Filmbox mit der ID zurück
+     *
+     * @param id Filmbox ID
+     * @param callback Callback Funktion welche die Daten erhält
+     */
+    getMovieBoxById(id, callback) {
+
+        var client = this.__connect();
+        var movieModel = this;
+        client.hget('movies', id, function (err, obj) {
+
+            var json = JSON.parse(obj);
+            if(json._type == 2) {
+
+                //Filmbox filme extrahieren
+                json.__proto__ = MovieBox.prototype;
+                var movies = [];
+                for(var j in json.movies) {
+
+                    var boxMovie = json.movies[j];
+                    boxMovie.__proto__ = Movie.prototype;
+                    movies[j] = boxMovie;
+                }
+                json.movies = movies;
+                callback(json);
+            } else {
+
+                callback(null);
+            }
+            client.quit();
+        });
+    }
+
+    /**
      * Film hinzufügen
      *
      * @param movie Film
@@ -319,6 +353,44 @@ module.exports = class MovieModel {
      * @param id Film ID
      */
     deleteMovie(id) {
+
+        var client = this.__connect();
+        client.hdel('movies', id);
+    }
+
+    /**
+     * FilmBox hinzufügen
+     *
+     * @param movie FilmBox
+     * @return ID der Filmbox
+     */
+    addMovieBox(movieBox) {
+
+        movieBox.id = this.__createId();
+        var client = this.__connect();
+        client.hset('movies', movieBox.id, JSON.stringify(movieBox));
+        return movieBox.id;
+    }
+
+    /**
+     * FilmBox bearbeiten
+     *
+     * @param movie FilmBox
+     * @return ID der Filmbox
+     */
+    updateMovieBox(movieBox) {
+
+        var client = this.__connect();
+        client.hset('movies', movieBox.id, JSON.stringify(movieBox));
+        return movieBox.id;
+    }
+
+    /**
+     * FilmBox löschen
+     *
+     * @param id FilmBox ID
+     */
+    deleteMovieBox(id) {
 
         var client = this.__connect();
         client.hdel('movies', id);

@@ -1,0 +1,117 @@
+<script type="text/javascript">
+    $(function () {
+
+        //Dropdowns
+        $('select.dropdown').dropdown();
+
+        $('.ui.form')
+                .form({
+                    on: 'blur',
+                    fields: {
+                        title: {
+                            identifier: 'title',
+                            rules: [
+                                {
+                                    type   : 'empty',
+                                    prompt : 'Titel eingeben'
+                                },
+                                {
+                                    type   : 'maxLength[100]',
+                                    prompt : 'Der Titel darf maximal 100 Zeichen lang sein'
+                                }
+                            ]
+                        },
+                        subtitle: {
+                            identifier: 'subtitle',
+                            optional   : true,
+                            rules: [
+                                {
+                                    type   : 'maxLength[100]',
+                                    prompt : 'Der Untertitelitel darf maximal 100 Zeichen lang sein'
+                                }
+                            ]
+                        },
+                        year: {
+                            identifier: 'year',
+                            rules: [
+                                {
+                                    type   : 'empty',
+                                    prompt : 'Wähle ein Produktionsjahr aus'
+                                }
+                            ]
+                        },
+                        disc: {
+                            identifier: 'disc',
+                            rules: [
+                                {
+                                    type   : 'empty',
+                                    prompt : 'Wähle ein Medium aus'
+                                }
+                            ]
+                        },
+                        price: {
+                            identifier: 'price',
+                            rules: [
+                                {
+                                    type   : 'decimal',
+                                    prompt : 'Gib eine gültige Zahl ein'
+                                }
+                            ]
+                        }
+                    }
+                })
+        ;
+        $('.ui.form').form('set values', {
+            year        : "{{moviebox.year}}",
+            disc        : "{{moviebox.disc}}"
+        });
+    })
+</script>
+<div class="ui segment">
+    <h2 class="ui header">Filmbox bearbeiten</h2>
+    <div class="ui divider"></div>
+    <form class="ui form" method="post" enctype="multipart/form-data" action="/admin/editMovieBox/{{moviebox.id}}">
+        <div class="equal width fields">
+            <div class="field required">
+                <label>Titel</label>
+                <input name="title" placeholder="Titel ..." type="text" maxlength="100" value="{{moviebox.title}}">
+            </div>
+            <div class="field">
+                <label>Untertietel</label>
+                <input name="subtitle" placeholder="Untertietel ..." maxlength="100" type="text" value="{{moviebox.subTitle}}">
+            </div>
+        </div>
+        <div class="equal width fields">
+            <div class="field">
+                <label>Cover</label>
+                <input name="cover" type="file">
+            </div>
+            <div class="field required">
+                <label>Produktionsjahr</label>
+                <select name="year" class="ui dropdown">
+                    <option value="">Produktionsjahr</option>
+                    {{#each years}}
+                        <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+        <div class="equal width fields">
+            <div class="field required">
+                <label>Medium</label>
+                <select name="disc" class="ui dropdown">
+                    <option value="">Medium</option>
+                    {{#each config.disc}}
+                        <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="field">
+                <label>Preis</label>
+                <input name="price" value="{{moviebox.price}}" type="number" min="0" max="250" step="0.01">
+            </div>
+        </div>
+        <div class="ui button basic secondary" onclick="window.history.back()">Zurück</div>
+        <button class="ui button primary" type="submit">Speichern</button>
+    </form>
+</div>

@@ -1,16 +1,16 @@
 /**
- * Created by oliver on 01.07.17.
+ * Created by oliver on 24.06.17.
  *
- * Film bearbeiten Controller
+ * Admin Controller
  */
 
 const MovieModel = require('../../model/moviemodel');
 const Movie = require('../../model/movie');
+const MovieBox = require('../../model/moviebox');
 const Handlebars = require('handlebars');
-const crypto = require('crypto');
 const config = require('../../config');
+const crypto = require('crypto');
 const movieFormat = require('../../util/movieFormat');
-const fs = require('fs');
 
 module.exports = {
 
@@ -21,7 +21,7 @@ module.exports = {
 
             //Formular anzeigen
 
-            if(data instanceof Movie) {
+            if(data instanceof MovieBox) {
 
                 //Liste der Jahre
                 var year = new Date().getYear() + 1900;
@@ -30,11 +30,29 @@ module.exports = {
                     years[j] = i;
                 }
 
+                //Film in der Box finden
+                var movie = null;
+                var found = false;
+                for(var i in data.movies) {
+
+                    if(data.movies[i].id == req.params.id) {
+
+                        movie = data.movies[i];
+                        found = true;
+                    }
+                }
+
+                //Film nicht gefunden
+                if(found == false) {
+
+                    res.redirect("/admin/manageMovieBoxMovies/" + data.id + "?editMovieInBoxSuccess=0");
+                }
+
                 //Template an Browser
-                res.render('admin/editmovie', {layout: 'adminlayout', config: config, years: years, movie: data});
+                res.render('admin/editmovieinbox', {layout: 'adminlayout', config: config, years: years, movie: movie});
             } else {
 
-                res.redirect("/admin?editSuccess=0");
+                res.redirect("/admin/manageMovieBoxMovies/" + data.id + "?editMovieInBoxSuccess=0");
             }
         });
     },
@@ -43,11 +61,26 @@ module.exports = {
         var movieModel = new MovieModel();
         movieModel.getMovieById(req.params.id, function(data) {
 
-            //Formular anzeigen
+            if (data instanceof MovieBox) {
 
-            if(data instanceof Movie) {
+                //Film in der Box finden
+                var movie = null;
+                var found = false;
+                for(var i in data.movies) {
 
-                newMovie = data;
+                    if(data.movies[i].id == req.params.id) {
+
+                        movie = data.movies[i];
+                        found = true;
+                    }
+                }
+
+                //Film nicht gefunden
+                if(found == false) {
+
+                    res.redirect("/admin/manageMovieBoxMovies/" + data.id + "?editMovieInBoxSuccess=0");
+                }
+                newMovie = movie;
 
                 //Formulardaten verarbeiten
                 var title = req.body.title;
@@ -56,7 +89,6 @@ module.exports = {
                 var cover = req.files.cover;
                 var year = parseInt(req.body.year);
                 var disc = req.body.disc;
-                var price = parseFloat(req.body.price);
                 var duration = parseInt(req.body.duration);
                 var fsk = parseInt(req.body.fsk);
                 var genre = req.body.genre;
@@ -110,15 +142,6 @@ module.exports = {
                     success = false;
                 }
 
-                //Preis
-                if(price >= 0 && price <= 1000) {
-
-                    newMovie.price = price;
-                } else {
-
-                    success = false;
-                }
-
                 //Laufzeit
                 if(duration >= 0 && duration <= 1000) {
 
@@ -158,7 +181,7 @@ module.exports = {
                 if(success == false) {
 
                     //zur Übersicht umleiten
-                    res.redirect("/admin?editSuccess=0");
+                    res.redirect("/admin/manageMovieBoxMovies/" + newMovie.id + "?editMovieInBoxSuccess=0");
                 }
 
                 //Cover (optional)
@@ -193,43 +216,64 @@ module.exports = {
                             newMovie.coverImg = imageId + fileExtension;
 
                             //Film speichern
+                            found = false;
                             var _movieModel = new MovieModel();
-                            var id = _movieModel.updateMovie(newMovie);
+                            for(var i in data.movies) {
 
-                            if(id.length < 10) {
+                                if(data.movies[i].id == newMovie.id) {
+
+                                    data.movies[i] = newMovie;
+                                    found = true;
+                                    break;
+                                }
+                            }
+                            var id = _movieModel.updateMovieBox(data);
+
+                            if(id.length < 10 || found == false) {
 
                                 success = false;
                             }
 
                             //zur Übersicht umleiten
-                            res.redirect("/admin?editSuccess=" + (success ? "1" : "0"));
+                            res.redirect("/admin/manageMovieBoxMovies/" + data.id + "?editMovieInBoxSuccess=" + (success ? "1" : "0"));
                             return;
                         })
                     } else {
 
                         //zur Übersicht umleiten
-                        res.redirect("/admin?editSuccess=0");
+                        res.redirect("/admin/manageMovieBoxMovies/" + data.id + "?editMovieInBoxSuccess=0");
                     }
                 } else {
 
                     //kein Cover Hochgeladen
 
                     //Film speichern
+                    found = false;
                     var _movieModel = new MovieModel();
-                    var id = _movieModel.updateMovie(newMovie);
-                    console.log(id);
-                    if(id.length < 10) {
+                    for(var i in data.movies) {
+
+                        if(data.movies[i].id == newMovie.id) {
+
+                            data.movies[i] = newMovie;
+                            found = true;
+                            break;
+                        }
+                    }
+                    var id = _movieModel.updateMovieBox(data);
+
+                    if(id.length < 10 || found == false) {
 
                         success = false;
                     }
 
                     //zur Übersicht umleiten
-                    res.redirect("/admin?editSuccess=" + (success ? "1" : "0"));
+                    res.redirect("/admin/manageMovieBoxMovies/" + data.id + "?editMovieInBoxSuccess=" + (success ? "1" : "0"));
                     return;
                 }
-            } else {
 
-                res.redirect("/admin?editSuccess=0");
+            }  else {
+
+                res.redirect("/admin/manageMovieBoxMovies/" + data.id + "?editMovieInBoxSuccess=0");
             }
         });
     }

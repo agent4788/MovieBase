@@ -1,0 +1,190 @@
+<script type="text/javascript">
+    $(function () {
+
+        //Dropdowns
+        $('select.dropdown').dropdown();
+
+        $('.ui.form')
+                .form({
+                    on: 'blur',
+                    fields: {
+                        title: {
+                            identifier: 'title',
+                            rules: [
+                                {
+                                    type   : 'empty',
+                                    prompt : 'Titel eingeben'
+                                },
+                                {
+                                    type   : 'maxLength[100]',
+                                    prompt : 'Der Titel darf maximal 100 Zeichen lang sein'
+                                }
+                            ]
+                        },
+                        subtitle: {
+                            identifier: 'subtitle',
+                            optional   : true,
+                            rules: [
+                                {
+                                    type   : 'maxLength[100]',
+                                    prompt : 'Der Untertitelitel darf maximal 100 Zeichen lang sein'
+                                }
+                            ]
+                        },
+                        description: {
+                            identifier: 'description',
+                            rules: [
+                                {
+                                    type   : 'empty',
+                                    prompt : 'Beschreibung eingeben'
+                                },
+                                {
+                                    type   : 'maxLength[2500]',
+                                    prompt : 'Die Beschreibung darf maximal 2500 Zeichen lang sein'
+                                }
+                            ]
+                        },
+                        year: {
+                            identifier: 'year',
+                            rules: [
+                                {
+                                    type   : 'empty',
+                                    prompt : 'Wähle ein Produktionsjahr aus'
+                                }
+                            ]
+                        },
+                        disc: {
+                            identifier: 'disc',
+                            rules: [
+                                {
+                                    type   : 'empty',
+                                    prompt : 'Wähle ein Medium aus'
+                                }
+                            ]
+                        },
+                        duration: {
+                            identifier: 'duration',
+                            rules: [
+                                {
+                                    type   : 'integer[1..1000]',
+                                    prompt : 'Gib eine gültige Laufzeit ein'
+                                }
+                            ]
+                        },
+                        fsk: {
+                            identifier: 'fsk',
+                            rules: [
+                                {
+                                    type   : 'empty',
+                                    prompt : 'Wähle eine Altersfreigabe aus'
+                                }
+                            ]
+                        },
+                        genre: {
+                            identifier: 'genre',
+                            rules: [
+                                {
+                                    type   : 'empty',
+                                    prompt : 'Wähle ein Genre aus'
+                                }
+                            ]
+                        },
+                        rating: {
+                            identifier: 'rating',
+                            rules: [
+                                {
+                                    type   : 'empty',
+                                    prompt : 'Wähle eine Bewertung aus'
+                                }
+                            ]
+                        }
+                    }
+                })
+        ;
+    })
+</script>
+<div class="ui segment">
+    <h2 class="ui header">Film hinzufügen</h2>
+    <div class="ui divider"></div>
+    <form class="ui form" method="post" enctype="multipart/form-data" action="/admin/addMovieToBox/{{boxid}}">
+        <div class="equal width fields">
+            <div class="field required">
+                <label>Titel</label>
+                <input name="title" placeholder="Titel ..." type="text" maxlength="100">
+            </div>
+            <div class="field">
+                <label>Untertietel</label>
+                <input name="subtitle" placeholder="Untertietel ..." maxlength="100" type="text">
+            </div>
+        </div>
+        <div class="field required">
+            <label>Beschreibung</label>
+            <textarea name="description"></textarea>
+        </div>
+        <div class="equal width fields">
+            <div class="field">
+                <label>Cover</label>
+                <input name="cover" type="file">
+            </div>
+        </div>
+        <div class="equal width fields">
+            <div class="field required">
+                <label>Medium</label>
+                <select name="disc" class="ui dropdown">
+                    <option value="">Medium</option>
+                    {{#each config.disc}}
+                        <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="field required">
+                <label>Produktionsjahr</label>
+                <select name="year" class="ui dropdown">
+                    <option value="">Produktionsjahr</option>
+                    {{#each years}}
+                        <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+        <div class="equal width fields">
+            <div class="field required">
+                <label>Laufzeit</label>
+                <input name="duration" placeholder="0" type="number" min="0" max="1000" step="1">
+            </div>
+            <div class="field required">
+                <label>Altersfreigabe</label>
+                <select name="fsk" class="ui dropdown">
+                    <option value="">FSK</option>
+                    {{#each config.fsk}}
+                        <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+        <div class="equal width fields">
+            <div class="field required">
+                <label>Genre</label>
+                <select name="genre" class="ui dropdown">
+                    <option value="">Genre</option>
+                    {{#each config.genres}}
+                        <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="field required">
+                <label>Bewertung</label>
+                <select name="rating" class="ui dropdown">
+                    <option value="">Bewertung</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+        </div>
+        <div class="ui button basic secondary" onclick="window.history.back()">Zurück</div>
+        <button class="ui button primary" type="submit">Speichern</button>
+    </form>
+</div>

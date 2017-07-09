@@ -1,0 +1,197 @@
+<div class="ui segment">
+    {{#if success.add}}
+        {{#if success.addSuccess}}
+            <div class="ui message success">
+                Die Filmbox wurde erfolgreich erstellt
+            </div>
+        {{else}}
+            <div class="ui message error">
+                Die Filmbox konnte nicht erstellt werden
+            </div>
+        {{/if}}
+    {{/if}}
+    {{#if success.edit}}
+        {{#if success.editSuccess}}
+            <div class="ui message success">
+                Die Filmbox wurde erfolgreich bearbeitet
+            </div>
+        {{else}}
+            <div class="ui message error">
+                Die Filmbox konnte nicht bearbeitet werden
+            </div>
+        {{/if}}
+    {{/if}}
+    {{#if success.addMovieToBox}}
+        {{#if success.addMovieToBoxSuccess}}
+            <div class="ui message success">
+                Der Film wurde der Filmbox erfolgreich hinzugef&uuml;gt
+            </div>
+        {{else}}
+            <div class="ui message error">
+                Der Film konnte der Filmbox nicht hinzugef&uuml;gt werden
+            </div>
+        {{/if}}
+    {{/if}}
+    {{#if success.editMovieInBox}}
+        {{#if success.editMovieInBoxSuccess}}
+            <div class="ui message success">
+                Der Film wurde der Filmbox erfolgreich bearbeitet
+            </div>
+        {{else}}
+            <div class="ui message error">
+                Der Film der Filmbox konnte nicht bearbeitet werden
+            </div>
+        {{/if}}
+    {{/if}}
+    {{#if success.deleteMovieFromBox}}
+        {{#if success.deleteMovieFromBoxSuccess}}
+            <div class="ui message success">
+                Der Film wurde aus der Filmbox erfolgreich gel&ouml;scht
+            </div>
+        {{else}}
+            <div class="ui message error">
+                Der Film aus der Filmbox konnte nicht gel&ouml;scht werden
+            </div>
+        {{/if}}
+    {{/if}}
+    <div class="ui grid stackable">
+        <div class="sixteen wide column">
+            <h2 class="ui header">Filmbox bearbeiten</h2>
+            <div class="ui divider"></div>
+        </div>
+        <div class="four wide column">
+            <img src="/static/image/cover/{{moviebox.coverImg}}" class="ui huge image">
+        </div>
+        <div class="twelve wide column">
+            <h1 class="ui header">{{moviebox.title}}</h1>
+            <h3 class="ui header">{{moviebox.subTitle}}</h3>
+            <div class="ui divider"></div>
+            <div class="ui grid stackable">
+                <div class="four wide column">
+                    <h4 class="ui header">Jahr</h4>
+                    {{moviebox.year}}
+                </div>
+                <div class="four wide column">
+                    <h4 class="ui header">Medium</h4>
+                    {{moviebox.disc}}
+                </div>
+                <div class="four wide column">
+                    <h4 class="ui header">Preis</h4>
+                        {{moviebox.price}}&euro;
+                </div>
+                <div class="four wide column">
+                    <h4 class="ui header">Gesamtlänge</h4>
+                    {{movieboxduration}}
+                </div>
+            </div>
+            <div class="ui grid stackable">
+                <div class="four wide column">
+                    <h4 class="ui header">FSK</h4>
+                    <img src="/static/image/fsk/{{movieboxfsk}}.jpg" class="ui tiny image">
+                </div>
+            </div>
+        </div>
+        <div class="sixteen wide column">
+            <div class="ui segment borderless">
+                <div class="ui button basic secondary" onclick="window.history.back()">Zurück</div>
+                <div class="ui button blue" onclick="window.location = '/admin/editMoviebox/{{moviebox.id}}'">Bearbeiten</div>
+                <div class="ui button red" onclick="$('#a{{moviebox.id}}').modal('show')">L&ouml;schen</div>
+                <div class="ui basic modal" id="a{{moviebox.id}}">
+                    <div class="ui icon header">
+                        <i class="delete icon"></i>
+                        Filmbox l&ouml;schen
+                    </div>
+                    <div class="content">
+                        <p>Bist du sicher das du die Filmbox l&ouml;schen m&ouml;chtest?</p>
+                    </div>
+                    <div class="actions">
+                        <div class="ui red basic cancel inverted button">
+                            <i class="remove icon"></i>
+                            Nein
+                        </div>
+                        <div class="ui green ok inverted button" onclick="window.location = '/admin/deleteMoviebox/{{moviebox.id}}'">
+                            <i class="checkmark icon"></i>
+                            Ja
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sixteen wide column">
+            <h2 class="ui header">Filme</h2>
+            <div class="ui segment borderless">
+                <div class="ui button blue" onclick="window.location = '/admin/addMovieToBox/{{moviebox.id}}'">Film hinzuf&uuml;gen</div>
+            </div>
+            {{#each moviebox.movies}}
+                <div class="ui segment">
+                    <div class="ui grid stackable">
+                        <div class="three wide column">
+                            <img src="/static/image/cover/{{this.coverImg}}" class="ui image">
+                        </div>
+                        <div class="thirteen wide column">
+                            <h3 class="ui header">{{this.title}}</h3>
+                            <h5 class="ui header">{{this.subTitle}}</h5>
+                            <div class="ui divider"></div>
+                            <div class="ui grid stackable">
+                                <div class="four wide column">
+                                    <h4 class="ui header">Genre</h4>
+                                    {{this.genre}}
+                                </div>
+                                <div class="four wide column">
+                                    <h4 class="ui header">Jahr</h4>
+                                    {{this.year}}
+                                </div>
+                                <div class="four wide column">
+                                    <h4 class="ui header">länge</h4>
+                                    {{this.duration}}
+                                </div>
+                                <div class="four wide column">
+                                    <h4 class="ui header">Bewertung</h4>
+                                    <span>
+                                        {{this.rating}}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="ui grid stackable">
+                                <div class="four wide column">
+                                    <h4 class="ui header">FSK</h4>
+                                    <img src="/static/image/fsk/{{this.fsk}}.jpg" class="ui tiny image">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sixteen wide column">
+                            <h3 class="ui header">Beschreibung</h3>
+                            <p>{{this.description}}</p>
+                        </div>
+                    </div>
+                    <div class="sixteen wide column">
+                        <br/>
+                        <div class="ui segment borderless">
+                            <div class="ui button blue" onclick="window.location = '/admin/editMovieInBox/{{this.id}}'">Bearbeiten</div>
+                            <div class="ui button red" onclick="$('#a{{this.id}}').modal('show')">L&ouml;schen</div>
+                            <div class="ui basic modal" id="a{{this.id}}">
+                                <div class="ui icon header">
+                                    <i class="delete icon"></i>
+                                    Film aus Filmbox l&ouml;schen
+                                </div>
+                                <div class="content">
+                                    <p>Bist du sicher das du den Film aus der Filmbox l&ouml;schen m&ouml;chtest?</p>
+                                </div>
+                                <div class="actions">
+                                    <div class="ui red basic cancel inverted button">
+                                        <i class="remove icon"></i>
+                                        Nein
+                                    </div>
+                                    <div class="ui green ok inverted button" onclick="window.location = '/admin/deleteMovieFromBox/{{this.id}}'">
+                                        <i class="checkmark icon"></i>
+                                        Ja
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
