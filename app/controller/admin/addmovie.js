@@ -10,7 +10,7 @@ const Handlebars = require('handlebars');
 const config = require('../../config');
 const crypto = require('crypto');
 const movieFormat = require('../../util/movieFormat');
-const datetime = require('node-datetime');
+const moment = require('moment');
 
 module.exports = {
     
@@ -26,8 +26,8 @@ module.exports = {
         }
 
         //aktuelles Datum
-        var dt = datetime.create();
-        var today = dt.format('Y-m-d');
+        var dt = moment();
+        var today = dt.format('YYYY-MM-DD');
     
         //Template an Browser
         res.render('admin/addmovie', {layout: 'adminlayout', config: config, years: years, today: today});

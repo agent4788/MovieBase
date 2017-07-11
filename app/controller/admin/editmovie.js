@@ -11,7 +11,6 @@ const crypto = require('crypto');
 const config = require('../../config');
 const movieFormat = require('../../util/movieFormat');
 const fs = require('fs');
-const datetime = require('node-datetime');
 
 module.exports = {
 
