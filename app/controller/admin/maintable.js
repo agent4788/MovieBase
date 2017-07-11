@@ -12,8 +12,37 @@ const movieFormat = require('../../util/movieFormat');
 
 module.exports = function(req, res) {
 
+    //Formulardaten prüfen
+    //TODO Eingabedaten filtern
+    var searchParameters = {
+        title: (req.query.title ? req.query.title : '')
+    };
+
     var movieModel = new MovieModel();
     movieModel.listOnlyMovies(function(data) {
+
+        //Nach Suchkriterien filtern
+        var filterActive = false;
+        var filtered = [];
+        var j = 0;
+        for(var i = 0; i < data.length; i++) {
+
+            var movie = data[i];
+
+            //Nacht Titel/Subtitel filtern
+            if(searchParameters.title.length > 0) {
+
+                if(!(movie.title.toLocaleLowerCase().search(searchParameters.title.toLocaleLowerCase()) > -1) && !(movie.subTitle.toLowerCase().search(searchParameters.title.toLocaleLowerCase()) > -1)) {
+
+                    filterActive = true;
+                    continue;
+                }
+            }
+
+            filtered[j] = movie;
+            j++;
+        }
+        data = filtered;
 
         //Daten nach Titel aufsteigend sortieren
         data.sort(function(obj1, obj2) {
@@ -131,7 +160,9 @@ module.exports = function(req, res) {
             layout: 'adminlayout',
             data: subData,
             pagination: new Handlebars.SafeString(paginationStr),
-            success: success
+            success: success,
+            searchParameters: searchParameters,
+            found: (filterActive && subData.length > 0 ? true : false)
         });
     });
 }

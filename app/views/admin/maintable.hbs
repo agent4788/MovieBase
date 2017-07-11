@@ -1,3 +1,36 @@
+<script type="text/javascript">
+    function showHide() {
+        if($('#searchForm').hasClass('hide')) {
+
+            $('#searchForm').show('slow');
+            $('#searchForm').removeClass('hide');
+        } else {
+
+            $('#searchForm').hide('slow');
+            $('#searchForm').addClass('hide');
+        }
+    }
+</script>
+<div class="ui segment">
+    <div onclick="showHide()" style="cursor: pointer;">
+        <h2 class="ui header">Suchen</h2>
+    </div>
+    <div class="ui divider"></div>
+    <div id="searchForm" {{#if found}}class="hide" style="display: none"{{/if}}>
+        <form class="ui form" method="get" action="/admin/">
+            <h4 class="ui dividing header">Titel</h4>
+            <div class="field">
+                <div class="field">
+                    <div class="field">
+                        <input name="title" placeholder="Titel" type="text" value="{{searchParameters.title}}">
+                    </div>
+                </div>
+            </div>
+            <input type="submit" class="ui button primary" value="Suchen">
+            <input type="reset" class="ui button" value="Reset">
+        </form>
+    </div>
+</div>
 <div class="ui segment">
     <h2 class="ui header">Filme</h2>
     <div class="ui divider"></div>
