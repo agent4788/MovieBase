@@ -64,7 +64,7 @@ module.exports = class MovieModel {
             movie1.genre = 'Action';
             movie1.price = 19.99;
             movie1.rating = i % 5;
-            movie1.registredDate = '01.01.1900';
+            movie1.registredDate = '1980-01-01';
 
             client.hset('movies', movie1.id, JSON.stringify(movie1));
         }
@@ -79,7 +79,7 @@ module.exports = class MovieModel {
             movieBox1.year = 2015;
             movieBox1.price = 49.95;
             movieBox1.disc = 'Blu-ray';
-            movieBox1.registredDate = '01.01.1900';
+            movieBox1.registredDate = '1980-01-01';
 
             var movies = [];
             for(var j = 0; j < 3; j++) {

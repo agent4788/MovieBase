@@ -10,6 +10,7 @@ const Handlebars = require('handlebars');
 const config = require('../../config');
 const crypto = require('crypto');
 const movieFormat = require('../../util/movieFormat');
+const datetime = require('node-datetime');
 
 module.exports = {
     
@@ -23,9 +24,13 @@ module.exports = {
         for(var i = year, j = 0; i >= 1900; i--, j++) {
             years[j] = i;
         }
+
+        //aktuelles Datum
+        var dt = datetime.create();
+        var today = dt.format('Y-m-d');
     
         //Template an Browser
-        res.render('admin/addmovie', {layout: 'adminlayout', config: config, years: years});
+        res.render('admin/addmovie', {layout: 'adminlayout', config: config, years: years, today: today});
     },
     post: function (req, res) {
 
@@ -41,6 +46,7 @@ module.exports = {
         var fsk = parseInt(req.body.fsk);
         var genre = req.body.genre;
         var rating = parseInt(req.body.rating);
+        var purchaseDate = req.body.purchaseDate;
 
         //Film
         var newMovie = new Movie();
@@ -131,6 +137,15 @@ module.exports = {
         if(rating >= 1 && rating <= 5) {
 
             newMovie.rating = rating;
+        } else {
+
+            success = false;
+        }
+
+        //Kaufdatum
+        if(purchaseDate.match(/^\d{4}-\d{2}-\d{2}$/)) {
+
+            newMovie.registredDate = purchaseDate;
         } else {
 
             success = false;

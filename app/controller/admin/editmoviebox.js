@@ -11,6 +11,7 @@ const config = require('../../config');
 const crypto = require('crypto');
 const movieFormat = require('../../util/movieFormat');
 const fs = require('fs');
+const datetime = require('node-datetime');
 
 module.exports = {
 
@@ -54,6 +55,7 @@ module.exports = {
                 var year = parseInt(req.body.year);
                 var disc = req.body.disc;
                 var price = parseFloat(req.body.price);
+                var purchaseDate = req.body.purchaseDate;
 
                 //Film
                 var newMovieBox = data;
@@ -99,6 +101,19 @@ module.exports = {
                 if (price >= 0 && price <= 1000) {
 
                     newMovieBox.price = price;
+                } else {
+
+                    success = false;
+                }
+
+                //Kaufdatum
+                if(purchaseDate.match(/^\d{4}-\d{2}-\d{2}$/)) {
+
+                    newMovieBox.registredDate = purchaseDate;
+                    for(var i in newMovieBox.movies) {
+
+                        newMovieBox.movies[i].registredDate = purchaseDate;
+                    }
                 } else {
 
                     success = false;

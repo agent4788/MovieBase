@@ -106,6 +106,20 @@
                                     prompt : 'Wähle eine Bewertung aus'
                                 }
                             ]
+                        },
+                        purchaseDate: {
+                            identifier: 'purchaseDate',
+                            rules: [
+                                {
+                                    type   : 'regExp',
+                                    value  : /^\d{4}-\d{2}-\d{2}$/,
+                                    prompt : 'Gib ein gültiges Datum ein (dd.mm.yyyy)'
+                                },
+                                {
+                                    type   : 'exactLength[10]',
+                                    prompt : 'Gib ein gültiges Datum ein (dd.mm.yyyy)'
+                                }
+                            ]
                         }
                     }
                 })
@@ -135,6 +149,8 @@
                 <label>Cover</label>
                 <input name="cover" type="file">
             </div>
+        </div>
+        <div class="equal width fields">
             <div class="field required">
                 <label>Produktionsjahr</label>
                 <select name="year" class="ui dropdown">
@@ -144,8 +160,6 @@
                     {{/each}}
                 </select>
             </div>
-        </div>
-        <div class="equal width fields">
             <div class="field required">
                 <label>Medium</label>
                 <select name="disc" class="ui dropdown">
@@ -155,16 +169,18 @@
                     {{/each}}
                 </select>
             </div>
+        </div>
+        <div class="equal width fields">
             <div class="field">
                 <label>Preis</label>
                 <input name="price" value="0" type="number" min="0" max="250" step="0.01">
             </div>
-        </div>
-        <div class="equal width fields">
             <div class="field required">
                 <label>Laufzeit</label>
                 <input name="duration" placeholder="0" type="number" min="0" max="1000" step="1">
             </div>
+        </div>
+        <div class="equal width fields">
             <div class="field required">
                 <label>Altersfreigabe</label>
                 <select name="fsk" class="ui dropdown">
@@ -174,8 +190,6 @@
                     {{/each}}
                 </select>
             </div>
-        </div>
-        <div class="equal width fields">
             <div class="field required">
                 <label>Genre</label>
                 <select name="genre" class="ui dropdown">
@@ -185,6 +199,8 @@
                     {{/each}}
                 </select>
             </div>
+        </div>
+        <div class="equal width fields">
             <div class="field required">
                 <label>Bewertung</label>
                 <select name="rating" class="ui dropdown">
@@ -195,6 +211,10 @@
                     <option value="4">4</option>
                     <option value="5">5</option>
                 </select>
+            </div>
+            <div class="field required">
+                <label>Kaufdatum</label>
+                <input type="date" min="1980-01-01" value="{{today}}" name="purchaseDate">
             </div>
         </div>
         <div class="ui button basic secondary" onclick="window.history.back()">Zurück</div>

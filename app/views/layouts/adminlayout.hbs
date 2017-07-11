@@ -28,27 +28,6 @@
 </head>
 <body>
 <header class="ui container">
-    <script type="text/javascript">
-
-        function search() {
-
-            var value = $('.ui.search input').val();
-            //window.location = '/search?title=' + value;
-            console.log('suche ' + value);
-        }
-
-        $(function () {
-
-            $('.ui.search i').click(function () {
-                search();
-            });
-            $('.ui.search input').keydown(function (e) {
-                if(e.which == 13) {
-                    search();
-                }
-            });
-        })
-    </script>
     <div class="ui fixed inverted menu large">
         <a href="#" class="header item">
             <img src="/static/image/icon.png" width="32" height="32" class="logo">
@@ -59,14 +38,6 @@
         <a href="/admin/addMovie" class="item"><i class="plus icon"></i> Film</a>
         <a href="/admin/boxes" class="item">Film Boxen</a>
         <a href="/admin/addMovieBox" class="item"><i class="plus icon"></i> Film Filmbox</a>
-        <div class="right menu">
-            <div class="item">
-                <div class="ui icon input search">
-                    <input placeholder="Suchen..." type="text">
-                    <i class="search link icon"></i>
-                </div>
-            </div>
-        </div>
     </div>
 </header>
 <main class="ui main container">

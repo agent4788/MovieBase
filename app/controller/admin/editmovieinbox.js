@@ -81,6 +81,7 @@ module.exports = {
                     res.redirect("/admin/manageMovieBoxMovies/" + data.id + "?editMovieInBoxSuccess=0");
                 }
                 newMovie = movie;
+                newMovie.registredDate = data.registredDate;
 
                 //Formulardaten verarbeiten
                 var title = req.body.title;

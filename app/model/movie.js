@@ -22,7 +22,7 @@ module.exports = class Movie {
         this._fsk = 0;
         this._genre = '';
         this._rating = 0;
-        this._registredDate = '01.01.1900';
+        this._registredDate = '1980-01-01';
         this._type = 1;
     }
 

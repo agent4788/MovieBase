@@ -10,6 +10,7 @@ const Handlebars = require('handlebars');
 const config = require('../../config');
 const crypto = require('crypto');
 const movieFormat = require('../../util/movieFormat');
+const datetime = require('node-datetime');
 
 module.exports = {
 
@@ -24,8 +25,12 @@ module.exports = {
             years[j] = i;
         }
 
+        //aktuelles Datum
+        var dt = datetime.create();
+        var today = dt.format('Y-m-d');
+
         //Template an Browser
-        res.render('admin/addmoviebox', {layout: 'adminlayout', config: config, years: years});
+        res.render('admin/addmoviebox', {layout: 'adminlayout', config: config, years: years, today: today});
     },
     post: function (req, res) {
 
@@ -36,6 +41,7 @@ module.exports = {
         var year = parseInt(req.body.year);
         var disc = req.body.disc;
         var price = parseFloat(req.body.price);
+        var purchaseDate = req.body.purchaseDate;
 
         //Film
         var newMovieBox = new MovieBox();
@@ -81,6 +87,15 @@ module.exports = {
         if(price >= 0 && price <= 1000) {
 
             newMovieBox.price = price;
+        } else {
+
+            success = false;
+        }
+
+        //Kaufdatum
+        if(purchaseDate.match(/^\d{4}-\d{2}-\d{2}$/)) {
+
+            newMovieBox.registredDate = purchaseDate;
         } else {
 
             success = false;

@@ -18,7 +18,7 @@ module.exports = class MovieBox {
         this._disc = '';
         this._price = 0.0;
         this._movies = [];
-        this._registredDate = '01.01.1900';
+        this._registredDate = '1980-01-01';
         this._type = 2;
     }
 

@@ -11,6 +11,7 @@ const crypto = require('crypto');
 const config = require('../../config');
 const movieFormat = require('../../util/movieFormat');
 const fs = require('fs');
+const datetime = require('node-datetime');
 
 module.exports = {
 
@@ -61,6 +62,7 @@ module.exports = {
                 var fsk = parseInt(req.body.fsk);
                 var genre = req.body.genre;
                 var rating = parseInt(req.body.rating);
+                var purchaseDate = req.body.purchaseDate;
 
                 //Film
                 var success = true;
@@ -155,6 +157,15 @@ module.exports = {
                     success = false;
                 }
 
+                //Kaufdatum
+                if(purchaseDate.match(/^\d{4}-\d{2}-\d{2}$/)) {
+
+                    newMovie.registredDate = purchaseDate;
+                } else {
+
+                    success = false;
+                }
+
                 if(success == false) {
 
                     //zur Übersicht umleiten
@@ -217,7 +228,6 @@ module.exports = {
                     //Film speichern
                     var _movieModel = new MovieModel();
                     var id = _movieModel.updateMovie(newMovie);
-                    console.log(id);
                     if(id.length < 10) {
 
                         success = false;

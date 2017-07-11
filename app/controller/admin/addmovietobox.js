@@ -60,6 +60,7 @@ module.exports = {
 
                 //Film
                 var newMovie = new Movie();
+                newMovie.registredDate = data.registredDate;
                 var success = true;
 
                 //Titel
