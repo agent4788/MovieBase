@@ -9,6 +9,7 @@ var movieList = require('../controller/movielist');
 var movieBoxList = require('../controller/movieboxlist');
 var detailView = require('../controller/detailview');
 var search = require('../controller/search');
+var statistics = require('../controller/statistics');
 
 var maintable = require('../controller/admin/maintable');
 var addMovie = require('../controller/admin/addmovie');
@@ -30,6 +31,7 @@ module.exports = function(app) {
     app.get('/boxes', movieBoxList);
     app.get('/detailView/:id', detailView);
     app.get('/search', search);
+    app.get('/statistics', statistics);
 
     app.get('/admin', maintable);
     app.get('/admin/addMovie', addMovie.get);
