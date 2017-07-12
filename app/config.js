@@ -14,7 +14,7 @@ module.exports = {
     },
 
     pagination: {
-        elementsAtPage: 10
+        elementsAtPage: 10          //Anzahl der Filme die pro Seite angezeigt werden
     },
 
     genres: [
@@ -32,5 +32,12 @@ module.exports = {
         "DVD",
         "Blu-ray",
         "UHD Blu-ray"
-    ]
+    ],
+
+    dashboard: {
+        newestMoviesValue: 25,      //Anzahl der neusten Filme aus der die Anzahl der angezeigten Filme entnommen wird
+        newestMoviesShow : 5,       //Anzahl der neusten Filme die angezeigt werden sollen
+        bestMoviesValue  : 50,      //Anzahl der Filme mit der besten Bewertung aus der die Anzahl der angezeigten Filme entnommen wird
+        bestMoviesShow   : 5        //Anzahl der Filme mit der besten Bewertung die angezeigt werden sollen
+    }
 }

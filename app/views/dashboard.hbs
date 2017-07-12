@@ -1,0 +1,64 @@
+<div class="ui segment">
+    <h2 class="ui header">Neuste Filme</h2>
+    <div class="ui divider"></div>
+    <div class="ui link cards five column doubling stackable">
+        {{#if newestMovies}}
+            {{#each newestMovies}}
+                <div class="card" onclick="window.location = '/detailView/{{this.id}}'">
+                    <div class="image">
+                        <img src="/static/image/cover/{{this.coverImg}}">
+                    </div>
+                    <div class="content">
+                        <div class="header">{{this.title}}</div>
+                        <div class="meta">
+                            <a>{{this.genre}}</a>
+                        </div>
+                    </div>
+                    <div class="extra content">
+                    <span class="right floated">
+                        {{this.duration}}
+                    </span>
+                    </div>
+                </div>
+            {{/each}}
+        {{else}}
+            <div class="ui negative message">
+                <div class="header">
+                    Keine Einträge
+                </div>
+            </div>
+        {{/if}}
+    </div>
+</div>
+<div class="ui segment">
+    <h2 class="ui header">Beste Bewertung</h2>
+    <div class="ui divider"></div>
+    <div class="ui link cards five column doubling stackable">
+        {{#if bestMovies}}
+            {{#each bestMovies}}
+                <div class="card" onclick="window.location = '/detailView/{{this.id}}'">
+                    <div class="image">
+                        <img src="/static/image/cover/{{this.coverImg}}">
+                    </div>
+                    <div class="content">
+                        <div class="header">{{this.title}}</div>
+                        <div class="meta">
+                            <a>{{this.genre}}</a>
+                        </div>
+                    </div>
+                    <div class="extra content">
+                    <span class="right floated">
+                        {{this.duration}}
+                    </span>
+                    </div>
+                </div>
+            {{/each}}
+        {{else}}
+            <div class="ui negative message">
+                <div class="header">
+                    Keine Einträge
+                </div>
+            </div>
+        {{/if}}
+    </div>
+</div>
