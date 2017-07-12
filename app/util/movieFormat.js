@@ -7,6 +7,7 @@
 const Movie = require('../model/movie');
 const MovieBox = require('../model/moviebox');
 const Handlebars = require('handlebars');
+const moment = require('moment');
 
 function movieFormat(data, inBox = false) {
 
@@ -68,6 +69,9 @@ function movieFormat(data, inBox = false) {
         }
         _movie.rating = new Handlebars.SafeString(rating);
 
+        //Kaufdatum
+        _movie.registredDate = moment(_movie.registredDate).format('DD.MM.YYYY');
+
         return _movie;
     } else if(data instanceof MovieBox) {
 
@@ -91,6 +95,9 @@ function movieFormat(data, inBox = false) {
 
         //Preis
         _movieBox.price = parseFloat(data.price).toFixed(2).replace('.', ',');
+
+        //Kaufdatum
+        _movieBox.registredDate = moment(_movieBox.registredDate).format('DD.MM.YYYY');
 
         //Filme formatieren
         var movies = [];
