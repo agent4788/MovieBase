@@ -16,6 +16,7 @@ Die MovieBase ist eine einfache und flexible Datenbank zum verwalten einer Films
 * Verwalten von Filmen
 * Verwalten von Filmboxen (Sammlung aus mehreren Filmen in einer Box)
 * Optimiert für alle Endgeräte (PC, Tablet, Smartphone)
+* Backup/Restore
 
 ---
 ## Screenshots
