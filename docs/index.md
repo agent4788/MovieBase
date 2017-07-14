@@ -1,6 +1,6 @@
 # MovieBase
 
-Die MovieBase ist eine einfache und flexible Datenbank zum verwalten einer Filmsammlung. Alles ist für die verwendung mit verschiedenen Geräten optimiert. Somit lässt sich die Filmsammlung bequem am PC, Tablet oder Smartpone verwalten.
+Die MovieBase ist eine einfache und flexible Datenbank zum verwalten einer Filmsammlung. Alles ist für die verwendung mit verschiedenen Geräten optimiert. Somit lässt sich die Filmsammlung bequem am PC, Tablet oder Smartphone verwalten.
 
 ---
 ## Anforderungen

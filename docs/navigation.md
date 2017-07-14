@@ -1,6 +1,5 @@
 # MovieBase
 
-
 [gimmick:theme (inverse: false)](spacelab)
 
 [gimmick:ThemeChooser](Theme)
