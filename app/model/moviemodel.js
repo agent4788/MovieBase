@@ -140,10 +140,11 @@ module.exports = class MovieModel {
                 }
             }
 
-            //TODO Nach Entwicklung wieder entfernen
+            /*
+            //Testdaten einfügen
             if(data.length < 1) {
                 movieModel.insertSampleData();
-            }
+            }*/
 
             callback(data);
             client.quit();
