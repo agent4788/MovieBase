@@ -1,0 +1,32 @@
+<div class="ui segment">
+    {{#if success}}
+        <div class="ui icon message success">
+            <i class="checkmark icon green"></i>
+            <div class="content">
+                <div class="header">
+                    Backup erfolgreich erstellt
+                </div>
+                <p>Du wirst gleich weiter zur &Uuml;bersicht weitergeleitet</p>
+            </div>
+        </div>
+    {{else}}
+        <div class="ui icon message error">
+            <i class="remove cycle icon red"></i>
+            <div class="content">
+                <div class="header">
+                    Das Backup konnte nicht erstellt werden
+                </div>
+                <p>Du wirst gleich weiter zur &Uuml;bersicht weitergeleitet</p>
+            </div>
+        </div>
+    {{/if}}
+    <script type="text/javascript">
+        $(function () {
+
+            setTimeout(function () {
+
+                window.location = '/admin/backups';
+            }, 5000);
+        })
+    </script>
+</div>

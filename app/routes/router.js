@@ -23,6 +23,11 @@ var maganeMovieBoxMovies = require('../controller/admin/maganemovieboxmovies');
 var addMovieToBox = require('../controller/admin/addmovietobox');
 var editMovieInBox = require('../controller/admin/editmovieinbox');
 var deleteMovieFromBox = require('../controller/admin/deletemoviefrombox');
+var backups = require('../controller/admin/backuplist');
+var createBackup = require('../controller/admin/createbackup');
+var downloadBackup = require('../controller/admin/downloadbackup');
+var deleteBackup = require('../controller/admin/deleteBackup');
+var restoreBackup = require('../controller/admin/restorebackup');
 
 module.exports = function(app) {
 
@@ -51,4 +56,9 @@ module.exports = function(app) {
     app.get('/admin/editMovieInBox/:id', editMovieInBox.get);
     app.post('/admin/editMovieInBox/:id', editMovieInBox.post);
     app.get('/admin/deleteMovieFromBox/:id', deleteMovieFromBox);
+    app.get('/admin/backups', backups);
+    app.get('/admin/createBackup', createBackup);
+    app.get('/admin/downloadBackup/:file', downloadBackup);
+    app.get('/admin/deleteBackup/:file', deleteBackup);
+    app.get('/admin/restoreBackup/:file', restoreBackup);
 }

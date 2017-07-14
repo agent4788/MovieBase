@@ -107,11 +107,11 @@ module.exports = class Movie {
     }
 
     get genre() {
-        return this._genres;
+        return this._genre;
     }
 
     set genre(value) {
-        this._genres = value;
+        this._genre = value;
     }
 
     get rating() {

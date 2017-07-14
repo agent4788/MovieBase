@@ -1,0 +1,88 @@
+<div class="ui segment">
+    <h2 class="ui header">Backups</h2>
+    {{#if success.download}}
+        {{#if success.downloadSuccess}}
+            <div class="ui message success">
+                Das Backup wurde erfolgreich heruntergeladen
+            </div>
+        {{else}}
+            <div class="ui message error">
+                Das Backup konnte nicht heruntergeladen werden
+            </div>
+        {{/if}}
+    {{/if}}
+    <div class="ui segment">
+        <a href="/admin/createBackup" class="ui button primary">Backup erstellen</a>
+    </div>
+    <table class="ui celled table">
+        <thead>
+        <tr>
+            <th>Datei</th>
+            <th>Datum</th>
+            <th>Optionen</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#if backups}}
+            {{#each backups}}
+                <tr>
+                    <td><a href="/admin/downloadBackup/{{this.filename}}">{{this.filename}}</a></td>
+                    <td>{{this.date}}</td>
+                    <td>
+                        <div class="ui icon buttons">
+                            <button title="Backup wiederherstellen" class="ui button large" onclick="$('#ab{{this.id}}').modal('show')"><i class="refresh icon orange large"></i></button>
+                            <button title="l&ouml;schen" class="ui button large" onclick="$('#a{{this.id}}').modal('show')"><i class="remove red icon large"></i></button>
+                        </div>
+                        <div class="ui basic modal" id="ab{{this.id}}">
+                            <div class="ui icon header">
+                                <i class="refresh icon"></i>
+                                Backup wiederherstellen
+                            </div>
+                            <div class="content">
+                                <p>
+                                    Bist du sicher das du das Backup wiederherstellen m&ouml;chtest?
+                                    <br>
+                                    Alle nicht im Backup enthaltenen Einträgen gehen dabei verloren!
+                                </p>
+                            </div>
+                            <div class="actions">
+                                <div class="ui red basic cancel inverted button">
+                                    <i class="remove icon"></i>
+                                    Nein
+                                </div>
+                                <div class="ui green ok inverted button" onclick="window.location = '/admin/restoreBackup/{{this.filename}}'">
+                                    <i class="checkmark icon"></i>
+                                    Ja
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui basic modal" id="a{{this.id}}">
+                            <div class="ui icon header">
+                                <i class="delete icon"></i>
+                                Backup l&ouml;schen
+                            </div>
+                            <div class="content">
+                                <p>Bist du sicher das du das Backup l&ouml;schen m&ouml;chtest?</p>
+                            </div>
+                            <div class="actions">
+                                <div class="ui red basic cancel inverted button">
+                                    <i class="remove icon"></i>
+                                    Nein
+                                </div>
+                                <div class="ui green ok inverted button" onclick="window.location = '/admin/deleteBackup/{{this.filename}}'">
+                                    <i class="checkmark icon"></i>
+                                    Ja
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {{/each}}
+        {{else}}
+            <tr>
+                <td colspan="3">keine Eiträge</td>
+            </tr>
+        {{/if}}
+        </tbody>
+    </table>
+</div>

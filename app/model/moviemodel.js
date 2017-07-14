@@ -63,7 +63,7 @@ module.exports = class MovieModel {
             movie1.duration = 75 + i;
             movie1.genre = 'Action';
             movie1.price = 19.99;
-            movie1.rating = i % 5;
+            movie1.rating = (i % 5) + 1;
             movie1.registredDate = '1980-01-01';
 
             client.hset('movies', movie1.id, JSON.stringify(movie1));
@@ -94,7 +94,7 @@ module.exports = class MovieModel {
                 movie1.duration = 90 + i;
                 movie1.genre = 'Horror';
                 movie1.price = 19.99;
-                movie1.rating = i % 5;
+                movie1.rating = (i % 5) + 1;
                 movies[j] = movie1;
             }
             movieBox1.movies = movies;
@@ -394,5 +394,27 @@ module.exports = class MovieModel {
 
         var client = this.__connect();
         client.hdel('movies', id);
+    }
+
+    /**
+     * löscht alle Filme und Filmboxen aus der Datenbank
+     *
+     * @param callback
+     */
+    deleteAll(callback) {
+
+        var client = this.__connect();
+        var movieModel = this;
+        client.del('movies', function (err, obj) {
+
+            if(!err) {
+
+                callback(true);
+            } else {
+
+                callback(false);
+            }
+            client.quit();
+        });
     }
 }
