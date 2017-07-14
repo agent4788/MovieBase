@@ -24,6 +24,7 @@ function movieFormat(data, inBox = false) {
         _movie.year = data.year;
         _movie.fsk = data.fsk;
         _movie.genre = data.genre;
+        _movie.registredDate = data.registredDate;
 
         //Cover Bild
         if(data.coverImg.length > 0) {
@@ -83,6 +84,7 @@ function movieFormat(data, inBox = false) {
         _movieBox.subTitle = data.subTitle;
         _movieBox.disc = data.disc;
         _movieBox.year = data.year;
+        _movieBox.registredDate = data.registredDate;
 
         //Cover Bild
         if(data.coverImg.length > 0) {
