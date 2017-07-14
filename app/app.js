@@ -6,7 +6,7 @@ var express = require('express');
 var fileUpload = require('express-fileupload');
 var bodyParser = require('body-parser');
 var exbars  = require('exbars');
-var config  = require('config');
+var config  = require('./config');
 var app = express();
 
 //statische Dateien einbinden
@@ -36,5 +36,5 @@ require('./routes/router')(app);
 
 //Server starten
 app.listen(config.server.port, function () {
-    console.log('Server unter http://localhost:3000 gestartet');
+    console.log('Server unter http://localhost:' + config.server.port + ' gestartet');
 });
