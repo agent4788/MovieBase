@@ -13,6 +13,10 @@ module.exports = {
         password: ''
     },
 
+    server: {
+        port: 8080
+    },
+
     pagination: {
         elementsAtPage: 10          //Anzahl der Filme die pro Seite angezeigt werden
     },
