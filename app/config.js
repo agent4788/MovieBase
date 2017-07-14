@@ -23,8 +23,17 @@ module.exports = {
 
     genres: [
         'Action',
-        'Horror',
+        'Comedy',
+        'Dokumentation',
         'Drama',
+        'Fantasy',
+        'Horror',
+        'Kriegsfilm',
+        'Mafia',
+        'Si-Fi',
+        'Thriller',
+        'Western',
+        'Zeichentrick',
         'Musik'
     ],
 
@@ -33,6 +42,7 @@ module.exports = {
     ],
 
     disc: [
+        "Datei",
         "DVD",
         "Blu-ray",
         "UHD Blu-ray"
