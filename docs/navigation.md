@@ -1,8 +1,7 @@
 # MovieBase
 
-[Start](index.md)
 
-[gimmick:theme (inverse: false)](slate)
+[gimmick:theme (inverse: false)](spacelab)
 
 [gimmick:ThemeChooser](Theme)
 
