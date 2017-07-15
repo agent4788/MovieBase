@@ -8,6 +8,8 @@ const Movie = require('../model/movie');
 const MovieBox = require('../model/moviebox');
 const Handlebars = require('handlebars');
 const moment = require('moment');
+const Entities = require('html-entities').Html5Entities;
+const entities = new Entities();
 
 function movieFormat(data, inBox = false) {
 
@@ -72,6 +74,12 @@ function movieFormat(data, inBox = false) {
 
         //Kaufdatum
         _movie.registredDate = moment(_movie.registredDate).format('DD.MM.YYYY');
+
+        //Beschreibung
+        var desc = entities.encode(_movie.description);
+        desc = desc.replace(/(?:\r\n|\r|\n)/g, '<br>');
+        desc = new Handlebars.SafeString(desc);
+        _movie.description = desc;
 
         return _movie;
     } else if(data instanceof MovieBox) {
