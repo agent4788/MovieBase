@@ -6,6 +6,7 @@
 
 const Handlebars = require('handlebars');
 const config = require('../../config');
+const numberFormat = require('../../util/numberFormat');
 const BackupModel = require('../../model/backupmodel');
 const moment = require('moment');
 
@@ -27,6 +28,11 @@ module.exports = function(req, res) {
 
                 return -1;
             }
+        });
+
+        backups.forEach(backup => {
+
+            backup.size = numberFormat((backup.size / 1024 / 1024), 2, 3, '.', ',') + " MiB";
         });
 
         //Meldungen

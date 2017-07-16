@@ -19,6 +19,7 @@
         <tr>
             <th>Datei</th>
             <th>Datum</th>
+            <th>Größe</th>
             <th>Optionen</th>
         </tr>
         </thead>
@@ -28,6 +29,7 @@
                 <tr>
                     <td><a href="/admin/downloadBackup/{{this.filename}}">{{this.filename}}</a></td>
                     <td>{{this.date}}</td>
+                    <td>{{this.size}}</td>
                     <td>
                         <div class="ui icon buttons">
                             <button title="Backup wiederherstellen" class="ui button large" onclick="$('#ab{{this.id}}').modal('show')"><i class="refresh icon orange large"></i></button>

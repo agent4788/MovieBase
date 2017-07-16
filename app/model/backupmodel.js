@@ -36,6 +36,7 @@ module.exports = class BackupModel {
                     backups[i] = {
                         id: crypto.randomBytes(5).toString('hex'),
                         filename: file,
+                        size: fs.statSync(backupDir + file).size,
                         date: date.format('DD.MM.YYYY HH:mm:ss')
                     };
                     i++;
