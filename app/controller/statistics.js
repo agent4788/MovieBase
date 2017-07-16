@@ -15,8 +15,9 @@ module.exports = function(req, res) {
 
     //Filme
     var movieModel = new MovieModel();
-    movieModel.listMovies(function(data) {
+    movieModel.listOnlyMovies(function(data) {
 
+        var moviesCount = data.length;
         var sumDuration = 0;
         var sumPrice = 0;
         var sumRating = 0;
@@ -28,27 +29,39 @@ module.exports = function(req, res) {
             sumRating += movie.rating;
         }
 
-        var movieCount = data.length;
-        var avgDuration = sumDuration / movieCount;
-        var avgPrice = sumPrice / movieCount;
-        var avgRating = Math.ceil(sumRating / movieCount);
-
-        //Bewertung formatieren
-        var rating = '';
-        for(var i = 0; i < avgRating; i++) {
-
-            rating += '<i class="yellow star icon"></i>';
-        }
-        for(var i = 0; i < (5 - avgRating); i++) {
-
-            rating += '<i class="grey star icon"></i>';
-        }
-
         //Filmboxen
         var movieModel = new MovieModel();
         movieModel.listMovieBoxes(function(data) {
 
+            var movieCountInBoxes = 0;
+            for(var i in data) {
+
+                var movieBox = data[i];
+                sumPrice += movieBox.price;
+                movieBox.movies.forEach(movie => {
+
+                    sumDuration += movie.duration;
+                    sumRating += movie.rating;
+                    movieCountInBoxes++;
+                });
+            }
+
+            var movieCount = movieCountInBoxes + moviesCount;
             var movieBoxCount = data.length;
+            var avgDuration = sumDuration / movieCount;
+            var avgPrice = sumPrice / movieCount;
+            var avgRating = Math.ceil(sumRating / movieCount);
+
+            //Bewertung formatieren
+            var rating = '';
+            for(var i = 0; i < avgRating; i++) {
+
+                rating += '<i class="yellow star icon"></i>';
+            }
+            for(var i = 0; i < (5 - avgRating); i++) {
+
+                rating += '<i class="grey star icon"></i>';
+            }
 
             //Template an Browser
             res.render('statistics', {
