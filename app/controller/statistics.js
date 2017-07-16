@@ -88,7 +88,7 @@ function formatDuration(duration) {
         if((duration - (t * 24 * 60)) >= 60) {
 
             var h = Math.ceil((duration - (t * 24 * 60)) / 60);
-            formatedDuration += ' ' + (h < 10 ? '0' : '') + h + (h > 1 ? ' Stunden' : ' Stunde');
+            formatedDuration += ' ' + h + (h > 1 ? ' Stunden' : ' Stunde');
         }
     }
     return formatedDuration;
