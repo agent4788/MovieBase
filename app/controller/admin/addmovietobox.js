@@ -31,7 +31,7 @@ module.exports = {
                 }
 
                 //Template an Browser
-                res.render('admin/addmovietobox', {layout: 'adminlayout', config: config, years: years, boxid: data.id});
+                res.render('admin/addmovietobox', {layout: 'adminlayout', config: config, years: years, boxid: data.id, disc: data.disc});
             } else {
 
                 res.redirect("/admin/boxes?addMovieToBoxSuccess=0");
