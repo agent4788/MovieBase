@@ -71,7 +71,7 @@
     <div class="ui link cards five column doubling stackable">
         {{#if data}}
             {{#each data}}
-                <div class="card" onclick="window.location = '/detailView/{{this.id}}'">
+                <div class="card" onclick="window.location = '/detailView/{{this.id}}#a{{this.id}}'">
                     <div class="image">
                         <img src="/static/image/cover/{{this.coverImg}}">
                     </div>
