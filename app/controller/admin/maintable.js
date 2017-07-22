@@ -182,7 +182,8 @@ module.exports = function(req, res) {
             pagination: new Handlebars.SafeString(paginationStr),
             success: success,
             searchParameters: searchParameters,
-            found: (filterActive && subData.length > 0 ? true : false)
+            found: (filterActive && subData.length > 0 ? true : false),
+            founds: data.length
         });
     });
 }

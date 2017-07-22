@@ -167,7 +167,8 @@ module.exports = function(req, res) {
             data: subData,
             pagination: new Handlebars.SafeString(paginationStr),
             success: success,
-            found: (filterActive && subData.length > 0 ? true : false)
+            found: (filterActive && subData.length > 0 ? true : false),
+            founds: data.length
         });
     });
 }

@@ -221,7 +221,8 @@ module.exports = function(req, res) {
             pagination: new Handlebars.SafeString(paginationStr),
             genreSelect: new Handlebars.SafeString(genreSelect),
             ratingSelect: new Handlebars.SafeString(ratingSelect),
-            found: (filterActive && subData.length > 0 ? true : false)
+            found: (filterActive && subData.length > 0 ? true : false),
+            founds: filtered.length
         });
     });
 }
