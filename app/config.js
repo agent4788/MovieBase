@@ -34,7 +34,8 @@ module.exports = {
         'Thriller',
         'Western',
         'Zeichentrick',
-        'Musik'
+        'Musik',
+        'Serien'
     ],
 
     fsk: [
