@@ -18,6 +18,13 @@ module.exports = function(req, res) {
         title: (req.query.title ? req.query.title : '')
     };
 
+    //film ID
+    var id = '';
+    if(req.query.id && req.query.id.length > 10) {
+
+        id = req.query.id;
+    }
+
     var movieModel = new MovieModel();
     movieModel.listOnlyMovies(function(data) {
 
@@ -69,7 +76,20 @@ module.exports = function(req, res) {
         var start = 0;
         if(req.query.start) {
 
-            var start = parseInt(req.query.start);
+            start = parseInt(req.query.start);
+        }
+
+        //Position in der Filmeliste suchen und das passende Start Element setzen
+        if(id.length > 10) {
+
+            for(var i in data) {
+
+                if(data[i].id == id) {
+
+                    start = i - (i % config.pagination.elementsAtPage);
+                    break;
+                }
+            }
         }
 
         //Blätterfunktion

@@ -192,7 +192,7 @@ module.exports = {
                     }
 
                     //zur Übersicht umleiten
-                    res.redirect("/admin?addSuccess=" + (success ? "1" : "0"));
+                    res.redirect("/admin?addSuccess=" + (success ? "1" : "0") + "&id=" + id);
                     return;
                 })
             } else {
@@ -214,7 +214,7 @@ module.exports = {
             }
 
             //zur Übersicht umleiten
-            res.redirect("/admin?addSuccess=" + (success ? "1" : "0"));
+            res.redirect("/admin?addSuccess=" + (success ? "1" : "0") + "&id=" + id);
             return;
         }
     }
