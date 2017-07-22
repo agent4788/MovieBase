@@ -37,7 +37,10 @@ module.exports = function(req, res) {
             movieModel.updateMovieBox(data);
 
             //Cover löschen
-            if(_movie != null && data.coverImg.length > 0) {
+            if(_movie != null
+                && data.coverImg.length > 0
+                && fs.existsSync(__dirname + "/../../public/image/cover/" + data.coverImg)
+                && _movie.coverImg != data.coverImg) {
 
                 fs.unlinkSync(__dirname + "/../../public/image/cover/" + data.coverImg);
             }

@@ -21,7 +21,7 @@ module.exports = function(req, res) {
             movieModel.deleteMovie(data.id);
 
             //Cover löschen
-            if(data.coverImg.length > 0) {
+            if(data.coverImg.length > 0 && fs.existsSync(__dirname + "/../../public/image/cover/" + data.coverImg)) {
 
                 fs.unlinkSync(__dirname + "/../../public/image/cover/" + data.coverImg);
             }

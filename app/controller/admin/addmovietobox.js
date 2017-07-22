@@ -204,6 +204,10 @@ module.exports = {
                 } else {
 
                     //kein Cover Hochgeladen
+                    if(data.coverImg.length > 0) {
+
+                        newMovie.coverImg = data.coverImg;
+                    }
 
                     //Film speichern
                     var _movieModel = new MovieModel();

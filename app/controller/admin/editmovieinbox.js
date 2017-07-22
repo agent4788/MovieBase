@@ -208,7 +208,9 @@ module.exports = {
                             }
 
                             //altes Cover löschen
-                            if(newMovie.coverImg.length > 0) {
+                            if(newMovie.coverImg.length > 0
+                                && fs.existsSync(__dirname + "/../../public/image/cover/" + newMovie.coverImg)
+                                && newMovie.coverImg != data.coverImg) {
 
                                 fs.unlinkSync(__dirname + "/../../public/image/cover/" + newMovie.coverImg);
                             }

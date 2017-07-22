@@ -153,10 +153,24 @@ module.exports = {
                             }
 
                             //altes Cover löschen
-                            if(newMovieBox.coverImg.length > 0) {
+                            if(newMovieBox.coverImg.length > 0 && fs.existsSync(__dirname + "/../../public/image/cover/" + newMovieBox.coverImg)) {
 
                                 fs.unlinkSync(__dirname + "/../../public/image/cover/" + newMovieBox.coverImg);
                             }
+
+                            //Filme imt altem Cover suchen und durch neues ersetzen
+                            var i = 0;
+                            var movies = [];
+                            newMovieBox.movies.forEach(movie => {
+
+                                if(movie.coverImg == newMovieBox.coverImg) {
+
+                                    movie.coverImg = imageId + fileExtension;
+                                }
+                                movies[i] = movie;
+                                i++;
+                            });
+                            newMovieBox.movies = movies;
 
                             //Dateinamen speichern
                             newMovieBox.coverImg = imageId + fileExtension;
