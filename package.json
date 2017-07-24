@@ -29,7 +29,6 @@
     "moment": "^2.18.1",
     "redis": "^2.7.1",
     "rimraf": "^2.6.1",
-    "shuffle-array": "^1.0.1",
     "zip-folder": "^1.0.0"
   }
 }

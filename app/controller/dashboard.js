@@ -8,7 +8,6 @@ const MovieModel = require('../model/moviemodel');
 const movieFormat = require('../util/movieFormat');
 const config = require('../config');
 const moment = require('moment');
-const shuffle = require('shuffle-array');
 
 module.exports = function(req, res) {
 
@@ -49,13 +48,26 @@ module.exports = function(req, res) {
 
         //array "mischen" und die ersten 5 Filme anzeigen
         var newestMovies = [];
-        shuffle(dateFiltered);
-        for(var i = 0; i < config.dashboard.newestMoviesShow; i++) {
+        var usedIds = [];
+        var i = 0;
+        while(newestMovies.length < 5) {
 
-            if(dateFiltered[i] != undefined) {
+            var randomId = randomNumber(0, 49);
+            if(usedIds.indexOf(randomId) > 0) {
 
-                newestMovies[i] = movieFormat(dateFiltered[i]);
-            } else {
+                //Zufallszahl bereits verwendet
+                continue;
+            }
+            usedIds[randomId] = randomId;
+
+            if(dateFiltered[randomId] != undefined) {
+
+                newestMovies[i] = movieFormat(dateFiltered[randomId]);
+                i++;
+            }
+
+            //abbrechen wenn alle vorhandennen Filme in der Liste sind
+            if(newestMovies.length == dateFiltered.length) {
 
                 break;
             }
@@ -95,13 +107,26 @@ module.exports = function(req, res) {
 
         //array "mischen" und die ersten 5 Filme anzeigen
         var bestMovies = [];
-        shuffle(ratingFiltered);
-        for(var i = 0; i < config.dashboard.bestMoviesShow; i++) {
+        var usedIds = [];
+        var i = 0;
+        while(bestMovies.length < 5) {
 
-            if(ratingFiltered[i] != undefined) {
+            var randomId = randomNumber(0, 49);
+            if(usedIds.indexOf(randomId) > 0) {
 
-                bestMovies[i] = movieFormat(ratingFiltered[i]);
-            } else {
+                //Zufallszahl bereits verwendet
+                continue;
+            }
+            usedIds[randomId] = randomId;
+
+            if(ratingFiltered[randomId] != undefined) {
+
+                bestMovies[i] = movieFormat(ratingFiltered[randomId]);
+                i++;
+            }
+
+            //abbrechen wenn alle vorhandennen Filme in der Liste sind
+            if(newestMovies.length == ratingFiltered.length) {
 
                 break;
             }
@@ -110,4 +135,16 @@ module.exports = function(req, res) {
         //Seite an Browser senden
         res.render('dashboard', {newestMovies: newestMovies, bestMovies: bestMovies});
     });
+};
+
+/**
+ * gibt eine Zufallszahl zwischen min und max zurück
+ *
+ * @param min Minimalwert
+ * @param max Maximalwert
+ * @return Zufallszahl
+ */
+function randomNumber(min, max) {
+
+    return Math.ceil((Math.random() * (max - min)) + min);
 }
