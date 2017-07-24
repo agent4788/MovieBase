@@ -332,6 +332,7 @@ module.exports = class MovieModel {
         movie.id = this.__createId();
         var client = this.__connect();
         client.hset('movies', movie.id, JSON.stringify(movie));
+        client.quit();
         return movie.id;
     }
 
@@ -345,6 +346,7 @@ module.exports = class MovieModel {
 
         var client = this.__connect();
         client.hset('movies', movie.id, JSON.stringify(movie));
+        client.quit();
         return movie.id;
     }
 
@@ -357,6 +359,7 @@ module.exports = class MovieModel {
 
         var client = this.__connect();
         client.hdel('movies', id);
+        client.quit();
     }
 
     /**
@@ -370,6 +373,7 @@ module.exports = class MovieModel {
         movieBox.id = this.__createId();
         var client = this.__connect();
         client.hset('movies', movieBox.id, JSON.stringify(movieBox));
+        client.quit();
         return movieBox.id;
     }
 
@@ -383,6 +387,7 @@ module.exports = class MovieModel {
 
         var client = this.__connect();
         client.hset('movies', movieBox.id, JSON.stringify(movieBox));
+        client.quit();
         return movieBox.id;
     }
 
@@ -395,6 +400,7 @@ module.exports = class MovieModel {
 
         var client = this.__connect();
         client.hdel('movies', id);
+        client.quit();
     }
 
     /**

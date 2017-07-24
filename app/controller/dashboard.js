@@ -4,47 +4,18 @@
  * Dashboard Controller
  */
 
-const MovieModel = require('../model/moviemodel');
+const DashboardModel = require('../model/dashboardmodel');
 const movieFormat = require('../util/movieFormat');
 const config = require('../config');
-const moment = require('moment');
 
 module.exports = function(req, res) {
 
-    var movieModel = new MovieModel();
-    movieModel.listMovies(function(data) {
+    var _dashoardModel = new DashboardModel();
+    _dashoardModel.getDasboardData(function(data) {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // neuste Filme ////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        //Daten nach Datum sortieren
-        data.sort(function(obj1, obj2) {
-
-            if(moment(obj1.registredDate).isBefore(obj2.registredDate)) {
-
-                return 1;
-            } else if(moment(obj1.registredDate).isSame(obj2.registredDate)) {
-
-                return 0;
-            } else if(moment(obj1.registredDate).isAfter(obj2.registredDate)) {
-
-                return -1;
-            }
-        });
-
-        //die ersten x Elemente in ein eigenes Array kopieren
-        var dateFiltered = [];
-        for(var i = 0; i < config.dashboard.newestMoviesValue; i++) {
-
-            if(data[i] != undefined) {
-
-                dateFiltered[i] = data[i];
-            } else {
-
-                break;
-            }
-        }
 
         //array "mischen" und die ersten 5 Filme anzeigen
         var newestMovies = [];
@@ -60,50 +31,22 @@ module.exports = function(req, res) {
             }
             usedIds[randomId] = randomId;
 
-            if(dateFiltered[randomId] != undefined) {
+            if(data.newestMovies[randomId] != undefined) {
 
-                newestMovies[i] = movieFormat(dateFiltered[randomId]);
+                newestMovies[i] = movieFormat(data.newestMovies[randomId]);
                 i++;
             }
 
             //abbrechen wenn alle vorhandennen Filme in der Liste sind
-            if(newestMovies.length == dateFiltered.length) {
+            if(newestMovies.length == data.newestMovies.length) {
 
                 break;
             }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // neuste Filme ////////////////////////////////////////////////////////////////////////////////////////////////
+        // beste Filme /////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        //Daten nach Bewertung sortieren
-        data.sort(function(obj1, obj2) {
-
-            if(obj1.rating < obj2.rating) {
-
-                return 1;
-            } else if(obj1.rating == obj2.rating) {
-
-                return 0;
-            } else if(obj1.rating > obj2.rating) {
-
-                return -1;
-            }
-        });
-
-        //die ersten x Elemente in ein eigenes Array kopieren
-        var ratingFiltered = [];
-        for(var i = 0; i < config.dashboard.bestMoviesValue; i++) {
-
-            if(data[i] != undefined) {
-
-                ratingFiltered[i] = data[i];
-            } else {
-
-                break;
-            }
-        }
 
         //array "mischen" und die ersten 5 Filme anzeigen
         var bestMovies = [];
@@ -119,14 +62,14 @@ module.exports = function(req, res) {
             }
             usedIds[randomId] = randomId;
 
-            if(ratingFiltered[randomId] != undefined) {
+            if(data.bestMovies[randomId] != undefined) {
 
-                bestMovies[i] = movieFormat(ratingFiltered[randomId]);
+                bestMovies[i] = movieFormat(data.bestMovies[randomId]);
                 i++;
             }
 
             //abbrechen wenn alle vorhandennen Filme in der Liste sind
-            if(newestMovies.length == ratingFiltered.length) {
+            if(newestMovies.length == data.bestMovies.length) {
 
                 break;
             }
