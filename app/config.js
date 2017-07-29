@@ -46,10 +46,10 @@ module.exports = {
         "DVD",
         "Blu-ray",
         "3D Blu-ray",
-        "UHD Blu-ray",
+        "4K Blu-ray",
         "SD Datei",
         "HD Datei",
-        "46 Datei"
+        "4K Datei"
     ],
 
     dashboard: {
