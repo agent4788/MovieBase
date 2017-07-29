@@ -5,6 +5,7 @@
  */
 
 var dashboard = require('../controller/dashboard');
+var newesMovies = require('../controller/newesmovies');
 var movieList = require('../controller/movielist');
 var movieBoxList = require('../controller/movieboxlist');
 var detailView = require('../controller/detailview');
@@ -32,6 +33,7 @@ var restoreBackup = require('../controller/admin/restorebackup');
 module.exports = function(app) {
 
     app.get('/', dashboard);
+    app.get('/new', newesMovies);
     app.get('/movies', movieList);
     app.get('/boxes', movieBoxList);
     app.get('/detailView/:id', detailView);
