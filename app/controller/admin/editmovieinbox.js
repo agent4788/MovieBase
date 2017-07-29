@@ -11,6 +11,7 @@ const Handlebars = require('handlebars');
 const config = require('../../config');
 const crypto = require('crypto');
 const movieFormat = require('../../util/movieFormat');
+const fs = require('fs');
 
 module.exports = {
 
