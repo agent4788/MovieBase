@@ -115,7 +115,7 @@ module.exports = class DashboardModel {
 
             //in cahce speichern
             client.set('dashboard', JSON.stringify(dasboardData));
-            client.expire('dashboard', 3600);
+            client.expire('dashboard', config.dashboard.cacheTime);
 
             //Datenbankverbindung trennen
             client.quit();

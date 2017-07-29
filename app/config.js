@@ -56,6 +56,7 @@ module.exports = {
         newestMoviesValue: 50,      //Anzahl der neusten Filme aus der die Anzahl der angezeigten Filme entnommen wird
         newestMoviesShow : 5,       //Anzahl der neusten Filme die angezeigt werden sollen
         bestMoviesValue  : 50,      //Anzahl der Filme mit der besten Bewertung aus der die Anzahl der angezeigten Filme entnommen wird
-        bestMoviesShow   : 5        //Anzahl der Filme mit der besten Bewertung die angezeigt werden sollen
+        bestMoviesShow   : 5,       //Anzahl der Filme mit der besten Bewertung die angezeigt werden sollen
+        cacheTime        : 3600     //Lebensdauer der Dashboard Cachedaten in Sekunden
     }
 }
