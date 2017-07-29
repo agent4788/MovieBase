@@ -118,7 +118,7 @@ module.exports = {
                 }
 
                 //Beschreibung
-                if(description.length <= 2500) {
+                if(description.length <= 10000) {
 
                     newMovie.description = description;
                 } else {
