@@ -43,13 +43,13 @@ module.exports = {
     ],
 
     disc: [
-        "SD Datei",
-        "HD Datei",
-        "46 Datei",
         "DVD",
         "Blu-ray",
         "3D Blu-ray",
-        "UHD Blu-ray"
+        "UHD Blu-ray",
+        "SD Datei",
+        "HD Datei",
+        "46 Datei"
     ],
 
     dashboard: {
