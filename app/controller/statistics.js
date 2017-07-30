@@ -51,17 +51,6 @@ module.exports = function(req, res) {
             var avgPrice = sumPrice / movieCount;
             var avgRating = Math.ceil(sumRating / movieCount);
 
-            //Bewertung formatieren
-            var rating = '';
-            for(var i = 0; i < avgRating; i++) {
-
-                rating += '<i class="yellow star icon"></i>';
-            }
-            for(var i = 0; i < (5 - avgRating); i++) {
-
-                rating += '<i class="grey star icon"></i>';
-            }
-
             //Template an Browser
             res.render('statistics', {
                 movieCount: numberFormat(movieCount, 0, 3, '.', ','),
@@ -70,7 +59,7 @@ module.exports = function(req, res) {
                 avgDuration: formatDuration(avgDuration),
                 sumPrice: numberFormat(sumPrice, 2, 3, '.', ','),
                 avgPrice: numberFormat(avgPrice, 2, 3, '.', ','),
-                avgRating: new Handlebars.SafeString(rating)
+                avgRating: avgRating
             });
         });
     });

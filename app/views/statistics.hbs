@@ -29,7 +29,14 @@
         </tr>
         <tr>
             <td>Durchschnittsbewertung:</td>
-            <td>{{avgRating}}</td>
+            <td>
+                <div class="ui rating star large" id="avgRating" data-rating="{{avgRating}}" data-max-rating="5"></div>
+                <script type="text/javascript">
+                    $(function() {
+                        $('#avgRating').rating('disable');
+                    });
+                </script>
+            </td>
         </tr>
         </tbody>
     </table>
