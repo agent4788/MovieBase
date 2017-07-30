@@ -97,9 +97,9 @@ module.exports = {
                     newMovie.registredDate = data.registredDate;
 
                     //Formulardaten verarbeiten
-                    var title = req.body.title;
-                    var subTitle = req.body.subtitle;
-                    var description = req.body.description;
+                    var title = req.body.title.trim();
+                    var subTitle = req.body.subtitle.trim();
+                    var description = req.body.description.trim();
                     var cover = req.files.cover;
                     var year = parseInt(req.body.year);
                     var disc = req.body.disc;

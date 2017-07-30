@@ -42,8 +42,8 @@ module.exports = {
         _settingsModel.getSettings(function (settings) {
 
             //Formulardaten verarbeiten
-            var title = req.body.title;
-            var subTitle = req.body.subtitle;
+            var title = req.body.title.trim();
+            var subTitle = req.body.subtitle.trim();
             var cover = req.files.cover;
             var year = parseInt(req.body.year);
             var disc = req.body.disc;
