@@ -3,7 +3,7 @@
         <div class="ui grid stackable">
             {{#if movie}}
                 <div class="four wide column">
-                    <img src="/static/image/cover/{{movie.coverImg}}" class="ui huge image">
+                    <img src="/static/image/cover/{{movie.coverImg}}" class="ui huge image" onclick="$('#b{{movie.id}}').modal('show');">
                 </div>
                 <div class="twelve wide column">
                     <h1 class="ui header">{{movie.title}}</h1>
@@ -60,9 +60,19 @@
                     <p>{{movie.actors}}</p>
                     {{/if}}
                 </div>
+                <div class="ui modal" id="b{{movie.id}}">
+                    <div class="header">{{movie.title}}</div>
+                    <div class="image content">
+                        <img src="/static/image/cover/{{movie.coverImg}}" class="image massive">
+                        <div class="description">
+                            <h4>{{movie.subTitle}}</h4>
+                            <p>{{movie.description}}</p>
+                        </div>
+                    </div>
+                </div>
             {{else if moviebox}}
                 <div class="four wide column">
-                    <img src="/static/image/cover/{{moviebox.coverImg}}" class="ui huge image">
+                    <img src="/static/image/cover/{{moviebox.coverImg}}" class="ui huge image" onclick="$('#b{{moviebox.id}}').modal('show');">
                 </div>
                 <div class="twelve wide column">
                     <h1 class="ui header">{{moviebox.title}}</h1>
@@ -97,13 +107,19 @@
                         </div>
                     </div>
                 </div>
+                <div class="ui modal" id="b{{moviebox.id}}">
+                    <div class="header">{{moviebox.title}}</div>
+                    <div class="image content">
+                        <img src="/static/image/cover/{{moviebox.coverImg}}" class="image massive">
+                    </div>
+                </div>
                 <div class="sixteen wide column">
                     <h2 class="ui header">Filme</h2>
                     {{#each moviebox.movies}}
                     <div class="ui segment" id="a{{this.id}}">
                         <div class="ui grid stackable">
                             <div class="three wide column">
-                                <img src="/static/image/cover/{{this.coverImg}}" class="ui image">
+                                <img src="/static/image/cover/{{this.coverImg}}" class="ui image" onclick="$('#b{{this.id}}').modal('show');">
                             </div>
                             <div class="thirteen wide column">
                                 <h3 class="ui header">{{this.title}}</h3>
@@ -150,6 +166,16 @@
                             </div>
                         </div>
                     </div>
+                        <div class="ui modal" id="b{{this.id}}">
+                            <div class="header">{{this.title}}</div>
+                            <div class="image content">
+                                <img src="/static/image/cover/{{this.coverImg}}" class="image massive">
+                                <div class="description">
+                                    <h4>{{this.subTitle}}</h4>
+                                    <p>{{this.description}}</p>
+                                </div>
+                            </div>
+                        </div>
                     {{/each}}
                 </div>
             {{/if}}
