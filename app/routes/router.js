@@ -9,6 +9,7 @@ var newesMovies = require('../controller/newesmovies');
 var movieList = require('../controller/movielist');
 var movieBoxList = require('../controller/movieboxlist');
 var detailView = require('../controller/detailview');
+var updateRating = require('../controller/updaterating');
 var search = require('../controller/search');
 var statistics = require('../controller/statistics');
 
@@ -29,6 +30,7 @@ var createBackup = require('../controller/admin/createbackup');
 var downloadBackup = require('../controller/admin/downloadbackup');
 var deleteBackup = require('../controller/admin/deleteBackup');
 var restoreBackup = require('../controller/admin/restorebackup');
+var settings = require('../controller/admin/settings');
 
 module.exports = function(app) {
 
@@ -37,6 +39,7 @@ module.exports = function(app) {
     app.get('/movies', movieList);
     app.get('/boxes', movieBoxList);
     app.get('/detailView/:id', detailView);
+    app.get('/updateRating/:id/:newRating', updateRating);
     app.get('/search', search);
     app.get('/statistics', statistics);
 
@@ -63,4 +66,6 @@ module.exports = function(app) {
     app.get('/admin/downloadBackup/:file', downloadBackup);
     app.get('/admin/deleteBackup/:file', deleteBackup);
     app.get('/admin/restoreBackup/:file', restoreBackup);
+    app.get('/admin/settings', settings.get);
+    app.post('/admin/settings', settings.post);
 }

@@ -11,8 +11,29 @@
                     <div class="ui divider"></div>
                     <div class="ui grid stackable">
                         <div class="four wide column">
-                            <h4 class="ui header">Jahr</h4>
-                            {{movie.year}}
+                            <h4 class="ui header">Bewertung</h4>
+                            <div class="ui rating star large" id="b{{movie.id}}" data-rating="{{movie.rating}}" data-max-rating="5"></div>
+                            <script type="text/javascript">
+                                $(function() {
+                                    $('#b{{movie.id}}').rating({
+                                        onRate: function(newRating) {
+                                            $.ajax({
+                                                url: "/updateRating/{{movie.id}}/" + newRating,
+                                                context: document.body
+                                            }).done(function(res) {
+                                                if(parseInt(res) != 1) {
+
+                                                    alert('Die Bewertung konnte nicht gespeichert werden!');
+                                                }
+                                            });
+                                        }
+                                    });
+                                });
+                            </script>
+                        </div>
+                        <div class="four wide column">
+                            <h4 class="ui header">Genre</h4>
+                            {{movie.genre}}
                         </div>
                         <div class="four wide column">
                             <h4 class="ui header">Medium</h4>
@@ -20,11 +41,7 @@
                         </div>
                         <div class="four wide column">
                             <h4 class="ui header">Preis</h4>
-                            {{movie.price}}&euro;
-                        </div>
-                        <div class="four wide column">
-                            <h4 class="ui header">Länge</h4>
-                            {{movie.duration}}
+                                {{movie.price}}&euro;
                         </div>
                     </div>
                     <div class="ui grid stackable">
@@ -33,18 +50,16 @@
                             <img src="/static/image/fsk/{{movie.fsk}}.jpg" class="ui tiny image">
                         </div>
                         <div class="four wide column">
-                            <h4 class="ui header">Genre</h4>
-                            {{movie.genre}}
+                            <h4 class="ui header">Länge</h4>
+                            {{movie.duration}}
+                        </div>
+                        <div class="four wide column">
+                            <h4 class="ui header">Jahr</h4>
+                            {{movie.year}}
                         </div>
                         <div class="four wide column">
                             <h4 class="ui header">Kaufdatum</h4>
                             {{movie.registredDate}}
-                        </div>
-                        <div class="four wide column">
-                            <h4 class="ui header">Bewertung</h4>
-                            <span>
-                                {{movie.rating}}
-                            </span>
                         </div>
                     </div>
                 </div>
@@ -70,6 +85,10 @@
                     <div class="ui divider"></div>
                     <div class="ui grid stackable">
                         <div class="four wide column">
+                            <h4 class="ui header">Gesamtlänge</h4>
+                            {{movieboxduration}}
+                        </div>
+                        <div class="four wide column">
                             <h4 class="ui header">Jahr</h4>
                             {{moviebox.year}}
                         </div>
@@ -80,10 +99,6 @@
                         <div class="four wide column">
                             <h4 class="ui header">Preis</h4>
                             {{moviebox.price}}&euro;
-                        </div>
-                        <div class="four wide column">
-                            <h4 class="ui header">Gesamtlänge</h4>
-                            {{movieboxduration}}
                         </div>
                     </div>
                     <div class="ui grid stackable">
@@ -111,22 +126,37 @@
                                 <div class="ui divider"></div>
                                 <div class="ui grid stackable">
                                     <div class="four wide column">
-                                        <h4 class="ui header">Genre</h4>
-                                        {{this.genre}}
-                                    </div>
-                                    <div class="four wide column">
-                                        <h4 class="ui header">Jahr</h4>
-                                        {{this.year}}
+                                        <h4 class="ui header">Bewertung</h4>
+                                        <div class="ui rating star large" id="b{{this.id}}" data-rating="{{this.rating}}" data-max-rating="5"></div>
+                                        <script type="text/javascript">
+                                            $(function() {
+                                                $('#b{{this.id}}').rating({
+                                                    onRate: function(newRating) {
+                                                        $.ajax({
+                                                            url: "/updateRating/{{this.id}}/" + newRating,
+                                                            context: document.body
+                                                        }).done(function(res) {
+                                                            if(parseInt(res) != 1) {
+
+                                                                alert('Die Bewertung konnte nicht gespeichert werden!');
+                                                            }
+                                                        });
+                                                    }
+                                                });
+                                            });
+                                        </script>
                                     </div>
                                     <div class="four wide column">
                                         <h4 class="ui header">länge</h4>
                                         {{this.duration}}
                                     </div>
                                     <div class="four wide column">
-                                        <h4 class="ui header">Bewertung</h4>
-                                        <span>
-                                            {{this.rating}}
-                                        </span>
+                                        <h4 class="ui header">Genre</h4>
+                                        {{this.genre}}
+                                    </div>
+                                    <div class="four wide column">
+                                        <h4 class="ui header">Jahr</h4>
+                                        {{this.year}}
                                     </div>
                                 </div>
                                 <div class="ui grid stackable">

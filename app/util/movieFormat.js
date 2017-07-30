@@ -29,6 +29,7 @@ function movieFormat(data, inBox = false) {
         _movie.registredDate = data.registredDate;
         _movie.directors = data.directors;
         _movie.actors = data.actors;
+        _movie.rating = data.rating;
 
         //Cover Bild
         if(data.coverImg.length > 0) {
@@ -61,18 +62,6 @@ function movieFormat(data, inBox = false) {
 
         //Preis
         _movie.price = parseFloat(data.price).toFixed(2).replace('.', ',');
-
-        //Bewertung
-        var rating = '';
-        for(var i = 0; i < data.rating; i++) {
-
-            rating += '<i class="yellow star icon"></i>';
-        }
-        for(var i = 0; i < (5 - data.rating); i++) {
-
-            rating += '<i class="grey star icon"></i>';
-        }
-        _movie.rating = new Handlebars.SafeString(rating);
 
         //Kaufdatum
         _movie.registredDate = moment(_movie.registredDate).format('DD.MM.YYYY');
@@ -126,7 +115,6 @@ function movieFormat(data, inBox = false) {
 
             _movie.actors = null;
         }
-
 
         return _movie;
     } else if(data instanceof MovieBox) {
