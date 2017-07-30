@@ -166,6 +166,14 @@
                         <div class="sixteen wide column">
                             <h3 class="ui header">Beschreibung</h3>
                             <p>{{this.description}}</p>
+                            {{#if this.directors}}
+                                <h5 class="ui header">Regisseur(e)</h5>
+                                <p>{{this.directors}}</p>
+                            {{/if}}
+                            {{#if this.actors}}
+                                <h5 class="ui header">Schauspieler</h5>
+                                <p>{{this.actors}}</p>
+                            {{/if}}
                         </div>
                     </div>
                     <div class="sixteen wide column">

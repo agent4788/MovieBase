@@ -104,7 +104,7 @@
         <div class="equal width fields">
             <div class="field required">
                 <label>Produktionsjahr</label>
-                <select name="year" class="ui dropdown">
+                <select name="year" class="ui dropdown search">
                     <option value="">Produktionsjahr</option>
                     {{#each years}}
                         <option value="{{this}}">{{this}}</option>
@@ -113,7 +113,7 @@
             </div>
             <div class="field required">
                 <label>Medium</label>
-                <select name="disc" class="ui dropdown">
+                <select name="disc" class="ui dropdown search">
                     <option value="">Medium</option>
                     {{#each config.disc}}
                         <option value="{{this}}">{{this}}</option>

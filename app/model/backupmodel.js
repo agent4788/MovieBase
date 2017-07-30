@@ -205,6 +205,8 @@ module.exports = class BackupModel {
                                         _movie.genre = json._genre;
                                         _movie.rating = json._rating;
                                         _movie.registredDate = json._registredDate;
+                                        _movie.directors = json._directors;
+                                        _movie.actors = json._actors;
                                         _movieModel.addMovie(_movie);
                                     }
 
@@ -245,6 +247,8 @@ module.exports = class BackupModel {
                                                     _movie.genre = json1._genre;
                                                     _movie.rating = json1._rating;
                                                     _movie.registredDate = json1._registredDate;
+                                                    _movie.directors = json1._directors;
+                                                    _movie.actors = json1._actors;
                                                     movies[j] = _movie;
                                                 }
 

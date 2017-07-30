@@ -95,6 +95,8 @@ module.exports = {
                 var fsk = parseInt(req.body.fsk);
                 var genre = req.body.genre;
                 var rating = parseInt(req.body.rating);
+                var directors = req.body.directors;
+                var actors = req.body.actors;
 
                 //Film
                 var success = true;
@@ -179,6 +181,44 @@ module.exports = {
 
                     success = false;
                 }
+
+                //Regisseure
+                var filteredDirectors = [];
+                var j = 0;
+                if(typeof directors == 'string') {
+
+                    filteredDirectors[j] = directors;
+                } else {
+
+                    for(var i in directors) {
+
+                        if(config.directors.indexOf(directors[i]) >= 0) {
+
+                            filteredDirectors[j] = directors[i];
+                            j++;
+                        }
+                    }
+                }
+                newMovie.directors = filteredDirectors;
+
+                //Schauspieler
+                var filteredActors = [];
+                var j = 0;
+                if(typeof actors == 'string') {
+
+                    filteredActors[j] = actors;
+                } else {
+
+                    for (var i in actors) {
+
+                        if (config.actors.indexOf(actors[i]) >= 0) {
+
+                            filteredActors[j] = actors[i];
+                            j++;
+                        }
+                    }
+                }
+                newMovie.actors = filteredActors;
 
                 if(success == false) {
 

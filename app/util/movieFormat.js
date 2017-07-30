@@ -27,6 +27,8 @@ function movieFormat(data, inBox = false) {
         _movie.fsk = data.fsk;
         _movie.genre = data.genre;
         _movie.registredDate = data.registredDate;
+        _movie.directors = data.directors;
+        _movie.actors = data.actors;
 
         //Cover Bild
         if(data.coverImg.length > 0) {
@@ -80,6 +82,51 @@ function movieFormat(data, inBox = false) {
         desc = desc.replace(/(?:\r\n|\r|\n)/g, '<br>');
         desc = new Handlebars.SafeString(desc);
         _movie.description = desc;
+
+        //Regesseure
+        var str = '';
+        var comma = '';
+        if(_movie.directors) {
+
+            if(_movie.directors.length > 0) {
+
+                for(var i in _movie.directors) {
+
+                    str += comma + _movie.directors[i];
+                    comma = ', ';
+                }
+                _movie.directors = [str];
+            } else {
+
+                _movie.directors = null;
+            }
+        } else {
+
+            _movie.directors = null;
+        }
+
+        //Schauspieler
+        var str = '';
+        var comma = '';
+        if(_movie.actors) {
+
+            if(_movie.actors.length > 0) {
+
+                for(var i in _movie.actors) {
+
+                    str += comma + _movie.actors[i];
+                    comma = ', ';
+                }
+                _movie.actors = [str];
+            } else {
+
+                _movie.actors = null;
+            }
+        } else {
+
+            _movie.actors = null;
+        }
+
 
         return _movie;
     } else if(data instanceof MovieBox) {

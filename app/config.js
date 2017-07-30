@@ -6,7 +6,7 @@
 
 module.exports = {
 
-    database: {
+    database: {     //Redis Verbindungsdaten
         host:     '127.0.0.1',
         port:     6379,
         db:       10,
@@ -14,14 +14,14 @@ module.exports = {
     },
 
     server: {
-        port: 8080
+        port: 8080                  //Server Port
     },
 
     pagination: {
         elementsAtPage: 10          //Anzahl der Filme die pro Seite angezeigt werden
     },
 
-    genres: [
+    genres: [   //Genres
         'Action',
         'Comedy',
         'Dokumentation',
@@ -38,11 +38,11 @@ module.exports = {
         'Serien'
     ],
 
-    fsk: [
+    fsk: [      //Altersfreigaben
         0, 6, 12, 16, 18
     ],
 
-    disc: [
+    disc: [     //Medienformate
         "DVD",
         "Blu-ray",
         "3D Blu-ray",
@@ -50,6 +50,24 @@ module.exports = {
         "SD Datei",
         "HD Datei",
         "4K Datei"
+    ],
+
+    directors: [ //Regisseure
+        'Sergio Leone',
+        'Steven Spielberg',
+        'Stephen King',
+        'Quentin Tarantino',
+        'Martin Scorsese'
+    ],
+
+    actors: [    //Schauspieler
+        'Bud Spencer',
+        'Terence Hill',
+        'Russell Crowe',
+        'Gerard Butler',
+        'Denzel Washington',
+        'Milla Jovovich',
+        'Hugh Jackman'
     ],
 
     dashboard: {

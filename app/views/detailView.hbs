@@ -51,6 +51,14 @@
                 <div class="sixteen wide column">
                     <h3 class="ui header">Beschreibung</h3>
                     <p>{{movie.description}}</p>
+                    {{#if movie.directors}}
+                    <h5 class="ui header">Regisseur(e)</h5>
+                    <p>{{movie.directors}}</p>
+                    {{/if}}
+                    {{#if movie.actors}}
+                    <h5 class="ui header">Schauspieler</h5>
+                    <p>{{movie.actors}}</p>
+                    {{/if}}
                 </div>
             {{else if moviebox}}
                 <div class="four wide column">
@@ -131,6 +139,14 @@
                             <div class="sixteen wide column">
                                 <h3 class="ui header">Beschreibung</h3>
                                 <p>{{this.description}}</p>
+                                {{#if this.directors}}
+                                    <h5 class="ui header">Regisseur(e)</h5>
+                                    <p>{{this.directors}}</p>
+                                {{/if}}
+                                {{#if this.actors}}
+                                    <h5 class="ui header">Schauspieler</h5>
+                                    <p>{{this.actors}}</p>
+                                {{/if}}
                             </div>
                         </div>
                     </div>

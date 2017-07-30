@@ -106,7 +106,9 @@
             disc        : "{{movie.disc}}",
             fsk         : "{{movie.fsk}}",
             genre       : "{{movie.genre}}",
-            rating      : "{{movie.rating}}"
+            rating      : "{{movie.rating}}",
+            directors   : [{{#each movie.directors}}"{{this}}",{{/each}}],
+            actors      : [{{#each movie.actors}}"{{this}}",{{/each}}]
         });
     });
 </script>
@@ -137,7 +139,7 @@
         <div class="equal width fields">
             <div class="field required">
                 <label>Medium</label>
-                <select name="disc" class="ui dropdown">
+                <select name="disc" class="ui dropdown search">
                     <option value="">Medium</option>
                     {{#each config.disc}}
                         <option value="{{this}}">{{this}}</option>
@@ -146,7 +148,7 @@
             </div>
             <div class="field required">
                 <label>Produktionsjahr</label>
-                <select name="year" class="ui dropdown">
+                <select name="year" class="ui dropdown search">
                     <option value="">Produktionsjahr</option>
                     {{#each years}}
                         <option value="{{this}}">{{this}}</option>
@@ -161,7 +163,7 @@
             </div>
             <div class="field required">
                 <label>Altersfreigabe</label>
-                <select name="fsk" class="ui dropdown">
+                <select name="fsk" class="ui dropdown search">
                     <option value="">FSK</option>
                     {{#each config.fsk}}
                         <option value="{{this}}">{{this}}</option>
@@ -172,7 +174,7 @@
         <div class="equal width fields">
             <div class="field required">
                 <label>Genre</label>
-                <select name="genre" class="ui dropdown">
+                <select name="genre" class="ui dropdown search">
                     <option value="">Genre</option>
                     {{#each config.genres}}
                         <option value="{{this}}">{{this}}</option>
@@ -181,13 +183,33 @@
             </div>
             <div class="field required">
                 <label>Bewertung</label>
-                <select name="rating" class="ui dropdown">
+                <select name="rating" class="ui dropdown search">
                     <option value="">Bewertung</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
                     <option value="5">5</option>
+                </select>
+            </div>
+        </div>
+        <div class="equal width fields">
+            <div class="field">
+                <label>Regisseur</label>
+                <select name="directors" class="ui fluid search dropdown" multiple>
+                    <option value="">Regisseur</option>
+                    {{#each config.directors}}
+                        <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="field">
+                <label>Schauspieler</label>
+                <select name="actors" class="ui fluid search dropdown" multiple>
+                    <option value="">Schauspieler</option>
+                    {{#each config.actors}}
+                        <option value="{{this}}">{{this}}</option>
+                    {{/each}}
                 </select>
             </div>
         </div>

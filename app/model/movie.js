@@ -23,6 +23,8 @@ module.exports = class Movie {
         this._genre = '';
         this._rating = 0;
         this._registredDate = '1980-01-01';
+        this._directors = [];
+        this._actors = [];
         this._type = 1;
     }
 
@@ -128,6 +130,22 @@ module.exports = class Movie {
 
     set registredDate(value) {
         this._registredDate = value;
+    }
+
+    get directors() {
+        return this._directors;
+    }
+
+    set directors(value) {
+        this._directors = value;
+    }
+
+    get actors() {
+        return this._actors;
+    }
+
+    set actors(value) {
+        this._actors = value;
     }
 
     get type() {
