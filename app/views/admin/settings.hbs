@@ -1,0 +1,80 @@
+<script type="text/javascript">
+    $(function() {
+
+        $('.menu .item').tab();
+    });
+</script>
+<div class="ui segment">
+    <div>
+        <h2 class="ui header">Einstellungen</h2>
+    </div>
+    <div class="ui divider"></div>
+    <div>
+        <form class="ui form" method="get" action="/admin/settings">
+            <div class="ui top attached tabular menu">
+                <div data-tab="dashboard" class="active item" style="cursor: pointer;">Dashboard</div>
+                <div data-tab="pagnation" class="item" style="cursor: pointer;">Blättern</div>
+                <div data-tab="movies" class="item" style="cursor: pointer;">Filme</div>
+            </div>
+            <div data-tab="dashboard" class="ui bottom attached tab segment active">
+                <h2>neuste Filme</h2>
+                <div class="ui divider"></div>
+                <div class="field required">
+                    <label>Anzahl der neusten Filme aus der die Anzahl der angezeigten Filme entnommen wird</label>
+                    <input name="newestMoviesValue" type="number" min="1" max="100000" step="1">
+                </div>
+                <div class="field required">
+                    <label>Anzahl der neusten Filme die angezeigt werden sollen</label>
+                    <input name="newestMoviesShow" type="number" min="1" max="100000" step="1">
+                </div>
+                <h2>beste Filme</h2>
+                <div class="ui divider"></div>
+                <div class="field required">
+                    <label>Anzahl der Filme mit der besten Bewertung aus der die Anzahl der angezeigten Filme entnommen wird</label>
+                    <input name="bestMoviesValue" type="number" min="1" max="100000" step="1">
+                </div>
+                <div class="field required">
+                    <label>Anzahl der Filme mit der besten Bewertung die angezeigt werden sollen</label>
+                    <input name="bestMoviesShow" type="number" min="1" max="100000" step="1">
+                </div>
+                <h2>Cache</h2>
+                <div class="ui divider"></div>
+                <div class="field required">
+                    <label>Lebensdauer der Dashboard Cachedaten in Sekunden</label>
+                    <input name="cacheTime" type="number" min="1" max="100000" step="1">
+                </div>
+            </div>
+            <div data-tab="pagnation" class="ui bottom attached tab segment">
+                <h2>Seiten</h2>
+                <div class="ui divider"></div>
+                <div class="field required">
+                    <label>Anzahl der Filme die pro Seite angezeigt werden</label>
+                    <input name="elementsAtPage" type="number" min="1" max="500" step="1">
+                </div>
+            </div>
+            <div data-tab="movies" class="ui bottom attached tab segment">
+                <h2>Filmdaten</h2>
+                <div class="ui divider"></div>
+                <div class="field required">
+                    <label>Genres</label>
+
+                </div>
+                <div class="field required">
+                    <label>Medien</label>
+
+                </div>
+                <div class="field required">
+                    <label>Regisseure</label>
+
+                </div>
+                <div class="field required">
+                    <label>Schauspieler</label>
+
+                </div>
+            </div>
+            <div class="ui divider"></div>
+            <input type="submit" class="ui button primary" value="speichern">
+            <input type="reset" class="ui button" value="reset">
+        </form>
+    </div>
+</div>

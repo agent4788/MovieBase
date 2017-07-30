@@ -53,21 +53,11 @@ module.exports = {
     ],
 
     directors: [ //Regisseure
-        'Sergio Leone',
-        'Steven Spielberg',
-        'Stephen King',
-        'Quentin Tarantino',
-        'Martin Scorsese'
+
     ],
 
     actors: [    //Schauspieler
-        'Bud Spencer',
-        'Terence Hill',
-        'Russell Crowe',
-        'Gerard Butler',
-        'Denzel Washington',
-        'Milla Jovovich',
-        'Hugh Jackman'
+
     ],
 
     dashboard: {
