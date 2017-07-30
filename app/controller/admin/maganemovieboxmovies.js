@@ -5,10 +5,10 @@
  */
 
 const MovieModel = require('../../model/moviemodel');
+const SettingsModel = require('../../model/settingsmodel');
 const MovieBox = require('../../model/moviebox');
 const Movie = require('../../model/movie');
 const Handlebars = require('handlebars');
-const config = require('../../config');
 const movieFormat = require('../../util/movieFormat');
 
 module.exports = function(req, res) {
@@ -16,87 +16,91 @@ module.exports = function(req, res) {
     var movieModel = new MovieModel();
     movieModel.getMovieBoxById(req.params.id, function(data) {
 
-        //Formular anzeigen
+        var _settingsModel = new SettingsModel();
+        _settingsModel.getSettings(function (settings) {
 
-        if (data instanceof MovieBox) {
+            //Formular anzeigen
 
-            _moviebox = movieFormat(data);
+            if (data instanceof MovieBox) {
 
-            //FSK der Box ermitteln
-            var _movieboxfsk = 0;
-            var _movieboxduration = 0;
-            var movies = _moviebox.movies;
-            for(var i in _moviebox.movies) {
+                _moviebox = movieFormat(data);
 
-                var movie1 = _moviebox.movies[i];
-                if(_movieboxfsk < movie1.fsk) {
+                //FSK der Box ermitteln
+                var _movieboxfsk = 0;
+                var _movieboxduration = 0;
+                var movies = _moviebox.movies;
+                for (var i in _moviebox.movies) {
 
-                    _movieboxfsk = movie1.fsk;
+                    var movie1 = _moviebox.movies[i];
+                    if (_movieboxfsk < movie1.fsk) {
+
+                        _movieboxfsk = movie1.fsk;
+                    }
+                    //Laufzeit
+                    _movieboxduration += movie1.duration;
+                    _moviebox.movies[i].duration = formatDuration(_moviebox.movies[i].duration);
                 }
-                //Laufzeit
-                _movieboxduration += movie1.duration;
-                _moviebox.movies[i].duration = formatDuration(_moviebox.movies[i].duration);
+
+                //Laufzeit formatieren
+                var formatedDuration = formatDuration(_movieboxduration);
+
+                //Meldungen verarbeiten
+
+
+                //Meldungen
+                var success = {
+                    add: false,
+                    addSuccess: false,
+                    edit: false,
+                    editSuccess: false,
+                    delete: false,
+                    deleteSuccess: false,
+                };
+
+                if (req.query.addSuccess !== undefined) {
+
+                    success.add = true;
+                    success.addSuccess = req.query.addSuccess;
+                }
+
+                if (req.query.editSuccess !== undefined) {
+
+                    success.edit = true;
+                    success.editSuccess = req.query.editSuccess;
+                }
+
+                if (req.query.addMovieToBoxSuccess !== undefined) {
+
+                    success.addMovieToBox = true;
+                    success.addMovieToBoxSuccess = req.query.addMovieToBoxSuccess;
+                }
+
+                if (req.query.editMovieInBoxSuccess !== undefined) {
+
+                    success.editMovieInBox = true;
+                    success.editMovieInBoxSuccess = req.query.editMovieInBoxSuccess;
+                }
+
+                if (req.query.deleteMovieFromBoxSuccess !== undefined) {
+
+                    success.deleteMovieFromBox = true;
+                    success.deleteMovieFromBoxSuccess = req.query.deleteMovieFromBoxSuccess;
+                }
+
+                //Template an Browser
+                res.render('admin/maganemovieboxmovies', {
+                    layout: 'adminlayout',
+                    config: settings,
+                    moviebox: _moviebox,
+                    movieboxfsk: _movieboxfsk,
+                    movieboxduration: formatedDuration,
+                    success: success
+                });
+            } else {
+
+                res.redirect("/admin/boxes?manageSuccess=0");
             }
-
-            //Laufzeit formatieren
-            var formatedDuration = formatDuration(_movieboxduration);
-
-            //Meldungen verarbeiten
-
-
-            //Meldungen
-            var success = {
-                add: false,
-                addSuccess: false,
-                edit: false,
-                editSuccess: false,
-                delete: false,
-                deleteSuccess: false,
-            };
-
-            if(req.query.addSuccess !== undefined) {
-
-                success.add = true;
-                success.addSuccess = req.query.addSuccess;
-            }
-
-            if(req.query.editSuccess !== undefined) {
-
-                success.edit = true;
-                success.editSuccess = req.query.editSuccess;
-            }
-
-            if(req.query.addMovieToBoxSuccess !== undefined) {
-
-                success.addMovieToBox = true;
-                success.addMovieToBoxSuccess = req.query.addMovieToBoxSuccess;
-            }
-
-            if(req.query.editMovieInBoxSuccess !== undefined) {
-
-                success.editMovieInBox = true;
-                success.editMovieInBoxSuccess = req.query.editMovieInBoxSuccess;
-            }
-
-            if(req.query.deleteMovieFromBoxSuccess !== undefined) {
-
-                success.deleteMovieFromBox = true;
-                success.deleteMovieFromBoxSuccess = req.query.deleteMovieFromBoxSuccess;
-            }
-
-            //Template an Browser
-            res.render('admin/maganemovieboxmovies', {
-                layout: 'adminlayout',
-                config: config,
-                moviebox: _moviebox,
-                movieboxfsk: _movieboxfsk,
-                movieboxduration: formatedDuration,
-                success: success
-            });
-        } else {
-
-            res.redirect("/admin/boxes?manageSuccess=0");
-        }
+        });
     });
 }
 

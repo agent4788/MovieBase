@@ -6,7 +6,6 @@
 
 const MovieModel = require('../model/moviemodel');
 const Handlebars = require('handlebars');
-const config = require('../config');
 const Entities = require('html-entities').Html5Entities;
 const entities = new Entities();
 const numberFormat = require('../util/numberFormat');

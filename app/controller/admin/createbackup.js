@@ -5,7 +5,6 @@
  */
 
 const BackupModel = require('../../model/backupmodel');
-const config = require('../../config');
 
 module.exports = function(req, res) {
 

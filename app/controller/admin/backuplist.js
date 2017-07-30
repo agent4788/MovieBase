@@ -5,7 +5,6 @@
  */
 
 const Handlebars = require('handlebars');
-const config = require('../../config');
 const numberFormat = require('../../util/numberFormat');
 const BackupModel = require('../../model/backupmodel');
 const moment = require('moment');

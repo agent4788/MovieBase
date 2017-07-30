@@ -6,7 +6,6 @@
 
 const DashboardModel = require('../model/dashboardmodel');
 const movieFormat = require('../util/movieFormat');
-const config = require('../config');
 
 module.exports = function(req, res) {
 

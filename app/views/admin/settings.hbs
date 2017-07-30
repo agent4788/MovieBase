@@ -8,40 +8,54 @@
     <div>
         <h2 class="ui header">Einstellungen</h2>
     </div>
+    {{#if success}}
+        {{#if successData}}
+            <div class="ui message success">
+                Die Einstellungen wurden erfolgreich gespeichert
+            </div>
+        {{else}}
+            <div class="ui message error">
+                Die Einstellungen konnten nicht gespeichert werden
+            </div>
+        {{/if}}
+    {{/if}}
     <div class="ui divider"></div>
     <div>
-        <form class="ui form" method="get" action="/admin/settings">
+        <form class="ui form" method="post" action="/admin/settings">
             <div class="ui top attached tabular menu">
                 <div data-tab="dashboard" class="active item" style="cursor: pointer;">Dashboard</div>
                 <div data-tab="pagnation" class="item" style="cursor: pointer;">Blättern</div>
-                <div data-tab="movies" class="item" style="cursor: pointer;">Filme</div>
+                <div data-tab="genres" class="item" style="cursor: pointer;">Genres</div>
+                <div data-tab="discs" class="item" style="cursor: pointer;">Medien</div>
+                <div data-tab="directors" class="item" style="cursor: pointer;">Regisseure</div>
+                <div data-tab="actors" class="item" style="cursor: pointer;">Schauspieler</div>
             </div>
             <div data-tab="dashboard" class="ui bottom attached tab segment active">
-                <h2>neuste Filme</h2>
+                <h2>Neuste Filme</h2>
                 <div class="ui divider"></div>
                 <div class="field required">
                     <label>Anzahl der neusten Filme aus der die Anzahl der angezeigten Filme entnommen wird</label>
-                    <input name="newestMoviesValue" type="number" min="1" max="100000" step="1">
+                    <input name="newestMoviesValue" type="number" min="1" max="100000" step="1" value="{{settings.dashboard.newestMoviesValue}}">
                 </div>
                 <div class="field required">
                     <label>Anzahl der neusten Filme die angezeigt werden sollen</label>
-                    <input name="newestMoviesShow" type="number" min="1" max="100000" step="1">
+                    <input name="newestMoviesShow" type="number" min="1" max="100000" step="1" value="{{settings.dashboard.newestMoviesShow}}">
                 </div>
-                <h2>beste Filme</h2>
+                <h2>Beste Filme</h2>
                 <div class="ui divider"></div>
                 <div class="field required">
                     <label>Anzahl der Filme mit der besten Bewertung aus der die Anzahl der angezeigten Filme entnommen wird</label>
-                    <input name="bestMoviesValue" type="number" min="1" max="100000" step="1">
+                    <input name="bestMoviesValue" type="number" min="1" max="100000" step="1" value="{{settings.dashboard.bestMoviesValue}}">
                 </div>
                 <div class="field required">
                     <label>Anzahl der Filme mit der besten Bewertung die angezeigt werden sollen</label>
-                    <input name="bestMoviesShow" type="number" min="1" max="100000" step="1">
+                    <input name="bestMoviesShow" type="number" min="1" max="100000" step="1" value="{{settings.dashboard.bestMoviesShow}}">
                 </div>
                 <h2>Cache</h2>
                 <div class="ui divider"></div>
                 <div class="field required">
                     <label>Lebensdauer der Dashboard Cachedaten in Sekunden</label>
-                    <input name="cacheTime" type="number" min="1" max="100000" step="1">
+                    <input name="cacheTime" type="number" min="1" max="100000" step="1" value="{{settings.dashboard.cacheTime}}">
                 </div>
             </div>
             <div data-tab="pagnation" class="ui bottom attached tab segment">
@@ -49,27 +63,31 @@
                 <div class="ui divider"></div>
                 <div class="field required">
                     <label>Anzahl der Filme die pro Seite angezeigt werden</label>
-                    <input name="elementsAtPage" type="number" min="1" max="500" step="1">
+                    <input name="elementsAtPage" type="number" min="1" max="500" step="1" value="{{settings.pagination.elementsAtPage}}">
                 </div>
             </div>
-            <div data-tab="movies" class="ui bottom attached tab segment">
-                <h2>Filmdaten</h2>
-                <div class="ui divider"></div>
+            <div data-tab="genres" class="ui bottom attached tab segment">
                 <div class="field required">
                     <label>Genres</label>
-
+                    <textarea name="genres" rows="25">{{settings.genres}}</textarea>
                 </div>
+            </div>
+            <div data-tab="discs" class="ui bottom attached tab segment">
                 <div class="field required">
                     <label>Medien</label>
-
+                    <textarea name="disc" rows="25">{{settings.disc}}</textarea>
                 </div>
+            </div>
+            <div data-tab="directors" class="ui bottom attached tab segment">
                 <div class="field required">
                     <label>Regisseure</label>
-
+                    <textarea name="directors" rows="25">{{settings.directors}}</textarea>
                 </div>
+            </div>
+            <div data-tab="actors" class="ui bottom attached tab segment">
                 <div class="field required">
                     <label>Schauspieler</label>
-
+                    <textarea name="actors" rows="25">{{settings.actors}}</textarea>
                 </div>
             </div>
             <div class="ui divider"></div>
