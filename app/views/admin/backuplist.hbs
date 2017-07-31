@@ -11,6 +11,23 @@
             </div>
         {{/if}}
     {{/if}}
+    {{#if success.upload}}
+        {{#if success.uploadTrue}}
+            <div class="ui message success">
+                Das Backup wurde erfolgreich hochgeladen
+            </div>
+        {{/if}}
+        {{#if success.uploadFalse}}
+            <div class="ui message error">
+                Das Backup konnte nicht hochgeladen werden
+            </div>
+        {{/if}}
+        {{#if success.uploadExists}}
+            <div class="ui message error">
+                Die Backupdatei existiert bereits
+            </div>
+        {{/if}}
+    {{/if}}
     <div class="ui segment">
         <a href="/admin/createBackup" class="ui button primary">Backup erstellen</a>
     </div>
@@ -87,4 +104,13 @@
         {{/if}}
         </tbody>
     </table>
+</div>
+<div class="ui segment">
+    <form method="post" enctype="multipart/form-data" action="/admin/backups" class="ui form">
+        <div class="field fluid">
+            <label>Cover</label>
+            <input name="backupFile" type="file">
+        </div>
+        <input type="submit" class="ui button" value="hochladen">
+    </form>
 </div>

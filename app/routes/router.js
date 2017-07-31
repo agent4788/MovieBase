@@ -61,7 +61,8 @@ module.exports = function(app) {
     app.get('/admin/editMovieInBox/:id', editMovieInBox.get);
     app.post('/admin/editMovieInBox/:id', editMovieInBox.post);
     app.get('/admin/deleteMovieFromBox/:id', deleteMovieFromBox);
-    app.get('/admin/backups', backups);
+    app.get('/admin/backups', backups.get);
+    app.post('/admin/backups', backups.post);
     app.get('/admin/createBackup', createBackup);
     app.get('/admin/downloadBackup/:file', downloadBackup);
     app.get('/admin/deleteBackup/:file', deleteBackup);
