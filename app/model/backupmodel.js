@@ -14,6 +14,7 @@ const moment = require('moment');
 const MovieModel = require('./moviemodel');
 const Movie = require('./movie');
 const MovieBox = require('./moviebox');
+const SettingsModel = require('../model/settingsmodel');
 
 'use strict';
 
@@ -103,28 +104,35 @@ module.exports = class BackupModel {
                     //Daten in Json Datei schreiben
                     jsonfile.writeFileSync(tmpDir + 'movieBoxes.json', movieBoxes);
 
-                    //Tar Datei erstellen
-                    var hash = crypto.randomBytes(5).toString('hex');
-                    var filename = 'backup_' + moment().format('YYYY_MM_DD__HH_mm_ss') + '_' + hash + '.zip';
+                    var _settingsModel = new SettingsModel();
+                    _settingsModel.getSettings(function (settings) {
 
-                    zipFolder(tmpDir, backupDir + filename, function(err) {
-                        if(err) {
+                        //Daten in Json Datei schreiben
+                        jsonfile.writeFileSync(tmpDir + 'settings.json', settings);
 
-                            //Temp Ordner löschen
-                            rimraf(tmpDir, function () {
+                        //Tar Datei erstellen
+                        var hash = crypto.randomBytes(5).toString('hex');
+                        var filename = 'backup_' + moment().format('YYYY_MM_DD__HH_mm_ss') + '_' + hash + '.zip';
 
-                                //Dateinamen zurückgeben
-                                callback(null);
-                            });
-                        } else {
+                        zipFolder(tmpDir, backupDir + filename, function(err) {
+                            if(err) {
 
-                            //Temp Ordner löschen
-                            rimraf(tmpDir, function () {
+                                //Temp Ordner löschen
+                                rimraf(tmpDir, function () {
 
-                                //Dateinamen zurückgeben
-                                callback(filename);
-                            });
-                        }
+                                    //Dateinamen zurückgeben
+                                    callback(null);
+                                });
+                            } else {
+
+                                //Temp Ordner löschen
+                                rimraf(tmpDir, function () {
+
+                                    //Dateinamen zurückgeben
+                                    callback(filename);
+                                });
+                            }
+                        });
                     });
                 });
             });
@@ -256,11 +264,29 @@ module.exports = class BackupModel {
                                                 _movieModel.addMovieBox(_movieBox);
                                             }
 
-                                            //Tempordner löschen
-                                            rimraf(tmpDir, function () {
+                                            //Filme wiederherstellen
+                                            jsonfile.readFile(tmpDir + 'settings.json', function (err, data) {
 
-                                                //Dateinamen zurückgeben
-                                                callback(true);
+                                                if(!err) {
+
+                                                    var _settingsModel = new SettingsModel();
+                                                    _settingsModel.updateSettings(data);
+
+                                                    //Tempordner löschen
+                                                    rimraf(tmpDir, function () {
+
+                                                        //Dateinamen zurückgeben
+                                                        callback(true);
+                                                    });
+                                                } else {
+
+                                                    //Tempordner löschen
+                                                    rimraf(tmpDir, function () {
+
+                                                        //Dateinamen zurückgeben
+                                                        callback(false);
+                                                    });
+                                                }
                                             });
                                         } else {
 
