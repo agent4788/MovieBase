@@ -3,7 +3,9 @@
         <div class="ui grid stackable">
             {{#if movie}}
                 <div class="four wide column">
-                    <img src="/static/image/cover/{{movie.coverImg}}" class="ui huge image">
+                    <a href="/static/image/cover/{{movie.coverImg}}" data-lightbox="c{{movie.id}}">
+                        <img src="/static/image/cover/{{movie.coverImg}}" class="ui huge image">
+                    </a>
                 </div>
                 <div class="twelve wide column">
                     <h1 class="ui header">{{movie.title}}</h1>
@@ -77,7 +79,9 @@
                 </div>
             {{else if moviebox}}
                 <div class="four wide column">
-                    <img src="/static/image/cover/{{moviebox.coverImg}}" class="ui huge image">
+                    <a href="/static/image/cover/{{moviebox.coverImg}}" data-lightbox="c{{moviebox.id}}">
+                        <img src="/static/image/cover/{{moviebox.coverImg}}" class="ui huge image">
+                    </a>
                 </div>
                 <div class="twelve wide column">
                     <h1 class="ui header">{{moviebox.title}}</h1>
@@ -118,7 +122,9 @@
                     <div class="ui segment" id="a{{this.id}}">
                         <div class="ui grid stackable">
                             <div class="three wide column">
-                                <img src="/static/image/cover/{{this.coverImg}}" class="ui image">
+                                <a href="/static/image/cover/{{this.coverImg}}" data-lightbox="c{{this.id}}">
+                                    <img src="/static/image/cover/{{this.coverImg}}" class="ui image">
+                                </a>
                             </div>
                             <div class="thirteen wide column">
                                 <h3 class="ui header">{{this.title}}</h3>
@@ -195,3 +201,4 @@
         </div>
     {{/if}}
 </div>
+<script src="/static/lightbox/js/lightbox.min.js" type="text/javascript"></script>
