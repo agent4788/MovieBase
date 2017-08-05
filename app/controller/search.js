@@ -23,34 +23,28 @@ module.exports = function(req, res) {
             title: (req.query.title ? req.query.title : ''),
             minLength: (req.query.min_length ? parseInt(req.query.min_length) : ''),
             maxLength: (req.query.max_length ? parseInt(req.query.max_length) : ''),
-            genre: (req.query.genre ? req.query.genre.toLocaleLowerCase() : ''),
-            rating: (req.query.rating ? req.query.rating.toLocaleLowerCase() : '')
+            genre: (req.query.genre ? req.query.genre : ''),
+            rating: (req.query.rating ? req.query.rating.toLocaleLowerCase() : ''),
         };
+        if(typeof req.query.actors == 'string') {
 
-        //Auswahlfelder vorbereiten
-        var genreSelect = '';
-        var genres = settings.genres;
-        for (var i in genres) {
+            searchParameters.actors = [req.query.actors];
+        } else if(typeof req.query.actors == 'object') {
 
-            var genre = genres[i];
-            if (genre.toLocaleLowerCase() == searchParameters.genre.toLocaleLowerCase()) {
+            searchParameters.actors = req.query.actors;
+        } else {
 
-                genreSelect += '<option selected value="' + entities.encode(genre) + '">' + entities.encode(genre) + '</option>'
-            } else {
-
-                genreSelect += '<option value="' + entities.encode(genre) + '">' + entities.encode(genre) + '</option>'
-            }
+            searchParameters.actors = [];
         }
-        var ratingSelect = '';
-        for (var i = 1; i <= 5; i++) {
+        if(typeof req.query.directors == 'string') {
 
-            if (searchParameters.rating == i) {
+            searchParameters.directors = [req.query.directors];
+        } else if(typeof req.query.directors == 'object') {
 
-                ratingSelect += '<option selected value="' + i.toString() + '">' + i.toString() + '</option>'
-            } else {
+            searchParameters.directors = req.query.directors;
+        } else {
 
-                ratingSelect += '<option value="' + i.toString() + '">' + i.toString() + '</option>'
-            }
+            searchParameters.directors = [];
         }
 
         //Liste mit allen Filmen Holen
@@ -117,10 +111,50 @@ module.exports = function(req, res) {
                     }
                 }
 
-                //FSK Filtern
+                //Bewertung Filtern
                 if (searchParameters.rating.length > 0) {
 
                     if (!(movie.rating >= searchParameters.rating)) {
+
+                        filterActive = true;
+                        continue;
+                    }
+                }
+
+                //Regisseure filtern
+                if(searchParameters.directors.length > 0) {
+
+                    var directorFound = false;
+                    var directorFoundCount = 0;
+                    searchParameters.directors.forEach(director => {
+
+                        if (movie.directors && movie.directors.indexOf(director) >= 0) {
+
+                            directorFound = true;
+                            directorFoundCount++;
+                        }
+                    });
+                    if (directorFound == false || directorFoundCount != searchParameters.directors.length) {
+
+                        filterActive = true;
+                        continue;
+                    }
+                }
+
+                //Schauspieler filtern
+                if(searchParameters.actors.length > 0) {
+
+                    var actorFound = false;
+                    var actorFoundCount = 0;
+                    searchParameters.actors.forEach(actor => {
+
+                        if (movie.actors && movie.actors.indexOf(actor) >= 0) {
+
+                            actorFound = true;
+                            actorFoundCount++;
+                        }
+                    });
+                    if (actorFound == false || actorFoundCount != searchParameters.actors.length) {
 
                         filterActive = true;
                         continue;
@@ -217,13 +251,10 @@ module.exports = function(req, res) {
 
             //Template an Browser
             res.render('search', {
-                genres: settings.genres,
-                fsk: settings.fsk,
+                config: settings,
                 searchParameters: searchParameters,
                 data: subData,
                 pagination: new Handlebars.SafeString(paginationStr),
-                genreSelect: new Handlebars.SafeString(genreSelect),
-                ratingSelect: new Handlebars.SafeString(ratingSelect),
                 found: (filterActive && subData.length > 0 ? true : false),
                 founds: filtered.length
             });
