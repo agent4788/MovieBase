@@ -69,7 +69,7 @@ module.exports = class DashboardModel {
 
                 if(data[i] != undefined) {
 
-                    dateFiltered[i] = data[i];
+                    dateFiltered[i] = data[i].id;
                 } else {
 
                     break;
@@ -101,7 +101,7 @@ module.exports = class DashboardModel {
 
                 if(data[i] != undefined) {
 
-                    ratingFiltered[i] = data[i];
+                    ratingFiltered[i] = data[i].id;
                 } else {
 
                     break;
@@ -151,53 +151,8 @@ module.exports = class DashboardModel {
                 //Daten aus Datenbank laden
                 var dashboardData = JSON.parse(data);
 
-                //Objekte wierherstellen
-                var newestMovies = [];
-                for(var i in dashboardData.newestMovies) {
-
-                    var json = dashboardData.newestMovies[i];
-                    var _movie = new Movie();
-                    _movie.id = json._id;
-                    _movie.title = json._title;
-                    _movie.subTitle = json._subTitle;
-                    _movie.description = json._description;
-                    _movie.coverImg = json._coverImg;
-                    _movie.year = json._year;
-                    _movie.disc = json._disc;
-                    _movie.price = json._price;
-                    _movie.duration = json._duration;
-                    _movie.fsk = json._fsk;
-                    _movie.genre = json._genre;
-                    _movie.rating = json._rating;
-                    _movie.registredDate = json._registredDate;
-                    newestMovies[i] = _movie;
-                };
-                var bestMovies = [];
-                for(var i in dashboardData.bestMovies) {
-
-                    var json = dashboardData.bestMovies[i];
-                    var _movie = new Movie();
-                    _movie.id = json._id;
-                    _movie.title = json._title;
-                    _movie.subTitle = json._subTitle;
-                    _movie.description = json._description;
-                    _movie.coverImg = json._coverImg;
-                    _movie.year = json._year;
-                    _movie.disc = json._disc;
-                    _movie.price = json._price;
-                    _movie.duration = json._duration;
-                    _movie.fsk = json._fsk;
-                    _movie.genre = json._genre;
-                    _movie.rating = json._rating;
-                    _movie.registredDate = json._registredDate;
-                    bestMovies[i] = _movie;
-                };
-
                 //Daten zurückgeben
-                callback({
-                    newestMovies: newestMovies,
-                    bestMovies: bestMovies
-                })
+                callback(dashboardData);
             }
         })
     }

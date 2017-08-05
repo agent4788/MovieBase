@@ -6,80 +6,105 @@
 
 const DashboardModel = require('../model/dashboardmodel');
 const SettingsModel = require('../model/settingsmodel');
+const MovieModel = require('../model/moviemodel');
 const movieFormat = require('../util/movieFormat');
 
 module.exports = function(req, res) {
 
     var _dashoardModel = new DashboardModel();
-    _dashoardModel.getDasboardData(function(data) {
+    _dashoardModel.getDasboardData(function(dashboardData) {
 
-        var _settingsModel = new SettingsModel();
-        _settingsModel.getSettings(function (settings) {
+        var _movieModel = new MovieModel();
+        _movieModel.listMoviesIdIndex(function (movies) {
 
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // neuste Filme ////////////////////////////////////////////////////////////////////////////////////////////////
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            var _settingsModel = new SettingsModel();
+            _settingsModel.getSettings(function (settings) {
 
-            //array "mischen" und die ersten 5 Filme anzeigen
-            var newestMovies = [];
-            var usedIds = [];
-            var i = 0;
-            while(newestMovies.length < settings.dashboard.newestMoviesShow) {
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // neuste Filme ////////////////////////////////////////////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                var randomId = randomNumber(0, 49);
-                if(usedIds.indexOf(randomId) > 0) {
+                //Liste mit den Filmen erstellen
+                var newestMoviesList = [];
+                for(var i in dashboardData.newestMovies) {
 
-                    //Zufallszahl bereits verwendet
-                    continue;
-                }
-                usedIds[randomId] = randomId;
+                    if(movies[dashboardData.newestMovies[i]]) {
 
-                if(data.newestMovies[randomId] != undefined) {
-
-                    newestMovies[i] = movieFormat(data.newestMovies[randomId]);
-                    i++;
+                        newestMoviesList[i] = movies[dashboardData.newestMovies[i]];
+                    }
                 }
 
-                //abbrechen wenn alle vorhandennen Filme in der Liste sind
-                if(newestMovies.length == data.newestMovies.length) {
+                //array "mischen" und die ersten 5 Filme anzeigen
+                var newestMovies = [];
+                var usedIds = [];
+                var i = 0;
+                while(newestMovies.length < settings.dashboard.newestMoviesShow) {
 
-                    break;
-                }
-            }
+                    var randomId = randomNumber(0, 49);
+                    if(usedIds.indexOf(randomId) > 0) {
 
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // beste Filme /////////////////////////////////////////////////////////////////////////////////////////////////
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        //Zufallszahl bereits verwendet
+                        continue;
+                    }
+                    usedIds[randomId] = randomId;
 
-            //array "mischen" und die ersten 5 Filme anzeigen
-            var bestMovies = [];
-            var usedIds = [];
-            var i = 0;
-            while(bestMovies.length < settings.dashboard.bestMoviesShow) {
+                    if(newestMoviesList[randomId] != undefined) {
 
-                var randomId = randomNumber(0, 49);
-                if(usedIds.indexOf(randomId) > 0) {
+                        newestMovies[i] = movieFormat(newestMoviesList[randomId]);
+                        i++;
+                    }
 
-                    //Zufallszahl bereits verwendet
-                    continue;
-                }
-                usedIds[randomId] = randomId;
+                    //abbrechen wenn alle vorhandennen Filme in der Liste sind
+                    if(newestMovies.length == newestMoviesList.length) {
 
-                if(data.bestMovies[randomId] != undefined) {
-
-                    bestMovies[i] = movieFormat(data.bestMovies[randomId]);
-                    i++;
+                        break;
+                    }
                 }
 
-                //abbrechen wenn alle vorhandennen Filme in der Liste sind
-                if(newestMovies.length == data.bestMovies.length) {
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // beste Filme /////////////////////////////////////////////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                    break;
+                //Liste mit den Filmen erstellen
+                var bestMoviesList = [];
+                for(var i in dashboardData.bestMovies) {
+
+                    if(movies[dashboardData.bestMovies[i]]) {
+
+                        bestMoviesList[i] = movies[dashboardData.bestMovies[i]];
+                    }
                 }
-            }
 
-            //Seite an Browser senden
-            res.render('dashboard', {newestMovies: newestMovies, bestMovies: bestMovies});
+                //array "mischen" und die ersten 5 Filme anzeigen
+                var bestMovies = [];
+                var usedIds = [];
+                var i = 0;
+                while(bestMovies.length < settings.dashboard.bestMoviesShow) {
+
+                    var randomId = randomNumber(0, 49);
+                    if(usedIds.indexOf(randomId) > 0) {
+
+                        //Zufallszahl bereits verwendet
+                        continue;
+                    }
+                    usedIds[randomId] = randomId;
+
+                    if(bestMoviesList[randomId] != undefined) {
+
+                        bestMovies[i] = movieFormat(bestMoviesList[randomId]);
+                        i++;
+                    }
+
+                    //abbrechen wenn alle vorhandennen Filme in der Liste sind
+                    if(newestMovies.length == bestMoviesList.length) {
+
+                        break;
+                    }
+                }
+
+                //Seite an Browser senden
+                res.render('dashboard', {newestMovies: newestMovies, bestMovies: bestMovies});
+            });
         });
     });
 };
