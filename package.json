@@ -28,6 +28,7 @@
     "jsonfile": "^3.0.1",
     "moment": "^2.18.1",
     "redis": "^2.7.1",
-    "rimraf": "^2.6.1"
+    "rimraf": "^2.6.1",
+    "zip-folder": "^1.0.0"
   }
 }

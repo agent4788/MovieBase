@@ -7,6 +7,7 @@
 const fs = require('fs-extra');
 const jsonfile = require('jsonfile');
 const rimraf = require('rimraf');
+const zipFolder = require('zip-folder');
 const { spawn } = require('child_process');
 const crypto = require('crypto');
 const moment = require('moment');
@@ -114,7 +115,7 @@ module.exports = class BackupModel {
                         var filename = 'backup_' + moment().format('YYYY_MM_DD__HH_mm_ss') + '_' + hash + '.zip';
 
                         //in Temp Ordner packen
-                        const ls = spawn('zip', ['-r', backupDir + filename, './'], {cwd: tmpDir});
+                        /*const ls = spawn('zip', ['-r', backupDir + filename, './'], {cwd: tmpDir});
                         ls.on('close', function (code) {
 
                             if(code == 0) {
@@ -134,9 +135,9 @@ module.exports = class BackupModel {
                                     callback(null);
                                 });
                             }
-                        });
+                        });*/
 
-                        /*zipFolder(tmpDir, backupDir + filename, function(err) {
+                        zipFolder(tmpDir, backupDir + filename, function(err) {
                             if(err) {
 
                                 //Temp Ordner löschen
@@ -154,7 +155,7 @@ module.exports = class BackupModel {
                                     callback(filename);
                                 });
                             }
-                        });*/
+                        });
                     });
                 });
             });
