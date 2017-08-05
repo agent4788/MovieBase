@@ -114,10 +114,24 @@ module.exports = function(req, res) {
                 //Bewertung Filtern
                 if (searchParameters.rating.length > 0) {
 
-                    if (!(movie.rating >= searchParameters.rating)) {
+                    var spRating = searchParameters.rating.substr(0, 1);
+                    var spGtRating = searchParameters.rating.length > 1;
+                    if(spGtRating == true) {
 
-                        filterActive = true;
-                        continue;
+                        //nach größer oder gleich Filtern
+                        if (!(movie.rating >= spRating)) {
+
+                            filterActive = true;
+                            continue;
+                        }
+                    } else {
+
+                        //nach gleich Filtern
+                        if (!(movie.rating == spRating)) {
+
+                            filterActive = true;
+                            continue;
+                        }
                     }
                 }
 
@@ -294,6 +308,22 @@ function queryString(searchParameters) {
     if(searchParameters.rating.length > 0) {
 
         queryStr += and + 'rating=' + entities.encode(searchParameters.rating);
+    }
+
+    if(searchParameters.directors.length > 0) {
+
+        searchParameters.directors.forEach(director => {
+
+            queryStr += and + 'directors=' + entities.encode(director);
+        });
+    }
+
+    if(searchParameters.actors.length > 0) {
+
+        searchParameters.actors.forEach(actor => {
+
+            queryStr += and + 'actors=' + entities.encode(actor);
+        });
     }
     return queryStr;
 }
