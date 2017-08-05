@@ -308,6 +308,7 @@ function queryString(searchParameters) {
     if(searchParameters.rating.length > 0) {
 
         queryStr += and + 'rating=' + entities.encode(searchParameters.rating);
+        and = '&';
     }
 
     if(searchParameters.directors.length > 0) {
@@ -315,6 +316,7 @@ function queryString(searchParameters) {
         searchParameters.directors.forEach(director => {
 
             queryStr += and + 'directors=' + entities.encode(director);
+            and = '&';
         });
     }
 
@@ -323,6 +325,7 @@ function queryString(searchParameters) {
         searchParameters.actors.forEach(actor => {
 
             queryStr += and + 'actors=' + entities.encode(actor);
+            and = '&';
         });
     }
     return queryStr;
