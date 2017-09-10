@@ -32,4 +32,18 @@
             </div>
         {{/if}}
     </div>
+    {{#if pagination}}
+        <nav>
+            <br>
+            <div class="ui container">
+                <div class="ui secondary menu">
+                    <div class="right menu">
+                        <div class="ui inverted pagination menu">
+                            {{pagination}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    {{/if}}
 </div>
