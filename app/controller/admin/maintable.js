@@ -9,21 +9,30 @@ const SettingsModel = require('../../model/settingsmodel');
 const Pagination = require('../../util/pagination');
 const Handlebars = require('handlebars');
 const movieFormat = require('../../util/movieFormat');
+const Entities = require('html-entities').Html5Entities;
+const entities = new Entities();
 
 module.exports = function(req, res) {
 
     //Formulardaten prüfen
     //TODO Eingabedaten filtern
     var searchParameters = {
-        title: (req.query.title ? req.query.title : '')
+        title: (req.query.title ? req.query.title : ''),
+        disc: (req.query.disc ? req.query.disc : {})
     };
+    if(typeof req.query.disc == 'string') {
 
-    //film ID
+        searchParameters.disc = [req.query.disc];
+    }
+
+    //Film ID
     var id = '';
     if(req.query.id && req.query.id.length > 10) {
 
         id = req.query.id;
     }
+
+    //Medium
 
     var movieModel = new MovieModel();
     movieModel.listOnlyMovies(function(data) {
@@ -33,7 +42,7 @@ module.exports = function(req, res) {
 
             //Nach Suchkriterien filtern
             var filterActive = false;
-            var filtered = [];
+            var titleFiltered = [];
             var j = 0;
             for (var i = 0; i < data.length; i++) {
 
@@ -49,10 +58,33 @@ module.exports = function(req, res) {
                     }
                 }
 
-                filtered[j] = movie;
+                titleFiltered[j] = movie;
                 j++;
             }
-            data = filtered;
+
+            var discFiltered = [];
+            if(searchParameters.disc.length > 0) {
+
+                var j = 0;
+                for (var i = 0; i < titleFiltered.length; i++) {
+
+                    var movie = titleFiltered[i];
+
+                    //Nacht Titel/Subtitel filtern
+                    if (!(searchParameters.disc.indexOf(movie.disc) >= 0)) {
+
+                        filterActive = true;
+                        continue;
+                    }
+
+                    discFiltered[j] = movie;
+                    j++;
+                }
+            } else {
+
+                discFiltered = titleFiltered;
+            }
+            data = discFiltered;
 
             //Daten nach Titel aufsteigend sortieren
             data.sort(function (obj1, obj2) {
@@ -103,9 +135,10 @@ module.exports = function(req, res) {
 
             if (pagination.lastPage > 1) {
 
+                var queryStr = queryString(searchParameters);
                 if (pagination.firstPage < pagination.previous2Page) {
 
-                    paginationStr += '<a class="item" href="/admin?start=0">1</a>';
+                    paginationStr += '<a class="item" href="/admin?' + queryStr + '&start=0">1</a>';
                     if (pagination.firstPage < (pagination.previous2Page - 1)) {
 
                         paginationStr += '<a class="item disabled">...</a>';
@@ -113,20 +146,20 @@ module.exports = function(req, res) {
                 }
                 if (pagination.previous2Page >= 1) {
 
-                    paginationStr += '<a class="item" href="/admin?start=' + ((pagination.previous2Page - 1) * pagination.elementsAtPage) + '">' + pagination.previous2Page + '</a>';
+                    paginationStr += '<a class="item" href="/admin?' + queryStr + '&start=' + ((pagination.previous2Page - 1) * pagination.elementsAtPage) + '">' + pagination.previous2Page + '</a>';
                 }
                 if (pagination.previousPage >= 1) {
 
-                    paginationStr += '<a class="item" href="/admin?start=' + ((pagination.previousPage - 1) * pagination.elementsAtPage) + '">' + pagination.previousPage + '</a>';
+                    paginationStr += '<a class="item" href="/admin?' + queryStr + '&start=' + ((pagination.previousPage - 1) * pagination.elementsAtPage) + '">' + pagination.previousPage + '</a>';
                 }
                 paginationStr += '<a class="item active">' + pagination.currentPage + '</a>';
                 if (pagination.nextPage <= pagination.lastPage) {
 
-                    paginationStr += '<a class="item" href="/admin?start=' + ((pagination.nextPage - 1) * pagination.elementsAtPage) + '">' + pagination.nextPage + '</a>';
+                    paginationStr += '<a class="item" href="/admin?' + queryStr + '&start=' + ((pagination.nextPage - 1) * pagination.elementsAtPage) + '">' + pagination.nextPage + '</a>';
                 }
                 if (pagination.next2Page <= pagination.lastPage) {
 
-                    paginationStr += '<a class="item" href="/admin?start=' + ((pagination.next2Page - 1) * pagination.elementsAtPage) + '">' + pagination.next2Page + '</a>';
+                    paginationStr += '<a class="item" href="/admin?' + queryStr + '&start=' + ((pagination.next2Page - 1) * pagination.elementsAtPage) + '">' + pagination.next2Page + '</a>';
                 }
                 if (pagination.next2Page < pagination.lastPage) {
 
@@ -134,7 +167,7 @@ module.exports = function(req, res) {
 
                         paginationStr += '<a class="item disabled">...</a>';
                     }
-                    paginationStr += '<a class="item" href="/admin?start=' + ((pagination.lastPage - 1) * pagination.elementsAtPage) + '">' + pagination.lastPage + '</a>';
+                    paginationStr += '<a class="item" href="/admin?' + queryStr + '&start=' + ((pagination.lastPage - 1) * pagination.elementsAtPage) + '">' + pagination.lastPage + '</a>';
                 }
             }
 
@@ -186,8 +219,31 @@ module.exports = function(req, res) {
                 success: success,
                 searchParameters: searchParameters,
                 found: (filterActive && subData.length > 0 ? true : false),
-                founds: data.length
+                founds: data.length,
+                config: settings
             });
         });
     });
+};
+
+function queryString(searchParameters) {
+
+    var queryStr = '';
+    var and = '';
+
+    if(searchParameters.title.length > 0) {
+
+        queryStr += 'title=' + entities.encode(searchParameters.title);
+        and = '&';
+    }
+
+    if(searchParameters.disc.length > 0) {
+
+        searchParameters.disc.forEach(disc => {
+
+            queryStr += and + 'disc=' + entities.encode(disc);
+            and = '&';
+        });
+    }
+    return queryStr;
 }
