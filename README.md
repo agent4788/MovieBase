@@ -7,7 +7,7 @@ Projektseite: https://agent4788.github.io/MovieBase/#!index.md
 
 ```
 $ sudo cp mbserver.service /etc/systemd/system/mbserver.service
-$ sudo sudo systemctl enable mbserver.service
-$ sudo sudo systemctl start mbserver.service
+$ sudo systemctl enable mbserver.service
+$ sudo systemctl start mbserver.service
 ```
 
