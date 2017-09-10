@@ -1,0 +1,10 @@
+[Unit]
+Description=MovieBase Server
+
+[Service]
+Type=idle
+WorkingDirectory=/opt/MovieBase/
+ExecStart=/usr/bin/node /opt/MovieBase/app/app.js
+
+[Install]
+WantedBy=multi-user.target
