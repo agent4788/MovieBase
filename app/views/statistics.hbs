@@ -1,3 +1,76 @@
+<script src="/static/js/rgraph/RGraph.common.core.js"></script>
+<script src="/static/js/rgraph/RGraph.bar.js"></script>
+<script type="text/javascript">
+    var purchaseAtYearKeys = [
+        {{#each purchaseAtYearKeys}}"{{this}}",{{/each}}
+    ];
+    var purchaseAtYearData = [
+        {{#each purchaseAtYearData}}"{{this}}",{{/each}}
+    ];
+    var costAtYearKeys = [
+        {{#each costAtYearKeys}}"{{this}}",{{/each}}
+    ];
+    var costAtYearData = [
+        {{#each costAtYearData}}"{{this}}",{{/each}}
+    ];
+
+    $(function() {
+
+        new RGraph.Bar({
+            id: 'purchase',
+            data: purchaseAtYearData,
+            options: {
+                labelsAbove: true,
+                labelsAboveDecimals: 0,
+                labelsAboveColor: 'black',
+                labelsAboveSize: 10,
+                hmargin: 20,
+                colorsSequential: true,
+                labels: purchaseAtYearKeys,
+                textSize: 10,
+                textColor: 'gray',
+                backgroundGridVlines: false,
+                backgroundGridAutofitNumhlines: 4,
+                backgroundGridBorder: false,
+                noaxes: true,
+                ylabelsCount: 4,
+                title: 'Anzahl gekaufter Filme pro Jahr',
+                titleX: 25,
+                titleY: 0,
+                titleHalign: 'left',
+                titleColor: '#999',
+                ylabelsOffsetx: -10
+            }
+        }).grow({frames: 60});
+
+        new RGraph.Bar({
+            id: 'price',
+            data: costAtYearData,
+            options: {
+                labelsAbove: true,
+                labelsAboveDecimals: 1,
+                labelsAboveColor: 'black',
+                labelsAboveSize: 10,
+                hmargin: 20,
+                colorsSequential: true,
+                labels: costAtYearKeys,
+                textSize: 10,
+                textColor: 'gray',
+                backgroundGridVlines: false,
+                backgroundGridAutofitNumhlines: 4,
+                backgroundGridBorder: false,
+                noaxes: true,
+                ylabelsCount: 4,
+                title: 'Preis gekaufter Filme pro Jahr',
+                titleX: 25,
+                titleY: 0,
+                titleHalign: 'left',
+                titleColor: '#999',
+                ylabelsOffsetx: -10
+            }
+        }).grow({frames: 60});
+    });
+</script>
 <div class="ui segment">
     <h2 class="ui header">Statistik</h2>
     <div class="ui divider"></div>
@@ -40,4 +113,14 @@
         </tr>
         </tbody>
     </table>
+    <div style="width: 800px; margin: 25px auto;">
+        <canvas id="purchase" width="800" height="400">
+            [No canvas support]
+        </canvas>
+    </div>
+    <div style="width: 800px; margin: 25px auto;">
+        <canvas id="price" width="800" height="400">
+            [No canvas support]
+        </canvas>
+    </div>
 </div>

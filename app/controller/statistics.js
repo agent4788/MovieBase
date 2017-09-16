@@ -12,20 +12,37 @@ const numberFormat = require('../util/numberFormat');
 
 module.exports = function(req, res) {
 
+    //Values
+    var movieCount = 0;
+    var movieBoxCount = 0;
+    var totalDuration = 0;
+    var avgDuration = 0;
+    var totalPrice = 0;
+    var avgPrice = 0;
+    var avgRating = 0;
+
+    var purchaseAtYear = {};
+    var costAtYear = {};
+    var firstYear = 2100;
+
     //Filme
     var movieModel = new MovieModel();
     movieModel.listOnlyMovies(function(data) {
 
-        var moviesCount = data.length;
-        var sumDuration = 0;
+        movieCount = data.length;
         var sumPrice = 0;
         var sumRating = 0;
         for(var i in data) {
 
             var movie = data[i];
-            sumDuration += movie.duration;
-            sumPrice += movie.price;
+            totalDuration += movie.duration;
+            totalPrice += movie.price;
             sumRating += movie.rating;
+
+            let year = movie.registredDate.substr(0, 4);
+            purchaseAtYear[year] != undefined ? purchaseAtYear[year] += 1 : purchaseAtYear[year] = 0;
+            costAtYear[year] != undefined ? costAtYear[year] += movie.price : costAtYear[year] = 0;
+            firstYear > year ? firstYear = year : 0;
         }
 
         //Filmboxen
@@ -39,27 +56,42 @@ module.exports = function(req, res) {
                 sumPrice += movieBox.price;
                 movieBox.movies.forEach(movie => {
 
-                    sumDuration += movie.duration;
+                    totalDuration += movie.duration;
                     sumRating += movie.rating;
                     movieCountInBoxes++;
                 });
+
+                let year = movieBox.registredDate.substr(0, 4);
+                purchaseAtYear[year] != undefined ? purchaseAtYear[year] += movieBox.movies.length : purchaseAtYear[year] = 0;
+                costAtYear[year] != undefined ? costAtYear[year] += movieBox.price : costAtYear[year] = 0;
+                firstYear > year ? firstYear = year : 0;
             }
 
-            var movieCount = movieCountInBoxes + moviesCount;
-            var movieBoxCount = data.length;
-            var avgDuration = sumDuration / movieCount;
-            var avgPrice = sumPrice / movieCount;
-            var avgRating = Math.ceil(sumRating / movieCount);
+            movieCount = movieCountInBoxes + movieCount;
+            movieBoxCount = data.length;
+            avgDuration = totalDuration / movieCount;
+            avgPrice = totalPrice / movieCount;
+            avgRating = Math.ceil(sumRating / movieCount);
 
+            let thisYear = 1900 + new Date().getYear();
+            for(let i = firstYear; i <= thisYear; i++) {
+
+                purchaseAtYear[i] == undefined ? purchaseAtYear[i] = 0 : 0;
+                costAtYear[i] == undefined ? costAtYear[i] = 0 : 0;
+            }
             //Template an Browser
             res.render('statistics', {
                 movieCount: numberFormat(movieCount, 0, 3, '.', ','),
                 movieBoxCount: numberFormat(movieBoxCount, 0, 3, '.', ','),
-                sumDuration: formatDuration(sumDuration),
+                sumDuration: formatDuration(totalDuration),
                 avgDuration: formatDuration(avgDuration),
-                sumPrice: numberFormat(sumPrice, 2, 3, '.', ','),
+                sumPrice: numberFormat(totalPrice, 2, 3, '.', ','),
                 avgPrice: numberFormat(avgPrice, 2, 3, '.', ','),
-                avgRating: avgRating
+                avgRating: avgRating,
+                purchaseAtYearKeys: Object.keys(purchaseAtYear).slice(-10, purchaseAtYear.length),
+                purchaseAtYearData: Object.values(purchaseAtYear).slice(-10, purchaseAtYear.length),
+                costAtYearKeys: Object.keys(costAtYear).slice(-10, costAtYear.length),
+                costAtYearData: Object.values(costAtYear).slice(-10, costAtYear.length)
             });
         });
     });
