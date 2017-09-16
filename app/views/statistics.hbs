@@ -13,6 +13,12 @@
     var costAtYearData = [
         {{#each costAtYearData}}"{{this}}",{{/each}}
     ];
+    var avgCostAtYearKeys = [
+        {{#each avgCostAtYearKeys}}"{{this}}",{{/each}}
+    ];
+    var avgCostAtYearData = [
+        {{#each avgCostAtYearData}}"{{this}}",{{/each}}
+    ];
 
     $(function() {
 
@@ -73,6 +79,36 @@
                 ylabelsOffsetx: -10
             }
         }).grow({frames: 60});
+
+        new RGraph.Bar({
+            id: 'avgPrice',
+            data: avgCostAtYearData,
+            options: {
+                unitsPost: ' €',
+                labelsAbove: true,
+                labelsAboveDecimals: 0,
+                labelsAboveUnitsPost: '€',
+                labelsAboveColor: 'black',
+                labelsAboveSize: 10,
+                hmargin: 20,
+                colors: ['#86B5BC','#E30513','#1C1C1B','#86BC24','#E5007D','#2F8DCD','#F9D900','#F6A200','#BCBCBC'],
+                colorsSequential: true,
+                labels: avgCostAtYearKeys,
+                textSize: 10,
+                textColor: 'gray',
+                backgroundGridVlines: false,
+                backgroundGridAutofitNumhlines: 4,
+                backgroundGridBorder: false,
+                noaxes: true,
+                ylabelsCount: 4,
+                title: 'mittlererer Preis gekaufter Filme pro Jahr',
+                titleX: 25,
+                titleY: 0,
+                titleHalign: 'left',
+                titleColor: '#999',
+                ylabelsOffsetx: -10
+            }
+        }).grow({frames: 60});
     });
 </script>
 <div class="ui segment">
@@ -124,6 +160,11 @@
     </div>
     <div style="width: 800px; margin: 25px auto;">
         <canvas id="price" width="800" height="400">
+            [No canvas support]
+        </canvas>
+    </div>
+    <div style="width: 800px; margin: 25px auto;">
+        <canvas id="avgPrice" width="800" height="400">
             [No canvas support]
         </canvas>
     </div>

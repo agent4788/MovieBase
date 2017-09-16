@@ -23,6 +23,7 @@ module.exports = function(req, res) {
 
     var purchaseAtYear = {};
     var costAtYear = {};
+    var avgCostAtYear = {};
     var firstYear = 2100;
 
     //Filme
@@ -67,18 +68,30 @@ module.exports = function(req, res) {
                 firstYear > year ? firstYear = year : 0;
             }
 
-            movieCount = movieCountInBoxes + movieCount;
-            movieBoxCount = data.length;
-            avgDuration = totalDuration / movieCount;
-            avgPrice = totalPrice / movieCount;
-            avgRating = Math.ceil(sumRating / movieCount);
-
             let thisYear = 1900 + new Date().getYear();
             for(let i = firstYear; i <= thisYear; i++) {
 
                 purchaseAtYear[i] == undefined ? purchaseAtYear[i] = 0 : 0;
                 costAtYear[i] == undefined ? costAtYear[i] = 0 : 0;
             }
+
+            Object.keys(purchaseAtYear).forEach(year => {
+
+                if(purchaseAtYear[year] != undefined && costAtYear[year] != undefined && costAtYear[year] > 0) {
+
+                    avgCostAtYear[year] = costAtYear[year] / purchaseAtYear[year];
+                } else {
+
+                    avgCostAtYear[year] = 0;
+                }
+            });
+
+            movieCount = movieCountInBoxes + movieCount;
+            movieBoxCount = data.length;
+            avgDuration = totalDuration / movieCount;
+            avgPrice = totalPrice / movieCount;
+            avgRating = Math.ceil(sumRating / movieCount);
+
             //Template an Browser
             res.render('statistics', {
                 movieCount: numberFormat(movieCount, 0, 3, '.', ','),
@@ -91,7 +104,9 @@ module.exports = function(req, res) {
                 purchaseAtYearKeys: Object.keys(purchaseAtYear).slice(-10, purchaseAtYear.length),
                 purchaseAtYearData: Object.values(purchaseAtYear).slice(-10, purchaseAtYear.length),
                 costAtYearKeys: Object.keys(costAtYear).slice(-10, costAtYear.length),
-                costAtYearData: Object.values(costAtYear).slice(-10, costAtYear.length)
+                costAtYearData: Object.values(costAtYear).slice(-10, costAtYear.length),
+                avgCostAtYearKeys: Object.keys(avgCostAtYear).slice(-10, avgCostAtYear.length),
+                avgCostAtYearData: Object.values(avgCostAtYear).slice(-10, avgCostAtYear.length)
             });
         });
     });
