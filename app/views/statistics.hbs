@@ -1,5 +1,9 @@
 <script src="/static/js/rgraph/RGraph.common.core.js"></script>
+<script src="/static/js/rgraph/RGraph.common.dynamic.js"></script>
+<script src="/static/js/rgraph/RGraph.common.tooltips.js"></script>
+<script src="/static/js/rgraph/RGraph.common.key.js"></script>
 <script src="/static/js/rgraph/RGraph.bar.js"></script>
+<script src="/static/js/rgraph/RGraph.pie.js"></script>
 <script type="text/javascript">
     var purchaseAtYearKeys = [
         {{#each purchaseAtYearKeys}}"{{this}}",{{/each}}
@@ -19,6 +23,26 @@
     var avgCostAtYearData = [
         {{#each avgCostAtYearData}}"{{this}}",{{/each}}
     ];
+    var genresKeys = [
+        {{#each genresKeys}}"{{this}}",{{/each}}
+    ];
+    var genresData = [
+        {{#each genresData}}"{{this}}",{{/each}}
+    ];
+    var ratingKeys = [
+        {{#each ratingKeys}}"{{this}}",{{/each}}
+    ];
+    var ratingData = [
+        {{#each ratingData}}"{{this}}",{{/each}}
+    ];
+    var discsKeys = [
+        {{#each discsKeys}}"{{this}}",{{/each}}
+    ];
+    var discsData = [
+        {{#each discsData}}"{{this}}",{{/each}}
+    ];
+
+    var colors = ['#86B5BC','#E30513','#1C1C1B','#86BC24','#E5007D','#2F8DCD','#F9D900','#F6A200','#BCBCBC'];
 
     $(function() {
 
@@ -31,7 +55,7 @@
                 labelsAboveColor: 'black',
                 labelsAboveSize: 10,
                 hmargin: 20,
-                colors: ['#86B5BC','#E30513','#1C1C1B','#86BC24','#E5007D','#2F8DCD','#F9D900','#F6A200','#BCBCBC'],
+                colors: colors,
                 colorsSequential: true,
                 labels: purchaseAtYearKeys,
                 textSize: 10,
@@ -41,7 +65,6 @@
                 backgroundGridBorder: false,
                 noaxes: true,
                 ylabelsCount: 4,
-                title: 'Anzahl gekaufter Filme pro Jahr',
                 titleX: 25,
                 titleY: 0,
                 titleHalign: 'left',
@@ -61,7 +84,7 @@
                 labelsAboveColor: 'black',
                 labelsAboveSize: 10,
                 hmargin: 20,
-                colors: ['#86B5BC','#E30513','#1C1C1B','#86BC24','#E5007D','#2F8DCD','#F9D900','#F6A200','#BCBCBC'],
+                colors: colors,
                 colorsSequential: true,
                 labels: costAtYearKeys,
                 textSize: 10,
@@ -71,7 +94,6 @@
                 backgroundGridBorder: false,
                 noaxes: true,
                 ylabelsCount: 4,
-                title: 'Preis gekaufter Filme pro Jahr',
                 titleX: 25,
                 titleY: 0,
                 titleHalign: 'left',
@@ -91,7 +113,7 @@
                 labelsAboveColor: 'black',
                 labelsAboveSize: 10,
                 hmargin: 20,
-                colors: ['#86B5BC','#E30513','#1C1C1B','#86BC24','#E5007D','#2F8DCD','#F9D900','#F6A200','#BCBCBC'],
+                colors: colors,
                 colorsSequential: true,
                 labels: avgCostAtYearKeys,
                 textSize: 10,
@@ -101,7 +123,6 @@
                 backgroundGridBorder: false,
                 noaxes: true,
                 ylabelsCount: 4,
-                title: 'mittlererer Preis gekaufter Filme pro Jahr',
                 titleX: 25,
                 titleY: 0,
                 titleHalign: 'left',
@@ -109,6 +130,111 @@
                 ylabelsOffsetx: -10
             }
         }).grow({frames: 60});
+
+        let keys = [];
+        for (let i = 0; i < genresData.length; i++) {
+            keys[i] = '{1}: {2}'.format(genresKeys[i], genresData[i]);
+        }
+
+        RGraph.HTML.Key('genresContainer',
+                {
+                    colors: colors,
+                    labels: keys,
+                    tableCss: {
+                        position: 'absolute',
+                        top: '50%',
+                        right: '-70px',
+                        transform: 'translateY(-50%)'
+                    }
+                });
+
+        new RGraph.Pie({
+            id: 'genres',
+            data: genresData,
+            options: {
+                gutterLeft: 50,
+                gutterRight: 50,
+                linewidth: 0,
+                strokestyle: 'rgba(0,0,0,0)',
+                colors: colors,
+                variant: 'pie3d',
+                radius: 100,
+                radius: 80,
+                shadowOffsety: 5,
+                shadowColor: '#aaa',
+                exploded: [,,20]
+            }
+        }).draw();
+
+        keys = [];
+        for (let i = 0; i < ratingData.length; i++) {
+            keys[i] = '{1}: {2}'.format(ratingKeys[i], ratingData[i]);
+        }
+
+        RGraph.HTML.Key('ratingContainer',
+                {
+                    colors: colors,
+                    labels: keys,
+                    tableCss: {
+                        position: 'absolute',
+                        top: '50%',
+                        right: '-70px',
+                        transform: 'translateY(-50%)'
+                    }
+                });
+
+        new RGraph.Pie({
+            id: 'ratings',
+            data: ratingData,
+            options: {
+                gutterLeft: 50,
+                gutterRight: 50,
+                linewidth: 0,
+                strokestyle: 'rgba(0,0,0,0)',
+                colors: colors,
+                variant: 'pie3d',
+                radius: 100,
+                radius: 80,
+                shadowOffsety: 5,
+                shadowColor: '#aaa',
+                exploded: [,,20]
+            }
+        }).draw();
+
+        keys = [];
+        for (let i = 0; i < discsData.length; i++) {
+            keys[i] = '{1}: {2}'.format(discsKeys[i], discsData[i]);
+        }
+
+        RGraph.HTML.Key('discContainer',
+                {
+                    colors: colors,
+                    labels: keys,
+                    tableCss: {
+                        position: 'absolute',
+                        top: '50%',
+                        right: '-70px',
+                        transform: 'translateY(-50%)'
+                    }
+                });
+
+        new RGraph.Pie({
+            id: 'discs',
+            data: discsData,
+            options: {
+                gutterLeft: 50,
+                gutterRight: 50,
+                linewidth: 0,
+                strokestyle: 'rgba(0,0,0,0)',
+                colors: colors,
+                variant: 'pie3d',
+                radius: 100,
+                radius: 80,
+                shadowOffsety: 5,
+                shadowColor: '#aaa',
+                exploded: [,,20]
+            }
+        }).draw();
     });
 </script>
 <div class="ui segment">
@@ -153,19 +279,46 @@
         </tr>
         </tbody>
     </table>
+    <h3 class="ui header">Anzahl gekaufter Filme</h3>
+    <div class="ui divider"></div>
     <div style="width: 800px; margin: 25px auto;">
         <canvas id="purchase" width="800" height="400">
             [No canvas support]
         </canvas>
     </div>
+    <h3 class="ui header">Preis gekaufter Filme</h3>
+    <div class="ui divider"></div>
     <div style="width: 800px; margin: 25px auto;">
         <canvas id="price" width="800" height="400">
             [No canvas support]
         </canvas>
     </div>
+    <h3 class="ui header">mittlerer Preis gekaufter Filme</h3>
+    <div class="ui divider"></div>
     <div style="width: 800px; margin: 25px auto;">
         <canvas id="avgPrice" width="800" height="400">
             [No canvas support]
         </canvas>
+    </div>
+    <h3 class="ui header">Genres</h3>
+    <div class="ui divider"></div>
+    <div style="width: 800px; margin: 25px auto;">
+        <div id="genresContainer" style="display: inline-block; position: relative">
+            <canvas id="genres" width="500" height="350">[No canvas support]</canvas>
+        </div>
+    </div>
+    <h3 class="ui header">Medien</h3>
+    <div class="ui divider"></div>
+    <div style="width: 800px; margin: 25px auto;">
+        <div id="discContainer" style="display: inline-block; position: relative">
+            <canvas id="discs" width="500" height="350">[No canvas support]</canvas>
+        </div>
+    </div>
+    <h3 class="ui header">Bewertungen</h3>
+    <div class="ui divider"></div>
+    <div style="width: 800px; margin: 25px auto;">
+        <div id="ratingContainer" style="display: inline-block; position: relative">
+            <canvas id="ratings" width="500" height="350">[No canvas support]</canvas>
+        </div>
     </div>
 </div>

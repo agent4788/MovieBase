@@ -26,6 +26,10 @@ module.exports = function(req, res) {
     var avgCostAtYear = {};
     var firstYear = 2100;
 
+    var genres = {};
+    var rating = {};
+    var discs = {};
+
     //Filme
     var movieModel = new MovieModel();
     movieModel.listOnlyMovies(function(data) {
@@ -44,6 +48,10 @@ module.exports = function(req, res) {
             purchaseAtYear[year] != undefined ? purchaseAtYear[year] += 1 : purchaseAtYear[year] = 0;
             costAtYear[year] != undefined ? costAtYear[year] += movie.price : costAtYear[year] = 0;
             firstYear > year ? firstYear = year : 0;
+
+            genres[movie.genre] != undefined ? genres[movie.genre] += 1 : genres[movie.genre] = 1;
+            rating[movie.rating] != undefined ? rating[movie.rating] += 1 : rating[movie.rating] = 1;
+            discs[movie.disc] != undefined ? discs[movie.disc] += 1 : discs[movie.disc] = 1;
         }
 
         //Filmboxen
@@ -60,6 +68,10 @@ module.exports = function(req, res) {
                     totalDuration += movie.duration;
                     sumRating += movie.rating;
                     movieCountInBoxes++;
+
+                    genres[movie.genre] != undefined ? genres[movie.genre] += 1 : genres[movie.genre] = 1;
+                    rating[movie.rating] != undefined ? rating[movie.rating] += 1 : rating[movie.rating] = 1;
+                    discs[movie.disc] != undefined ? discs[movie.disc] += 1 : discs[movie.disc] = 1;
                 });
 
                 let year = movieBox.registredDate.substr(0, 4);
@@ -106,7 +118,13 @@ module.exports = function(req, res) {
                 costAtYearKeys: Object.keys(costAtYear).slice(-10, costAtYear.length),
                 costAtYearData: Object.values(costAtYear).slice(-10, costAtYear.length),
                 avgCostAtYearKeys: Object.keys(avgCostAtYear).slice(-10, avgCostAtYear.length),
-                avgCostAtYearData: Object.values(avgCostAtYear).slice(-10, avgCostAtYear.length)
+                avgCostAtYearData: Object.values(avgCostAtYear).slice(-10, avgCostAtYear.length),
+                genresKeys: Object.keys(genres),
+                genresData: Object.values(genres),
+                ratingKeys: Object.keys(rating),
+                ratingData: Object.values(rating),
+                discsKeys: Object.keys(discs),
+                discsData: Object.values(discs)
             });
         });
     });
