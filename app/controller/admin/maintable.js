@@ -191,6 +191,8 @@ module.exports = function(req, res) {
                 editSuccess: false,
                 delete: false,
                 deleteSuccess: false,
+                deleteCache: false,
+                deleteCacheSuccess: false,
             };
 
             if (req.query.addSuccess !== undefined) {
@@ -209,6 +211,12 @@ module.exports = function(req, res) {
 
                 success.delete = true;
                 success.deleteSuccess = req.query.deleteSuccess;
+            }
+
+            if (req.query.deleteCacheSuccess !== undefined) {
+
+                success.deleteCache = true;
+                success.deleteCacheSuccess = req.query.deleteCacheSuccess;
             }
 
             //Template an Browser

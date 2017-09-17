@@ -156,4 +156,26 @@ module.exports = class DashboardModel {
             }
         })
     }
+
+    /**
+     * löscht den Cache
+     *
+     * @param callback
+     */
+    deleteCache(callback) {
+
+        //Datenbank verbinden
+        let client = this.__connect();
+        client.del('dashboard', function (err, obj) {
+
+            if(!err) {
+
+                callback(true);
+            } else {
+
+                callback(false);
+            }
+            client.quit();
+        });
+    }
 };

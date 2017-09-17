@@ -82,6 +82,17 @@
             </div>
         {{/if}}
     {{/if}}
+    {{#if success.deleteCache}}
+        {{#if success.deleteCacheSuccess}}
+            <div class="ui message success">
+                Der Cache wurde erfolgreich gelöscht
+            </div>
+        {{else}}
+            <div class="ui message error">
+                Der Cache konnte nicht gelöscht werden
+            </div>
+        {{/if}}
+    {{/if}}
     <table class="ui celled table">
         <thead>
             <tr>

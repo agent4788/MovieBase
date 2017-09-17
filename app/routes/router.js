@@ -31,6 +31,7 @@ var downloadBackup = require('../controller/admin/downloadbackup');
 var deleteBackup = require('../controller/admin/deleteBackup');
 var restoreBackup = require('../controller/admin/restorebackup');
 var settings = require('../controller/admin/settings');
+var deleteCache = require('../controller/admin/deletecache');
 
 module.exports = function(app) {
 
@@ -69,4 +70,5 @@ module.exports = function(app) {
     app.get('/admin/restoreBackup/:file', restoreBackup);
     app.get('/admin/settings', settings.get);
     app.post('/admin/settings', settings.post);
+    app.get('/admin/deleteCache', deleteCache);
 }
