@@ -98,6 +98,12 @@ module.exports = function(req, res) {
                 }
             });
 
+            genres = sortObject(genres);
+            genres = sliceAndCombine(genres, 8);
+            rating = sortObject(rating);
+            discs = sortObject(discs);
+            discs = sliceAndCombine(discs, 8);
+
             movieCount = movieCountInBoxes + movieCount;
             movieBoxCount = data.length;
             avgDuration = totalDuration / movieCount;
@@ -158,4 +164,49 @@ function formatDuration(duration) {
         }
     }
     return formatedDuration;
+}
+
+function sortObject(obj) {
+    let arr = [];
+    for (let prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+            arr.push({
+                'key': prop,
+                'value': obj[prop]
+            });
+        }
+    }
+    arr.sort(function(a, b) { return b.value - a.value; });
+    //arr.sort(function(a, b) { a.value.toLowerCase().localeCompare(b.value.toLowerCase()); }); //use this to sort as strings
+    let newObj = [];
+    for(let i = 0; i < arr.length; i++) {
+
+        newObj[arr[i].key] = arr[i].value;
+    }
+    return newObj; // returns array
+}
+
+function sliceAndCombine(object, maxLen) {
+
+    maxLen = maxLen - 1;
+    if(Object.keys(object).length > maxLen) {
+
+        let newObject = {};
+        let keys = Object.keys(object);
+        for(let i in keys) {
+
+            let key = keys[i];
+            if(i < maxLen) {
+
+                newObject[key] = object[key];
+            } else {
+
+                newObject['andere'] != undefined ? newObject['andere'] += object[key] : newObject['andere'] = object[key];
+            }
+        }
+        return newObject;
+    } else {
+
+        return object;
+    }
 }
