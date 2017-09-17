@@ -39,7 +39,28 @@
         <a href="/admin/addMovieBox" class="item"><i class="plus icon"></i> Film Filmbox</a>
         <a href="/admin/settings" class="item">Einstellungen</a>
         <a href="/admin/backups" class="item">Backups</a>
-        <a href="/admin/deleteCache" class="item">Cache löschen</a>
+        <a onclick="$('#cacheDeletePrompt').modal('show')" class="item">Cache löschen</a>
+    </div>
+    <div class="ui basic modal" id="cacheDeletePrompt">
+        <div class="ui icon header">
+            <i class="delete icon"></i>
+            Cache löschen
+        </div>
+        <div class="content">
+            <p>
+                Bist du sicher das du den Cache löschen m&ouml;chtest?
+            </p>
+        </div>
+        <div class="actions">
+            <div class="ui red basic cancel inverted button">
+                <i class="remove icon"></i>
+                Nein
+            </div>
+            <div class="ui green ok inverted button" onclick="window.location = '/admin/deleteCache'">
+                <i class="checkmark icon"></i>
+                Ja
+            </div>
+        </div>
     </div>
 </header>
 <main class="ui main container">
