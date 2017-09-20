@@ -107,7 +107,6 @@ module.exports = function(req, res) {
             discs = sortObject(discs);
             discs = sliceAndCombine(discs, 8);
             fsk = sortObject(fsk);
-            console.log(fsk);
             fsk = sliceAndCombine(fsk, 8);
 
             movieCount = movieCountInBoxes + movieCount;
