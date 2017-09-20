@@ -41,6 +41,12 @@
     var discsData = [
         {{#each discsData}}"{{this}}",{{/each}}
     ];
+    var fskKeys = [
+        {{#each fskKeys}}"{{this}}",{{/each}}
+    ];
+    var fskData = [
+        {{#each fskData}}"{{this}}",{{/each}}
+    ];
 
     var colors = ['#86B5BC','#E30513','#1C1C1B','#86BC24','#E5007D','#2F8DCD','#F9D900',
         '#F6A200','#BCBCBC', '#00FFFF', '#8A2BE2', '#D2691E', '#DC143C', '#FF8C00', '#E9967A',
@@ -237,6 +243,41 @@
                 shadowColor: '#aaa'
             }
         }).draw();
+
+        keys = [];
+        for (let i = 0; i < fskData.length; i++) {
+            keys[i] = '{1}: {2}'.format(fskKeys[i], fskData[i]);
+        }
+
+        RGraph.HTML.Key('fskContainer',
+                {
+                    colors: colors,
+                    labels: keys,
+                    tableCss: {
+                        position: 'absolute',
+                        top: '50%',
+                        right: '-70px',
+                        transform: 'translateY(-50%)'
+                    }
+                });
+
+        new RGraph.Pie({
+            id: 'fsk',
+            data: fskData,
+            options: {
+                gutterLeft: 50,
+                gutterRight: 50,
+                linewidth: 0,
+                strokestyle: 'rgba(0,0,0,0)',
+                colors: colors,
+                colorsSequential: true,
+                variant: 'pie3d',
+                radius: 100,
+                radius: 80,
+                shadowOffsety: 5,
+                shadowColor: '#aaa'
+            }
+        }).draw();
     });
 </script>
 <div class="ui segment">
@@ -321,6 +362,13 @@
     <div style="width: 800px; margin: 25px auto;">
         <div id="ratingContainer" style="display: inline-block; position: relative">
             <canvas id="ratings" width="500" height="350">[No canvas support]</canvas>
+        </div>
+    </div>
+    <h3 class="ui header">Altersfreigaben</h3>
+    <div class="ui divider"></div>
+    <div style="width: 800px; margin: 25px auto;">
+        <div id="fskContainer" style="display: inline-block; position: relative">
+            <canvas id="fsk" width="500" height="350">[No canvas support]</canvas>
         </div>
     </div>
 </div>

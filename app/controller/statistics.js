@@ -29,6 +29,7 @@ module.exports = function(req, res) {
     var genres = {};
     var rating = {};
     var discs = {};
+    var fsk = {};
 
     //Filme
     var movieModel = new MovieModel();
@@ -52,6 +53,7 @@ module.exports = function(req, res) {
             genres[movie.genre] != undefined ? genres[movie.genre] += 1 : genres[movie.genre] = 1;
             rating[movie.rating] != undefined ? rating[movie.rating] += 1 : rating[movie.rating] = 1;
             discs[movie.disc] != undefined ? discs[movie.disc] += 1 : discs[movie.disc] = 1;
+            fsk[movie.fsk] != undefined ? fsk[movie.fsk] += 1 : fsk[movie.fsk] = 1;
         }
 
         //Filmboxen
@@ -72,6 +74,7 @@ module.exports = function(req, res) {
                     genres[movie.genre] != undefined ? genres[movie.genre] += 1 : genres[movie.genre] = 1;
                     rating[movie.rating] != undefined ? rating[movie.rating] += 1 : rating[movie.rating] = 1;
                     discs[movie.disc] != undefined ? discs[movie.disc] += 1 : discs[movie.disc] = 1;
+                    fsk[movie.fsk] != undefined ? fsk[movie.fsk] += 1 : fsk[movie.fsk] = 1;
                 });
 
                 let year = movieBox.registredDate.substr(0, 4);
@@ -103,6 +106,9 @@ module.exports = function(req, res) {
             rating = sortObject(rating);
             discs = sortObject(discs);
             discs = sliceAndCombine(discs, 8);
+            fsk = sortObject(fsk);
+            console.log(fsk);
+            fsk = sliceAndCombine(fsk, 8);
 
             movieCount = movieCountInBoxes + movieCount;
             movieBoxCount = data.length;
@@ -130,7 +136,9 @@ module.exports = function(req, res) {
                 ratingKeys: Object.keys(rating),
                 ratingData: Object.values(rating),
                 discsKeys: Object.keys(discs),
-                discsData: Object.values(discs)
+                discsData: Object.values(discs),
+                fskKeys: Object.keys(fsk),
+                fskData: Object.values(fsk)
             });
         });
     });
@@ -167,6 +175,7 @@ function formatDuration(duration) {
 }
 
 function sortObject(obj) {
+
     let arr = [];
     for (let prop in obj) {
         if (obj.hasOwnProperty(prop)) {
@@ -178,7 +187,7 @@ function sortObject(obj) {
     }
     arr.sort(function(a, b) { return b.value - a.value; });
     //arr.sort(function(a, b) { a.value.toLowerCase().localeCompare(b.value.toLowerCase()); }); //use this to sort as strings
-    let newObj = [];
+    let newObj = {};
     for(let i = 0; i < arr.length; i++) {
 
         newObj[arr[i].key] = arr[i].value;
