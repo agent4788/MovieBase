@@ -9,6 +9,7 @@ const Movie = require('./movie');
 const redis = require('redis');
 const config = require('../config');
 const moment = require('moment');
+const SettingsModel = require('../model/settingsmodel');
 
 'use strict';
 
@@ -44,83 +45,87 @@ module.exports = class DashboardModel {
         var _movieModel = new MovieModel();
         _movieModel.listMovies(function(data) {
 
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // neuste Filme ////////////////////////////////////////////////////////////////////////////////////////////////
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            var _settingsModel = new SettingsModel();
+            _settingsModel.getSettings(function (settings) {
 
-            //Daten nach Datum sortieren
-            data.sort(function(obj1, obj2) {
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // neuste Filme ////////////////////////////////////////////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                if(moment(obj1.registredDate).isBefore(obj2.registredDate)) {
+                //Daten nach Datum sortieren
+                data.sort(function(obj1, obj2) {
 
-                    return 1;
-                } else if(moment(obj1.registredDate).isSame(obj2.registredDate)) {
+                    if(moment(obj1.registredDate).isBefore(obj2.registredDate)) {
 
-                    return 0;
-                } else if(moment(obj1.registredDate).isAfter(obj2.registredDate)) {
+                        return 1;
+                    } else if(moment(obj1.registredDate).isSame(obj2.registredDate)) {
 
-                    return -1;
+                        return 0;
+                    } else if(moment(obj1.registredDate).isAfter(obj2.registredDate)) {
+
+                        return -1;
+                    }
+                });
+
+                //die ersten x Elemente in ein eigenes Array kopieren
+                var dateFiltered = [];
+                for(var i = 0; i < settings.dashboard.newestMoviesValue; i++) {
+
+                    if(data[i] != undefined) {
+
+                        dateFiltered[i] = data[i].id;
+                    } else {
+
+                        break;
+                    }
                 }
+
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // beste Filme /////////////////////////////////////////////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                //Daten nach Bewertung sortieren
+                data.sort(function(obj1, obj2) {
+
+                    if(obj1.rating < obj2.rating) {
+
+                        return 1;
+                    } else if(obj1.rating == obj2.rating) {
+
+                        return 0;
+                    } else if(obj1.rating > obj2.rating) {
+
+                        return -1;
+                    }
+                });
+
+                //die ersten x Elemente in ein eigenes Array kopieren
+                var ratingFiltered = [];
+                for(var i = 0; i < settings.dashboard.bestMoviesValue; i++) {
+
+                    if(data[i] != undefined) {
+
+                        ratingFiltered[i] = data[i].id;
+                    } else {
+
+                        break;
+                    }
+                }
+
+                var dasboardData = {
+                    newestMovies: dateFiltered,
+                    bestMovies: ratingFiltered
+                };
+
+                //in cahce speichern
+                client.set('dashboard', JSON.stringify(dasboardData));
+                client.expire('dashboard', settings.dashboard.cacheTime);
+
+                //Datenbankverbindung trennen
+                client.quit();
+
+                callback(dasboardData);
             });
-
-            //die ersten x Elemente in ein eigenes Array kopieren
-            var dateFiltered = [];
-            for(var i = 0; i < config.dashboard.newestMoviesValue; i++) {
-
-                if(data[i] != undefined) {
-
-                    dateFiltered[i] = data[i].id;
-                } else {
-
-                    break;
-                }
-            }
-
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // beste Filme /////////////////////////////////////////////////////////////////////////////////////////////////
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-            //Daten nach Bewertung sortieren
-            data.sort(function(obj1, obj2) {
-
-                if(obj1.rating < obj2.rating) {
-
-                    return 1;
-                } else if(obj1.rating == obj2.rating) {
-
-                    return 0;
-                } else if(obj1.rating > obj2.rating) {
-
-                    return -1;
-                }
-            });
-
-            //die ersten x Elemente in ein eigenes Array kopieren
-            var ratingFiltered = [];
-            for(var i = 0; i < config.dashboard.bestMoviesValue; i++) {
-
-                if(data[i] != undefined) {
-
-                    ratingFiltered[i] = data[i].id;
-                } else {
-
-                    break;
-                }
-            }
-
-            var dasboardData = {
-                newestMovies: dateFiltered,
-                bestMovies: ratingFiltered
-            };
-
-            //in cahce speichern
-            client.set('dashboard', JSON.stringify(dasboardData));
-            client.expire('dashboard', config.dashboard.cacheTime);
-
-            //Datenbankverbindung trennen
-            client.quit();
-
-            callback(dasboardData);
         });
     }
 
