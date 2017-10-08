@@ -130,7 +130,7 @@ module.exports = {
                     }
 
                     //Laufzeit
-                    if (duration >= 0 && duration <= 1000) {
+                    if (duration >= 0 && duration <= 10000) {
 
                         newMovie.duration = duration;
                     } else {

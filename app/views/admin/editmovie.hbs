@@ -75,7 +75,7 @@
                             identifier: 'duration',
                             rules: [
                                 {
-                                    type   : 'integer[1..1000]',
+                                    type   : 'integer[1..10000]',
                                     prompt : 'Gib eine gültige Laufzeit ein'
                                 }
                             ]
@@ -186,7 +186,7 @@
             </div>
             <div class="field required">
                 <label>Laufzeit</label>
-                <input name="duration" placeholder="0" type="number" min="0" max="1000" step="1"  value="{{movie.duration}}">
+                <input name="duration" placeholder="0" type="number" min="0" max="10000" step="1"  value="{{movie.duration}}">
             </div>
         </div>
         <div class="equal width fields">
